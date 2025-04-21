@@ -1,0 +1,42 @@
+<resources>
+    <!-- Màu cơ bản -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray_light">#F5F5F5</color>
+    <color name="gray_dark">#757575</color>
+
+    <!-- Màu chủ đạo (primary color) -->
+    <color name="primary">#2196F3</color> <!-- Xanh trời -->
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
+
+    <!-- Màu nhấn (accent) -->
+    <color name="accent">#FF9800</color> <!-- Cam -->
+
+    <!-- Màu thông báo / trạng thái -->
+    <color name="error">#F44336</color>       <!-- Đỏ -->
+    <color name="success">#4CAF50</color>     <!-- Xanh lá -->
+    <color name="warning">#FFC107</color>     <!-- Vàng -->
+
+    <!-- Nền màn hình -->
+    <color name="background">#003b4d</color>
+    <color name="surface">#FAFAFA</color>
+
+    <!-- Văn bản -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+
+    <!-- Đường viền / line -->
+    <color name="divider">#BDBDBD</color>
+    <!--    màu nền -->
+    <!-- colors.xml -->
+    <!-- màu home-->
+    <color name="dark_blue_background">#1b3b50</color>
+    <color name="dark_blue_card">#264b63</color>
+    <color name="light_blue_card">#1976D2</color>
+    <color name="divider_color">#3a5a70</color>
+    <color name="light_blue_text">#a0c0d0</color>
+    <color name="green_teal">#33cc99</color>
+    <color name="light_text">#CCCCCC</color>
+
+</resources>

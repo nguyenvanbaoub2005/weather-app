@@ -1,0 +1,37 @@
+<!-- res/layout/drawer_header.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:gravity="bottom"
+    android:padding="16dp"
+    android:background="#003b4d"> <!-- Màu nền tối xanh dương đậm -->
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/__1_bao"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="03.Nguyễn Văn Bảo"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="8dp" />
+
+    <TextView
+        android:id="@+id/proStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Không phải PRO"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="2dp"/>
+</LinearLayout>

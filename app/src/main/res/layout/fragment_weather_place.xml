@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/anhdem"
+    tools:context=".ui.view.MainActivity">
+
+
+    <!-- City Name -->
+    <TextView
+        android:id="@+id/tvCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Montreal"
+        android:textSize="32sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
+
+    <!-- Temperature -->
+    <TextView
+        android:id="@+id/tvTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="19°C"
+        android:textSize="72sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/tvCity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Weather Status -->
+    <TextView
+        android:id="@+id/tvWeatherStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mostly Clear"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/tvTemperature"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- High/Low Temperature -->
+    <TextView
+        android:id="@+id/tvHighLow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="H: 24°C  L: 18°C"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/tvWeatherStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- House Image -->
+    <ImageView
+        android:id="@+id/ivHouse"
+        android:layout_width="367dp"
+        android:layout_height="446dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/anhnha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHighLow" />
+
+
+    <!-- Hourly Forecast Section -->
+<!--    <HorizontalScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/ivHouse"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingHorizontal="16dp">-->
+
+<!--            &lt;!&ndash; Thời gian và nhiệt độ từng giờ &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:paddingEnd="16dp">-->
+
+<!--                <TextView-->
+<!--                    android:text="12 AM"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="14sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:text="20°C"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="14sp"/>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:paddingEnd="16dp">-->
+
+<!--                <TextView-->
+<!--                    android:text="2 AM"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="14sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:text="19°C"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="14sp"/>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:paddingEnd="16dp">-->
+
+<!--                <TextView-->
+<!--                    android:text="4 AM"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="14sp"/>-->
+
+<!--                <TextView-->
+<!--                    android:text="18°C"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="14sp"/>-->
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+<!--    </HorizontalScrollView>-->
+
+    <!-- Weekly Forecast Button -->
+<!--    <TextView-->
+<!--        android:id="@+id/tvWeeklyForecast"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Weekly Forecast"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:textSize="16sp"-->
+<!--        android:padding="12dp"-->
+<!--        android:background="@drawable/weekly_button_background"-->
+<!--        android:gravity="center"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/hourlyForecast"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="16dp" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <!-- Trang chính -->
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.textn.ui.view.fragment.HomeFragment"
+        android:label="Trang chủ"
+        tools:layout="@layout/fragment_home" />
+
+<!--     Thời tiết -->
+    <fragment
+        android:id="@+id/nav_weather"
+        android:name="com.example.textn.ui.view.fragment.MapWeatherFragment"
+        android:label="Thời tiết"
+        tools:layout="@layout/fragment_weather" />
+
+    <!-- Cài đặt -->
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.textn.ui.view.fragment.SettingsFragment"
+        android:label="Cài đặt"
+        tools:layout="@layout/fragment_settings" />
+
+</navigation>
