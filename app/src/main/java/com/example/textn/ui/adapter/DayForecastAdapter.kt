@@ -45,7 +45,6 @@ class DayForecastAdapter : ListAdapter<DayForecastItem, DayForecastAdapter.Forec
             override fun areItemsTheSame(oldItem: DayForecastItem, newItem: DayForecastItem): Boolean {
                 return oldItem.id == newItem.id
             }
-
             override fun areContentsTheSame(oldItem: DayForecastItem, newItem: DayForecastItem): Boolean {
                 return oldItem == newItem
             }

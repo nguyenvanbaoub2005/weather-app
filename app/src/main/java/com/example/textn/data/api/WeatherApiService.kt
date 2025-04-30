@@ -1,4 +1,4 @@
-package com.example.textn.data.network
+package com.example.textn.data.api
 import com.example.textn.data.model.WeatherResponse
 import retrofit2.Response
 import retrofit2.http.GET

@@ -1,5 +1,6 @@
 package com.example.textn.data.network
 
+import com.example.textn.data.api.WeatherApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {

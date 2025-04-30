@@ -7,7 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
+        android:name=".ui.view.WeatherApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -33,7 +36,8 @@
         </activity>
         <activity  android:name=".ui.view.MainActivity"></activity>
         <activity  android:name=".ui.view.LoginActivity"></activity>
-        <activity  android:name=".ui.view.RegisterActivity"></activity>
+
+
     </application>
 
 </manifest>

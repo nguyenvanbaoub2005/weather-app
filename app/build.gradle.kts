@@ -93,11 +93,16 @@ dependencies {
 //Material Design
     implementation ("com.google.android.material:material:1.11.0")
 }
+dependencies {
+    // Các dependencies WorkManager
+    implementation ("androidx.work:work-runtime-ktx:2.8.1")
+}
 buildscript {
     dependencies {
         classpath ("com.google.gms:google-services:4.3.15")// mới nhất
     }
 }
+
 
 //dependencies {
 //    // Google Maps

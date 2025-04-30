@@ -36,11 +36,11 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Layer Menu" />
 
-<!--    <Spinner-->
-<!--        android:id="@+id/layerSpinner"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/btnLayerMenu"-->
-<!--        android:layout_margin="16dp" />-->
+    <Spinner
+        android:id="@+id/layerSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnLayerMenu"
+        android:layout_margin="16dp" />
 
 </RelativeLayout>

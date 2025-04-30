@@ -39,4 +39,8 @@
     <color name="green_teal">#33cc99</color>
     <color name="light_text">#CCCCCC</color>
 
+    <!-- Màu cho cảnh báo sức khỏe -->
+    <color name="alert_low">#E3F2FD</color>
+    <color name="alert_medium">#FFECB3</color>
+    <color name="alert_high">#FFCDD2</color>
 </resources>

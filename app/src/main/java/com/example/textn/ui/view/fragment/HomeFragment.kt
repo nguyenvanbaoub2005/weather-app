@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.textn.R
 import com.example.textn.data.model.DayForecastItem
@@ -63,25 +64,9 @@ class HomeFragment : Fragment() {
         // Quan sát dữ liệu thời tiết
         setupWeatherObservers()
         // Thêm sự kiện click cho cardMap để chuyển sang Fragment bản đồ chi tiết
-        // Thêm sự kiện click cho cardMap để chuyển sang Fragment bản đồ chi tiết
-        binding.cardMap.setOnClickListener {
-            // Tạo instance của Fragment bản đồ chi tiết
-            val fullMapFragment = MapWeatherFragment()
-
-            // Thay thế Fragment hiện tại bằng Fragment bản đồ đầy đủ
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, fullMapFragment) // Thay main_container bằng ID container chính của bạn
-                .addToBackStack(null) // Để có thể quay lại bằng nút Back
-                .commit()
-        }
-
-        // Tương tự cho nút mở rộng
         binding.btnExpandMap.setOnClickListener {
-            val fullMapFragment = MapWeatherFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, fullMapFragment)
-                .addToBackStack(null)
-                .commit()
+            // Sử dụng NavController để điều hướng đến FullMapFragment
+            findNavController().navigate(R.id.nav_weather)
         }
 
         // Nút mở menu navigation drawer

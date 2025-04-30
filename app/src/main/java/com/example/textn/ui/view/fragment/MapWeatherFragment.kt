@@ -48,11 +48,7 @@ class MapWeatherFragment : Fragment() {
 
         // Khởi tạo tất cả các thành phần
         weatherHelper.initialize()
-
-
     }
-
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

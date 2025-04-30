@@ -9,7 +9,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.textn.R
 import com.google.android.material.navigation.NavigationView
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
@@ -43,11 +42,13 @@ class MainActivity : AppCompatActivity() {
             val handled = when (menuItem.itemId) {
                 R.id.nav_home,
                 R.id.nav_weather,
+                R.id.nav_health,
                 R.id.nav_settings -> {
                     navController.popBackStack()
                     navController.navigate(menuItem.itemId)
                     true
                 }
+
                 else -> false
             }
             menuItem.isChecked = true
