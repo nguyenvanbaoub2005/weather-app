@@ -6,6 +6,8 @@
         <item name="android:statusBarColor">@color/background</item>
     </style>
 
+
+
     <style name="Theme.TextĐồÁn" parent="Base.Theme.TextĐồÁn" />
 
 </resources>

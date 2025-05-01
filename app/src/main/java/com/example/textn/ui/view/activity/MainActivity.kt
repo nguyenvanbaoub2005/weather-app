@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userPrefs: UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

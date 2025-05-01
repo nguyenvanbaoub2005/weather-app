@@ -25,6 +25,16 @@
 <string name="register_success">Đăng ký thành công</string>
 <string name="register_failed">Đăng ký thất bại</string>
 
+    <!-- Settings Fragment -->
+<string name="settings_title">Cài đặt</string>
+<string name="unit_label">Đơn vị</string>
+<string name="feedback_label">Phản hồi</string>
+<string name="legal_info_label">Thông tin hợp pháp</string>
+<string name="theme_light">Chủ đề ánh sáng</string>
+<string name="theme_dark">Chủ đề tối</string>
+<string name="font_size_label">Cỡ chữ</string>
+<string name="version_format">Phiên bản: %s</string>
+
 //Google
 <string name="default_web_client_id">1049797410331-5upjvaiu1ru40203n1aqf97hevumh0r6.apps.googleusercontent.com</string>
 </resources>
