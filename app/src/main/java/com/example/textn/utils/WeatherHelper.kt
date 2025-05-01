@@ -87,7 +87,6 @@ class WeatherHelper(
             layer: String = "wind",
             onLocationFetched: ((lat: Double, lon: Double) -> Unit)? = null
         ) {
-            // Kiểm tra quyền truy cập vị trí
             if (ActivityCompat.checkSelfPermission(
                     activity,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -106,25 +105,51 @@ class WeatherHelper(
             }
 
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+
+            // Thử lấy vị trí cuối cùng
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 if (location != null) {
+                    // Nếu có vị trí cuối cùng, update luôn
                     val lat = location.latitude
                     val lon = location.longitude
-                    Log.d("Weather", "Vị trí hiện tại: lat = $lat, lon = $lon")
-
-                    val html = generateWindyHtml(lat, lon, layer)
-                    webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
-
+                    updateWindyMapHtml(webView, lat, lon, layer)
                     onLocationFetched?.invoke(lat, lon)
-
-                    // Đánh dấu là đã lấy vị trí
                     isLocationFetched = true
-                    Log.d("Weather", "Vị trí đã được lấy và cập nhật.")
                 } else {
-                    Toast.makeText(activity, "Không thể lấy vị trí hiện tại", Toast.LENGTH_SHORT).show()
+                    // Nếu không có, yêu cầu cập nhật mới
+                    val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
+                        priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+                        interval = 1000
+                        fastestInterval = 500
+                        numUpdates = 1
+                    }
+
+                    val locationCallback = object : com.google.android.gms.location.LocationCallback() {
+                        override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
+                            val freshLocation = locationResult.lastLocation
+                            if (freshLocation != null) {
+                                val lat = freshLocation.latitude
+                                val lon = freshLocation.longitude
+                                updateWindyMapHtml(webView, lat, lon, layer)
+                                onLocationFetched?.invoke(lat, lon)
+                                isLocationFetched = true
+                            } else {
+                                Toast.makeText(activity, "Không thể lấy vị trí hiện tại", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
+                    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
                 }
             }
         }
+
+        // Viết thêm 1 hàm con để update webview
+        private fun updateWindyMapHtml(webView: WebView, lat: Double, lon: Double, layer: String) {
+            val html = generateWindyHtml(lat, lon, layer)
+            webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
+        }
+
 
         // Hàm trợ giúp để tạo HTML cho Windy Map
         private fun generateWindyHtml(lat: Double, lon: Double, layer: String): String {
@@ -193,6 +218,8 @@ class WeatherHelper(
         setupSearchListener()
         observeViewModel()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+
+        updateWindyMapWithCurrentLocation()
     }
 
     private fun setupBindingWebView() {
