@@ -1,79 +1,62 @@
-package com.example.textn.ui.view
+package com.example.textn.ui.view.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.example.textn.R
-import com.example.textn.databinding.ActivityLoginBinding
+import com.example.textn.databinding.ActivityRegisterBinding
 import com.example.textn.ui.view.component.LoadingHandler
 import com.example.textn.utils.PasswordVisibility
 import com.example.textn.utils.Validate
-import com.example.textn.viewmodel.auth.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.auth
 
-class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
-    private lateinit var passwordVisibility: PasswordVisibility
+class RegisterActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
-    private val authViewModel: AuthViewModel by viewModels() // Sử dụng ViewModel
-    private var loadingHandler = LoadingHandler(supportFragmentManager) //Loading
+    private var loadingHandler = LoadingHandler(supportFragmentManager)
     private lateinit var googleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 9001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
 
-        // Quan sát kết quả đăng nhập
-        authViewModel.loginSuccess.observe(this, Observer {
-            if (it) {
-                Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        })
-        authViewModel.loginError.observe(this, Observer {
-            Toast.makeText(this, "Lỗi: $it", Toast.LENGTH_SHORT).show()
-            loadingHandler.hideLoading()
-        })
-        // Đăng nhập
-        binding.btnSignIn.setOnClickListener {
-            val email = binding.etEmail.text.toString().trim()
-            val password = binding.etPassword.text.toString().trim()
-            val validate = Validate()
-            if (validate.validateInput(email, password, binding.etEmail, binding.etPassword)) {
-                loadingHandler.showLoading()
-                authViewModel.loginWithEmail(email, password)
-            }
-        }
-
-        // Ẩn/hiện mật khẩu
-        passwordVisibility = PasswordVisibility(binding.etPassword, binding.ivTogglePassword)
+        // Setup password visibility toggle
+        val passwordVisibility = PasswordVisibility(binding.etPassword, binding.ivTogglePassword)
         binding.ivTogglePassword.setOnClickListener {
             passwordVisibility.toggle()
         }
 
-        // Quên mật khẩu
-        binding.tvForgotPassword.setOnClickListener {
-            Toast.makeText(this, "Forgot Password feature coming soon", Toast.LENGTH_SHORT).show()
+        val confirmPasswordVisibility = PasswordVisibility(binding.etConfirmPassword, binding.ivToggleCofirmPassword)
+        binding.ivToggleCofirmPassword.setOnClickListener {
+            confirmPasswordVisibility.toggle()
         }
 
-        // Đăng ký
-        binding.tvSignUp.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+        // Đăng ký bằng email và mật khẩu
+        binding.btnSignUp.setOnClickListener {
+            val email = binding.etEmail.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
+            val confirmPassword = binding.etConfirmPassword.text.toString().trim()
+
+            val validate = Validate()
+            if (validate.validateRegister(email, password, confirmPassword, binding.etEmail, binding.etPassword, binding.etConfirmPassword)) {
+                loadingHandler.showLoading()
+                registerUser(email, password)
+                loadingHandler.hideLoading()
+            }
+        }
+
+        // Trở về trang đăng nhập
+        binding.tvSignIn.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -81,47 +64,58 @@ class LoginActivity : AppCompatActivity() {
         setupGoogleLogin()
     }
 
+    private fun registerUser(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+            .addOnFailureListener {
+                showToast("Lỗi đăng ký: ${it.localizedMessage}")
+            }
+    }
 
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
 
-
-
-    //Login bằng google
     private fun setupGoogleLogin() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-        binding.btnGoogleLogin.setOnClickListener {
+
+        binding.btnGoogleRegister.setOnClickListener {
             googleSignInClient.signOut().addOnCompleteListener {
                 loadingHandler.showLoading()
                 val signInIntent = googleSignInClient.signInIntent
                 startActivityForResult(signInIntent, RC_SIGN_IN)
             }
-            loadingHandler.hideLoading()
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
+            loadingHandler.hideLoading()
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             if (task.isSuccessful) {
                 val account = task.result
                 firebaseAuthWithGoogle(account.idToken!!)
             } else {
                 Toast.makeText(this, "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show()
-                loadingHandler.hideLoading()
             }
         }
     }
+
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
                     Toast.makeText(this, "Đăng nhập Google thành công", Toast.LENGTH_SHORT).show()
-
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -130,8 +124,4 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
-
-
-
 }

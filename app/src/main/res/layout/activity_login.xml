@@ -7,22 +7,24 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:padding="24dp"
-    tools:context=".ui.view.LoginActivity">
+    tools:context=".ui.view.activity.LoginActivity">
 
 
     <!-- Logo -->
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="172dp"
-        android:layout_height="135dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/anhnha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
     <!-- Email -->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_radar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvEmailLabel"
         android:layout_width="wrap_content"

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:padding="24dp"
-    tools:context=".ui.view.RegisterActivity">
+    tools:context=".ui.view.activity.RegisterActivity">
 
     <!-- Tiêu đề -->
     <TextView
@@ -22,46 +22,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Nhãn Email -->
-
-    <RadioGroup
-        android:id="@+id/roleGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/rbUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Người mua"
-            android:buttonTint="@color/primary" />
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/rbSeller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/primary"
-            android:text="Người bán" />
-    </RadioGroup>
-
     <!-- Nhập Email -->
     <TextView
         android:id="@+id/tvEmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="Email"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/roleGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -101,6 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvPasswordLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Toggle password -->
     <ImageView
         android:id="@+id/ivTogglePassword"
@@ -111,6 +83,8 @@
         app:layout_constraintTop_toTopOf="@id/etPassword"
         app:layout_constraintBottom_toBottomOf="@id/etPassword"
         app:layout_constraintEnd_toEndOf="@id/etPassword" />
+
+    <!-- Xác nhận mật khẩu -->
     <TextView
         android:id="@+id/tvConfirmPasswordLabel"
         android:layout_width="wrap_content"
@@ -122,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@id/etPassword"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Nhập Mật khẩu -->
+    <!-- Nhập Xác nhận Mật khẩu -->
     <EditText
         android:id="@+id/etConfirmPassword"
         android:layout_width="0dp"
@@ -135,6 +109,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvConfirmPasswordLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Toggle password -->
     <ImageView
         android:id="@+id/ivToggleCofirmPassword"
@@ -146,79 +121,20 @@
         app:layout_constraintBottom_toBottomOf="@id/etConfirmPassword"
         app:layout_constraintEnd_toEndOf="@id/etConfirmPassword" />
 
-
-
-    <!-- Thông tin người bán (ẩn mặc định) -->
-    <LinearLayout
-        android:id="@+id/sellerInfoLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/etConfirmPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Tên Shop -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên cửa hàng"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
-
-        <EditText
-            android:id="@+id/etShopName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Tên cửa hàng"
-            android:inputType="text"
-            android:padding="12dp"
-            android:background="@drawable/edit_text_background" />
-
-        <!-- Nhãn ngành hàng -->
-        <TextView
-            android:id="@+id/tvCategoryLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ngành hàng kinh doanh"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginTop="16dp" />
-
-        <!-- Spinner ngành hàng -->
-        <Spinner
-            android:id="@+id/spCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/edit_text_background"
-            android:padding="12dp" />
-
-
-    </LinearLayout>
-
-
     <!-- Nút đăng ký -->
-
-    <!-- Or -->
-
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="344dp"
+        android:layout_width="0dp"
         android:layout_height="58dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/primary"
         android:text="Đăng ký"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sellerInfoLayout" />
+        app:layout_constraintTop_toBottomOf="@id/etConfirmPassword" />
 
+    <!-- Or -->
     <TextView
         android:id="@+id/tvOr"
         android:layout_width="wrap_content"
@@ -261,44 +177,21 @@
             app:iconSize="24dp"
             app:strokeWidth="2dp"
             app:strokeColor="@color/gray_dark"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
-
-        <!-- Facebook Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnFacebookRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/background"
-            android:padding="12dp"
-            android:text="Đăng kí bằng Facebook"
-            android:textColor="@color/text_primary"
-            app:icon="@drawable/ic_facebook"
-            app:iconGravity="start"
-            app:iconPadding="8dp"
-            app:iconTint="@null"
-            app:iconSize="24dp"
-            app:strokeWidth="2dp"
-            app:strokeColor="@color/gray_dark"/>
     </LinearLayout>
 
-
-
-
     <!-- Sign up -->
-
     <TextView
         android:id="@+id/tvAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginTop="40dp"
         android:text="Bạn đã có tài khoản? "
         android:textColor="#333333"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/llSocialRegister"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4" />
 
     <TextView
         android:id="@+id/tvSignIn"
@@ -309,12 +202,7 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/tvAccount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/tvAccount"
-        app:layout_constraintTop_toTopOf="@id/tvAccount"
-        app:layout_constraintVertical_bias="0.0" />
-
-
+        app:layout_constraintTop_toTopOf="@id/tvAccount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

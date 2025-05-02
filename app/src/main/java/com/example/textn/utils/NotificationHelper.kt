@@ -9,7 +9,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.textn.R
 import com.example.textn.data.model.HealthAlert
-import com.example.textn.ui.view.MainActivity
+import com.example.textn.ui.view.activity.MainActivity
 
 class NotificationHelper(private val context: Context) {
 

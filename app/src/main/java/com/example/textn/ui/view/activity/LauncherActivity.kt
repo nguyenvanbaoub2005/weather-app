@@ -1,4 +1,4 @@
-package com.example.textn.ui.view
+package com.example.textn.ui.view.activity
 
 import android.content.Intent
 import android.os.Bundle

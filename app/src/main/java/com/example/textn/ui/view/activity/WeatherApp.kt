@@ -1,4 +1,4 @@
-package com.example.textn.ui.view
+package com.example.textn.ui.view.activity
 
 import android.app.Application
 import com.example.textn.utils.WeatherCheckWorker

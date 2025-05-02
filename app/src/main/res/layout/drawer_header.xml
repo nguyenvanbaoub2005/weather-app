@@ -1,8 +1,7 @@
-<!-- res/layout/drawer_header.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:gravity="bottom"
     android:padding="16dp"
     android:background="#003b4d"> <!-- Màu nền tối xanh dương đậm -->
@@ -34,4 +33,16 @@
         android:textSize="14sp"
         android:layout_gravity="center_horizontal"
         android:paddingTop="2dp"/>
+
+    <!-- Thêm nút Đăng xuất -->
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng xuất"
+        android:textColor="#ffffff"
+        android:background="?attr/selectableItemBackground"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:gravity="center" />
 </LinearLayout>

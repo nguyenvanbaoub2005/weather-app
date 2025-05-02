@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.MainActivity">
+    tools:context=".ui.view.activity.MainActivity">
 
     <!-- Nội dung chính -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Navigation Drawer -->
@@ -41,5 +42,6 @@
         app:itemTextColor="@android:color/white"
         app:itemIconTint="@color/white"
         app:headerLayout="@layout/drawer_header" />
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

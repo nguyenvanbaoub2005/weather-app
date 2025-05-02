@@ -14,8 +14,8 @@ import com.example.textn.data.model.DayForecastItem
 import com.example.textn.data.network.RetrofitClient
 import com.example.textn.data.repository.WeatherRepository
 import com.example.textn.databinding.FragmentHomeBinding
+import com.example.textn.ui.view.activity.MainActivity
 import com.example.textn.ui.adapter.DayForecastAdapter
-import com.example.textn.ui.view.MainActivity
 import com.example.textn.utils.WeatherHelper
 import com.example.textn.viewmodel.WeatherViewModel
 import com.example.textn.viewmodel.WeatherViewModelFactory
