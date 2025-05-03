@@ -1,5 +1,4 @@
 package com.example.textn.viewmodel
-
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -12,8 +11,8 @@ import com.example.textn.data.model.WeatherData
 import com.example.textn.data.repository.WeatherRepository
 import com.example.textn.data.services.AlertSeverity
 import com.example.textn.data.services.HealthAlertAnalyzer
+import com.example.textn.utils.FirebaseNotificationHelper
 import com.example.textn.utils.NotificationHelper
-import com.example.textn.utils.WeatherHelper
 import kotlinx.coroutines.launch
 
 class HealthAlertViewModel(
@@ -33,6 +32,16 @@ class HealthAlertViewModel(
 
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
+
+    private val firebaseNotificationHelper = FirebaseNotificationHelper(application)
+    private val localNotificationHelper = NotificationHelper(application)
+
+    init {
+        // Đăng ký nhận thông báo theo chủ đề
+        firebaseNotificationHelper.subscribeToTopic("health_alerts")
+        firebaseNotificationHelper.subscribeToTopic("weather_alerts")
+    }
+
     /**
      * Lấy dữ liệu thời tiết theo location.
      * Nếu fetch thất bại hoặc không có cảnh báo, sẽ dùng dữ liệu mẫu.
@@ -107,24 +116,51 @@ class HealthAlertViewModel(
             description = "AQI 120 — hạn chế ra ngoài nếu khó thở.",
             iconResId = R.drawable.ic_air_quality_warning
         )
+
+
     )
 
     /**
      * Gửi Notification cho các cảnh báo có độ nghiêm trọng cao.
+     * Sử dụng cả thông báo cục bộ và Firebase
      */
     private fun checkAndSendNotifications(alerts: List<HealthAlert>) {
         val highSeverity = alerts.filter { it.severity == AlertSeverity.HIGH }
         if (highSeverity.isNotEmpty()) {
-            val notificationHelper = NotificationHelper(getApplication())
             val title = if (highSeverity.size == 1)
                 "Cảnh báo sức khỏe: ${highSeverity[0].title}"
             else
                 "${highSeverity.size} cảnh báo sức khỏe quan trọng"
+
             val content = if (highSeverity.size == 1)
                 highSeverity[0].description
             else
                 "Có nhiều cảnh báo sức khỏe cần chú ý"
-            notificationHelper.showNotification(title, content, highSeverity)
+
+            // Hiển thị thông báo cục bộ
+            localNotificationHelper.showNotification(title, content, highSeverity)
+
+            // Gửi thông báo qua Firebase nếu cần đồng bộ với các thiết bị khác
+            sendFirebaseAlert(title, content, highSeverity)
         }
+    }
+
+    /**
+     * Gửi thông báo cảnh báo sức khỏe qua Firebase (Demo - thực tế cần server)
+     * Trong triển khai thực tế, việc này nên được thực hiện từ server backend
+     */
+    private fun sendFirebaseAlert(title: String, content: String, alerts: List<HealthAlert>) {
+        // Trong ứng dụng thực tế, bạn sẽ gửi yêu cầu đến server của mình
+        // và server sẽ gửi thông báo FCM tới các thiết bị đã đăng ký
+
+        // Đây chỉ là demo để hiển thị cách thức hoạt động
+        // Trong môi trường thực tế, KHÔNG nên gửi thông báo FCM từ client
+
+        Log.d("HealthAlertViewModel", "Đã phát hiện cảnh báo nghiêm trọng, " +
+                "trong triển khai thực tế, server sẽ gửi thông báo FCM đến tất cả thiết bị đã đăng ký")
+
+        // Đối với các thiết bị khác của cùng người dùng,
+        // bạn có thể sử dụng user-specific topic
+        // Ví dụ: "user_123_health_alerts"
     }
 }

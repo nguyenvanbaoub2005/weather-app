@@ -38,6 +38,26 @@
         <activity  android:name=".ui.view.activity.LauncherActivity"></activity>
         <activity  android:name=".ui.view.activity.RegisterActivity"></activity>
         <activity  android:name=".ui.view.activity.LoginActivity"></activity>
+
+        <!-- Service FCM -->
+        <service
+            android:name=".data.services.HealthAlertFirebaseService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Các meta-data cho FCM -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_health" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="health_alerts_channel" />
     </application>
 
 </manifest>
