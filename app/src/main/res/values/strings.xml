@@ -26,6 +26,7 @@
 <string name="register_failed">Đăng ký thất bại</string>
 
     <!-- Settings Fragment -->
+<string name="close_button_description">Quay lại</string>
 <string name="settings_title">Cài đặt</string>
 <string name="unit_label">Đơn vị</string>
 <string name="feedback_label">Phản hồi</string>
@@ -35,6 +36,181 @@
 <string name="font_size_label">Cỡ chữ</string>
 <string name="version_format">Phiên bản: %s</string>
 
-//Google
+    // Thong tin hop phap
+
+<string name="legal_info">Thông tin hợp pháp</string>
+<string name="privacy_policy">Chính sách quyền riêng tư</string>
+<string name="terms_of_use">Điều khoản sử dụng</string>
+<string name="back">Quay lại</string>
+<string name="app_logo">Logo ứng dụng</string>
+<string name="navigate_to">Điều hướng tới</string>
+<string name="version_info">Phiên bản: 1.0.0</string>
+<string name="last_updated">Cập nhật lần cuối: 03/05/2025</string>
+<string name="legal_description">Chúng tôi tôn trọng quyền bảo mật của bạn và dữ liệu chỉ được
+    sử dụng nếu giúp ứng dụng tốt hơn. Vui lòng đọc các thông tin hợp pháp của chúng tôi</string>
+
+    <string name="privacy_policy_content">
+        Chính sách quyền riêng tư\n\n
+
+        1. Thông tin chúng tôi thu thập\n
+        Chúng tôi có thể thu thập các loại thông tin sau đây:\n
+        • Thông tin vị trí: Để cung cấp dự báo thời tiết chính xác cho vị trí của bạn\n
+        • Thông tin thiết bị: Loại thiết bị, hệ điều hành và phiên bản\n
+        • Dữ liệu sử dụng: Cách bạn tương tác với ứng dụng\n\n
+
+        2. Cách chúng tôi sử dụng thông tin\n
+        Thông tin được sử dụng để:\n
+        • Cung cấp dự báo thời tiết và thông tin liên quan\n
+        • Cải thiện trải nghiệm người dùng\n
+        • Phát triển tính năng mới\n\n
+
+        3. Chia sẻ thông tin\n
+        Chúng tôi không bán thông tin cá nhân của bạn. Chúng tôi có thể chia sẻ thông tin với:\n
+        • Nhà cung cấp dịch vụ giúp chúng tôi vận hành ứng dụng\n
+        • Khi luật pháp yêu cầu\n\n
+
+        4. Lựa chọn của bạn\n
+        Bạn có thể:\n
+        • Tắt quyền truy cập vị trí trong cài đặt thiết bị\n
+        • Yêu cầu xóa dữ liệu của bạn\n\n
+
+        5. Bảo mật\n
+        Chúng tôi thực hiện các biện pháp bảo mật hợp lý để bảo vệ thông tin của bạn.\n\n
+
+        6. Thay đổi chính sách\n
+        Chúng tôi có thể cập nhật chính sách này và sẽ thông báo cho bạn về những thay đổi quan trọng.\n\n
+
+        7. Liên hệ\n
+        Nếu bạn có câu hỏi về chính sách này, vui lòng liên hệ privacy@weatherapp.com
+    </string>
+
+    <string name="terms_of_use_content">
+        Điều khoản sử dụng\n\n
+
+        1. Chấp nhận điều khoản\n
+        Bằng cách sử dụng ứng dụng này, bạn đồng ý với các điều khoản này. Nếu bạn không đồng ý, vui lòng không sử dụng ứng dụng.\n\n
+
+        2. Thay đổi điều khoản\n
+        Chúng tôi có thể sửa đổi các điều khoản này bất kỳ lúc nào. Việc bạn tiếp tục sử dụng ứng dụng sau khi thay đổi được đăng tải đồng nghĩa với việc bạn chấp nhận các thay đổi đó.\n\n
+
+        3. Giấy phép sử dụng\n
+        Chúng tôi cấp cho bạn giấy phép giới hạn, không độc quyền, không thể chuyển nhượng để tải và sử dụng ứng dụng cho mục đích cá nhân, phi thương mại.\n\n
+
+        4. Giới hạn sử dụng\n
+        Bạn đồng ý không:\n
+        • Sao chép, sửa đổi hoặc tạo sản phẩm phái sinh từ ứng dụng\n
+        • Đảo ngược, dịch ngược, hoặc cố gắng trích xuất mã nguồn\n
+        • Sử dụng ứng dụng cho bất kỳ mục đích bất hợp pháp nào\n\n
+
+        5. Từ chối trách nhiệm\n
+        Ứng dụng được cung cấp "nguyên trạng" và "như có sẵn" mà không có bất kỳ bảo đảm nào.\n\n
+
+        6. Giới hạn trách nhiệm\n
+        Trong mọi trường hợp, chúng tôi không chịu trách nhiệm về bất kỳ thiệt hại nào phát sinh từ việc sử dụng ứng dụng.\n\n
+
+        7. Chấm dứt\n
+        Chúng tôi có thể chấm dứt quyền truy cập của bạn vào ứng dụng bất kỳ lúc nào mà không cần thông báo.\n\n
+
+        8. Luật áp dụng\n
+        Các điều khoản này được điều chỉnh bởi luật pháp Việt Nam.
+    </string>
+
+    <!-- Màn hình đơn vị -->
+    <string name="units_title">Đơn vị</string>
+    <string name="weather_widget_title">Widget thời tiết</string>
+    <string name="favorite_places_title">Điểm yêu thích</string>
+    <string name="rose_diagram_title">Hoa hồng</string>
+    <string name="temperature_units_title">Nhiệt độ không khí</string>
+    <string name="wind_speed_units_title">Tốc độ</string>
+    <string name="electric_current_speed_title">Tốc độ dòng điện</string>
+    <string name="air_pressure_title">Áp lực khí quyển</string>
+    <string name="tide_level_title">Không có mức thủy triều</string>
+    <string name="distance_title">Khoảng cách</string>
+    <string name="height_title">Chiều cao</string>
+    <string name="precipitation_units_title">Lượng mưa</string>
+    <string name="time_format_title">Thời gian</string>
+    <string name="forecast_title">Dự báo</string>
+    <string name="weight_title">Cân nặng của bạn</string>
+    <string name="enabled">Đã tật</string>
+    <string name="disabled">Đã tắt</string>
+    <string name="apply_changes">Áp dụng thay đổi</string>
+    <string name="settings_saved">Đã lưu cài đặt thành công</string>
+
+    <!-- Đơn vị Widget thời tiết -->
+    <string name="wind_direction">Hướng gió</string>
+    <string name="wave_height">Sơ đồ</string>
+    <string name="temperature">Nhiệt độ</string>
+    <string name="precipitation">Lượng mưa</string>
+    <string name="snow">Tuyết</string>
+
+    <!-- Đơn vị Điểm yêu thích -->
+    <string name="wind">Gió</string>
+    <string name="wave">Sóng</string>
+    <string name="temp">Nhiệt độ</string>
+    <string name="rain">Mưa</string>
+
+    <!-- Đơn vị Hoa hồng -->
+    <string name="compass">La bàn</string>
+    <string name="true_north">Bắc thực</string>
+    <string name="magnetic_north">Bắc từ</string>
+
+    <!-- Đơn vị Nhiệt độ -->
+    <string name="celsius">°C</string>
+    <string name="fahrenheit">°F</string>
+    <string name="kelvin">K</string>
+
+    <!-- Đơn vị Tốc độ gió -->
+    <string name="mps">m/s</string>
+    <string name="kmh">kph</string>
+    <string name="mph">mph</string>
+    <string name="knots">knots</string>
+    <string name="beaufort">beaufort</string>
+
+    <!-- Đơn vị Tốc độ dòng điện -->
+    <string name="mps_current">m/s</string>
+    <string name="kmh_current">kph</string>
+    <string name="mph_current">mph</string>
+    <string name="knots_current">knots</string>
+
+    <!-- Đơn vị Áp suất -->
+    <string name="hpa">hPa</string>
+    <string name="inhg">inHg</string>
+    <string name="mmhg">mmHg</string>
+
+    <!-- Đơn vị Mức thủy triều -->
+    <string name="lat">LAT</string>
+    <string name="mllw">MLLW</string>
+    <string name="msl">MSL</string>
+
+    <!-- Đơn vị Khoảng cách -->
+    <string name="kilometers">Kilometers</string>
+    <string name="miles">Miles</string>
+    <string name="nautical_miles">dặm hải lý</string>
+
+    <!-- Đơn vị Chiều cao -->
+    <string name="weight_label">Chiều cao</string>
+    <string name="meters">Meters</string>
+    <string name="feet">Feet</string>
+
+    <!-- Đơn vị Lượng mưa -->
+    <string name="mm">mm</string>
+    <string name="inch">in</string>
+
+    <!-- Định dạng thời gian -->
+    <string name="format_24h">24h</string>
+    <string name="format_12h">12h</string>
+
+    <!-- Thời gian dự báo -->
+    <string name="forecast_1h">1 giờ</string>
+    <string name="forecast_3h">3 giờ</string>
+
+    <!-- Vệ tinh -->
+    <string name="satellite_view">Vệ tinh</string>
+
+    <!-- Trạng thái -->
+    <string name="error_loading">Lỗi khi tải dữ liệu</string>
+
+
+    //Google
 <string name="default_web_client_id">1049797410331-5upjvaiu1ru40203n1aqf97hevumh0r6.apps.googleusercontent.com</string>
 </resources>

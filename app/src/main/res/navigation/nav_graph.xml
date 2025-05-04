@@ -31,4 +31,35 @@
         android:label="Cài đặt"
         tools:layout="@layout/fragment_settings" />
 
+    <!-- Thông tin hợp pháp -->
+    <fragment
+        android:id="@+id/navigation_legal_info"
+        android:name="com.example.textn.ui.view.fragment.LegalInfoFragment"
+        android:label="@string/legal_info"
+        tools:layout="@layout/fragment_legal_info" />
+    <action
+        android:id="@+id/action_settingsFragment_to_legalInfoFragment"
+        app:destination="@id/navigation_legal_info" />
+
+    <!-- Chính sách bảo mật -->
+    <fragment
+        android:id="@+id/navigation_privacy_policy"
+        android:name="com.example.textn.ui.view.fragment.PrivacyPolicyFragment"
+        android:label="@string/privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+    <action
+        android:id="@+id/action_settingsFragment_to_privacyPolicyFragment"
+        app:destination="@id/navigation_privacy_policy" />
+
+    <!-- Điều khoản sử dụng -->
+    <fragment
+        android:id="@+id/navigation_terms_of_use"
+        android:name="com.example.textn.ui.view.fragment.TermsOfUseFragment"
+        android:label="@string/terms_of_use"
+        tools:layout="@layout/fragment_terms_of_use" />
+    <action
+        android:id="@+id/action_settingsFragment_to_termsOfUseFragment"
+        app:destination="@id/navigation_terms_of_use" />
+
+
 </navigation>

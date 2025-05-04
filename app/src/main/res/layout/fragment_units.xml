@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue_background"
+    android:padding="16dp">
+
+    <!-- Header with Back Button -->
+    <ImageButton
+        android:id="@+id/buttonClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/close_24px"
+        android:tint="@color/light_text"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/close_button_description" />
+
+    <TextView
+        android:id="@+id/tvHeaderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đơn vị"
+        android:textColor="@color/light_text"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/buttonClose"
+        app:layout_constraintBottom_toBottomOf="@id/buttonClose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollUnits"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/buttonClose"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Weather Widget Units -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Widget thời tiết"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đã tắt"
+                        android:textColor="@color/light_text"
+                        android:textSize="16sp"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleWeatherWidget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true">
+
+                        <Button
+                            android:id="@+id/btnWindDirection"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/dark_blue_card"
+                            app:iconTint="@android:color/white"
+                            app:icon="@drawable/ic_wind"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            android:contentDescription="@string/wind_direction" />
+
+                        <Button
+                            android:id="@+id/btnWaveHeight"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/primary"
+                            app:iconTint="@android:color/white"
+                            app:icon="@drawable/ic_wave"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            android:contentDescription="@string/wave_height" />
+
+                        <Button
+                            android:id="@+id/btnTemperature"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/dark_blue_card"
+                            app:iconTint="@android:color/white"
+                            app:icon="@drawable/ic_temperature"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            android:contentDescription="@string/temperature" />
+
+                        <Button
+                            android:id="@+id/btnSnow"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/dark_blue_card"
+                            app:iconTint="@android:color/white"
+                            app:icon="@drawable/ic_snowflake"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            android:contentDescription="@string/snow" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Favorite Places Units -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Điểm yêu thích"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đã tắt"
+                        android:textColor="@color/light_text"
+                        android:textSize="16sp"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleFavoritePlaces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true">
+
+                        <Button
+                            android:id="@+id/btnWindDirection"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/dark_blue_card"
+                            app:iconTint="@android:color/white"
+                            app:icon="@drawable/ic_wind"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            android:contentDescription="@string/wind_direction" />
+
+                        <Button
+                            android:id="@+id/btnWaveHeight"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/primary"
+                            app:iconTint="@android:color/white"
+                            app:icon="@drawable/ic_wave"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            android:contentDescription="@string/wave_height" />
+
+                        <Button
+                            android:id="@+id/btnTemperature"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/dark_blue_card"
+                            app:iconTint="@android:color/white"
+                            app:icon="@drawable/ic_temperature"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            android:contentDescription="@string/temperature" />
+
+                        <Button
+                            android:id="@+id/btnSnow"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/dark_blue_card"
+                            app:iconTint="@android:color/white"
+                            app:icon="@drawable/ic_snowflake"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            android:contentDescription="@string/snow" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Rose Diagram -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hoa hồng"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnCompass"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="Sơ đồ" />
+
+                    <Button
+                        android:id="@+id/btnNorth"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="Vệ tinh" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Wind Speed Units -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tốc độ"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnMps"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="m/s" />
+
+                    <Button
+                        android:id="@+id/btnMph"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="mph" />
+
+                    <Button
+                        android:id="@+id/btnKmh"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="kph" />
+
+                    <Button
+                        android:id="@+id/btnKnots"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="knots" />
+
+                    <Button
+                        android:id="@+id/btnBeaufort"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="beaufort" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Electric Current Speed -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tốc độ dòng điện"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnMpsCurrent"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="m/s" />
+
+                    <Button
+                        android:id="@+id/btnMphCurrent"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="mph" />
+
+                    <Button
+                        android:id="@+id/btnKphCurrent"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="kph" />
+
+                    <Button
+                        android:id="@+id/btnKnotsCurrent"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="knots" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Temperature Units -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nhiệt độ không khí"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnCelsius"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="°C" />
+
+                    <Button
+                        android:id="@+id/btnFahrenheit"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="°F" />
+
+                    <Button
+                        android:id="@+id/btnKelvin"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="K" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Air Pressure -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Áp lực khí quyển"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnHpa"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="hPa" />
+
+                    <Button
+                        android:id="@+id/btnInhg"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="inHg" />
+
+                    <Button
+                        android:id="@+id/btnMmhg"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="mmHg" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Tide Level -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Không có mức thủy triều"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnLat"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="LAT" />
+
+                    <Button
+                        android:id="@+id/btnMllw"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="MLLW" />
+
+                    <Button
+                        android:id="@+id/btnMsl"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="MSL" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Distance Units -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Khoảng cách"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnKilometers"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="Kilometers" />
+
+                    <Button
+                        android:id="@+id/btnMiles"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="Miles" />
+
+                    <Button
+                        android:id="@+id/btnNauticalMiles"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="dặm hải lý" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Height Units -->
+            <TextView
+                android:id="@+id/tvWeightLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chiều cao"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnMeters"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="Meters" />
+
+                    <Button
+                        android:id="@+id/btnFeet"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="Feet" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Precipitation Units -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lượng mưa"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/btnMm"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="mm" />
+
+                    <Button
+                        android:id="@+id/btnInch"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="in" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Time Format -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thời gian"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleTimeFormat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btn24h"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="24h" />
+
+                    <Button
+                        android:id="@+id/btn12h"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="12h" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Forecast Period -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dự báo"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/dark_blue_card">
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleForecastPeriod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btn1Hour"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/dark_blue_card"
+                        android:text="1 giờ" />
+
+                    <Button
+                        android:id="@+id/btn3Hours"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/light_text"
+                        android:backgroundTint="@color/primary"
+                        android:text="3 giờ" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Weight Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cân nặng của bạn: 154 lbs"
+                android:textColor="@color/light_text"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:valueFrom="0"
+                android:valueTo="300"
+                android:value="154"
+                app:thumbColor="@color/primary"
+                app:trackColorActive="@color/primary"
+                app:trackColorInactive="@color/dark_blue_card" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

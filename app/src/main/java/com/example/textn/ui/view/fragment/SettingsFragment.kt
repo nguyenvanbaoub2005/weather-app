@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.textn.R
 import com.example.textn.databinding.FragmentSettingsBinding
 import com.example.textn.utils.ThemeManager
@@ -38,6 +39,7 @@ class SettingsFragment : Fragment() {
 
         setupObservers()
         setupListeners()
+        setupCloseButton()
     }
 
     private fun setupObservers() {
@@ -93,10 +95,14 @@ class SettingsFragment : Fragment() {
         // Legal info card
         binding.cardLegal.setOnClickListener {
             // Navigate to Legal info fragment
-            // parentFragmentManager.beginTransaction()
-            //     .replace(R.id.fragment_container, LegalInfoFragment())
-            //     .addToBackStack(null)
-            //     .commit()
+            findNavController().navigate(R.id.navigation_legal_info)
+        }
+    }
+
+    private fun setupCloseButton() {
+        binding.buttonClose.setOnClickListener {
+            val navController = findNavController()
+            navController.navigate(R.id.navigation_view)
         }
     }
 
