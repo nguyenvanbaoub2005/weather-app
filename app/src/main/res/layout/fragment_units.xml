@@ -12,7 +12,7 @@
         android:id="@+id/buttonClose"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/close_24px"
+        android:src="@drawable/ic_chevron_left"
         android:tint="@color/light_text"
         android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,13 +69,6 @@
                     android:orientation="horizontal"
                     android:padding="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Đã tắt"
-                        android:textColor="@color/light_text"
-                        android:textSize="16sp"/>
-
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -88,20 +81,34 @@
                         app:singleSelection="true">
 
                         <Button
-                            android:id="@+id/btnWindDirection"
+                            android:id="@+id/btnWeatherOff"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
+                            android:text="Đã tắt"
+                            android:minWidth="0dp"
+                            android:maxWidth="70dp"
+                            android:textAllCaps="false"
                             android:textColor="@color/light_text"
                             android:backgroundTint="@color/dark_blue_card"
-                            app:iconTint="@android:color/white"
+                            android:contentDescription="Tắt hiển thị" />
+
+
+                        <Button
+                            android:id="@+id/btnWeatherWindDirection"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:backgroundTint="@color/dark_blue_card"
+                            android:contentDescription="@string/wind_direction"
+                            android:textColor="@color/light_text"
                             app:icon="@drawable/ic_wind"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
-                            android:contentDescription="@string/wind_direction" />
+                            app:iconTint="@android:color/white" />
 
                         <Button
-                            android:id="@+id/btnWaveHeight"
+                            android:id="@+id/btnWeatherWaveHeight"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
@@ -114,7 +121,7 @@
                             android:contentDescription="@string/wave_height" />
 
                         <Button
-                            android:id="@+id/btnTemperature"
+                            android:id="@+id/btnWeatherTemperature"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
@@ -127,7 +134,7 @@
                             android:contentDescription="@string/temperature" />
 
                         <Button
-                            android:id="@+id/btnSnow"
+                            android:id="@+id/btnWeatherSnow"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
@@ -165,13 +172,6 @@
                     android:orientation="horizontal"
                     android:padding="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Đã tắt"
-                        android:textColor="@color/light_text"
-                        android:textSize="16sp"/>
-
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -183,8 +183,24 @@
                         android:layout_height="wrap_content"
                         app:singleSelection="true">
 
+                        <!-- Đã tắt button -->
                         <Button
-                            android:id="@+id/btnWindDirection"
+                            android:id="@+id/btnFavoritesOff"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="Đã tắt"
+
+                            android:minWidth="0dp"
+                            android:maxWidth="70dp"
+                            android:textAllCaps="false"
+                            android:textColor="@color/light_text"
+                            android:backgroundTint="@color/dark_blue_card"
+                            android:contentDescription="Tắt hiển thị" />
+
+
+                        <Button
+                            android:id="@+id/btnFavoritesWindDirection"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
@@ -197,7 +213,7 @@
                             android:contentDescription="@string/wind_direction" />
 
                         <Button
-                            android:id="@+id/btnWaveHeight"
+                            android:id="@+id/btnFavoritesWaveHeight"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
@@ -210,7 +226,7 @@
                             android:contentDescription="@string/wave_height" />
 
                         <Button
-                            android:id="@+id/btnTemperature"
+                            android:id="@+id/btnFavoritesTemperature"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
@@ -223,7 +239,7 @@
                             android:contentDescription="@string/temperature" />
 
                         <Button
-                            android:id="@+id/btnSnow"
+                            android:id="@+id/btnFavoritesSnow"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
@@ -345,16 +361,6 @@
                         android:textColor="@color/light_text"
                         android:backgroundTint="@color/primary"
                         android:text="knots" />
-
-                    <Button
-                        android:id="@+id/btnBeaufort"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="0dp"
-                        android:layout_height="36dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/light_text"
-                        android:backgroundTint="@color/dark_blue_card"
-                        android:text="beaufort" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -825,6 +831,7 @@
 
             <!-- Weight Section -->
             <TextView
+                android:id="@+id/textWeightValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cân nặng của bạn: 154 lbs"

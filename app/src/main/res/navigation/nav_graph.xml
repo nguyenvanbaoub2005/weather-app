@@ -30,6 +30,12 @@
         android:name="com.example.textn.ui.view.fragment.SettingsFragment"
         android:label="Cài đặt"
         tools:layout="@layout/fragment_settings" />
+    <!-- Đơn vị -->
+    <fragment
+        android:id="@+id/nav_units"
+        android:name="com.example.textn.ui.view.fragment.UnitsFragment"
+        android:label="Cài đặt"
+        tools:layout="@layout/fragment_units" />
 
     <!-- Thông tin hợp pháp -->
     <fragment

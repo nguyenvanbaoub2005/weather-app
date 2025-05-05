@@ -80,11 +80,7 @@ class SettingsFragment : Fragment() {
 
         // Units card
         binding.cardUnit.setOnClickListener {
-            // Navigate to Units fragment
-            // parentFragmentManager.beginTransaction()
-            //     .replace(R.id.fragment_container, UnitsFragment())
-            //     .addToBackStack(null)
-            //     .commit()
+            findNavController().navigate(R.id.nav_units)
         }
 
         // Feedback card
@@ -102,7 +98,7 @@ class SettingsFragment : Fragment() {
     private fun setupCloseButton() {
         binding.buttonClose.setOnClickListener {
             val navController = findNavController()
-            navController.navigate(R.id.navigation_view)
+            navController.navigate(R.id.nav_home)
         }
     }
 
