@@ -98,6 +98,14 @@ dependencies {
     // Các dependencies WorkManager
     implementation ("androidx.work:work-runtime-ktx:2.8.1")
 }
+// Firebase Cloud Messaging
+dependencies {
+    // Firebase Core
+    implementation ("com.google.firebase:firebase-core:21.1.1")
+    // Firebase Cloud Messaging
+    implementation ("com.google.firebase:firebase-messaging:23.3.1")
+}
+
 buildscript {
     dependencies {
         classpath ("com.google.gms:google-services:4.3.15")// mới nhất

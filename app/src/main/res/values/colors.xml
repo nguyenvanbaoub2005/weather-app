@@ -43,4 +43,7 @@
     <color name="alert_low">#E3F2FD</color>
     <color name="alert_medium">#FFECB3</color>
     <color name="alert_high">#FFCDD2</color>
+
+
+    <color name="colorAccent">#F44336</color>
 </resources>
