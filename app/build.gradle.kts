@@ -20,8 +20,8 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
 
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -104,6 +104,20 @@ dependencies {
     implementation ("com.google.firebase:firebase-core:21.1.1")
     // Firebase Cloud Messaging
     implementation ("com.google.firebase:firebase-messaging:23.3.1")
+}
+
+
+dependencies {
+    // Các dependencies mặc định của bạn...
+
+    // Material Components
+    implementation ("com.google.android.material:material:1.9.0")
+
+    // ConstraintLayout
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // Facebook Shimmer (hiệu ứng loading)
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
 }
 
 buildscript {
