@@ -30,6 +30,11 @@
         android:name="com.example.textn.ui.view.fragment.SettingsFragment"
         android:label="Cài đặt"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/geminiAIFragment"
+        android:name="com.example.textn.ui.view.fragment.GeminiAIFragment"
+        android:label="Gemini AI"
+        tools:layout="@layout/fragment_gemini_ai" />
     <!-- Đơn vị -->
     <fragment
         android:id="@+id/nav_units"

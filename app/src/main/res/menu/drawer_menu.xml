@@ -3,4 +3,5 @@
     <item android:id="@+id/nav_weather" android:title="Thời tiết" android:icon="@drawable/ic_radar"/>
     <item android:id="@+id/nav_health" android:title="Cảnh báo sức khoẻ" android:icon="@drawable/icon_health"/>
     <item android:id="@+id/nav_settings" android:title="Cài đặt" android:icon="@drawable/ic_settings"/>
+    <item android:id="@+id/nav_gemini_ai" android:title="AI dự báo thời tiết" android:icon="@drawable/ic_settings"/>
 </menu>

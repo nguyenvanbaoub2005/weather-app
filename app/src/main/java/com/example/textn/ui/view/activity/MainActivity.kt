@@ -58,6 +58,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(menuItem.itemId)
                     true
                 }
+                R.id.nav_gemini_ai -> {
+                    // Điều hướng đến Gemini AI Fragment
+                    navController.popBackStack()
+                    navController.navigate(R.id.geminiAIFragment)
+                    true
+                }
                 else -> false
             }
             menuItem.isChecked = true

@@ -212,5 +212,55 @@
 
 
     //Google
+//Google
 <string name="default_web_client_id">1049797410331-5upjvaiu1ru40203n1aqf97hevumh0r6.apps.googleusercontent.com</string>
+    <!-- Weather Format Strings -->
+        <string name="temperature_format">Nhiệt độ: %.1f°C</string>
+        <string name="uv_index_format">Chỉ số UV: %.1f</string>
+        <string name="humidity_format">Độ ẩm: %d%%</string>
+        <string name="air_quality_format">Chất lượng không khí: %d</string>
+
+
+<!--AI gemini-->
+        <string name="ai_response_title">Lời khuyên từ AI về thời tiết</string>
+        <string name="fg_Ai_Text">Trợ lý thời tiết AI</string>
+        <string name="app_description">Thông tin thời tiết và lời khuyên sức khỏe</string>
+
+        <!-- Location Card -->
+        <string name="enter_location">Nhập địa điểm của bạn</string>
+        <string name="location_icon">Biểu tượng vị trí</string>
+        <string name="get_current_location">Lấy vị trí hiện tại</string>
+
+        <!-- Weather Card -->
+        <string name="weather_background">Hình nền thời tiết</string>
+        <string name="weather_icon">Biểu tượng thời tiết</string>
+        <string name="sunny">Trời nắng</string>
+        <string name="cloudy">Trời nhiều mây</string>
+        <string name="rainy">Trời mưa</string>
+        <string name="humidity">Độ ẩm</string>
+        <string name="humidity_icon">Biểu tượng độ ẩm</string>
+        <string name="uv_index">Chỉ số UV</string>
+        <string name="uv_icon">Biểu tượng UV</string>
+        <string name="feels_like">Cảm giác như</string>
+        <string name="feels_like_icon">Biểu tượng cảm giác nhiệt</string>
+
+        <!-- Health Advice Section -->
+        <string name="health_advice">Lời khuyên sức khỏe</string>
+        <string name="health_advice_description">Nhận các lời khuyên sức khỏe dựa trên điều kiện thời tiết hiện tại tại địa điểm của bạn.</string>
+        <string name="get_health_advice">Xin lời khuyên sức khỏe</string>
+
+        <!-- Custom Question Section -->
+        <string name="custom_question">Câu hỏi của bạn</string>
+        <string name="custom_question_hint">Nhập câu hỏi của bạn về thời tiết và sức khỏe...</string>
+        <string name="ask_ai">Hỏi AI</string>
+
+        <!-- AI Response Section -->
+        <string name="ai_response">Phản hồi từ AI</string>
+        <string name="ai_icon">Biểu tượng AI</string>
+
+        <!-- Error Messages -->
+        <string name="error_location_empty">Vui lòng nhập địa điểm</string>
+        <string name="error_network">Không thể kết nối đến máy chủ</string>
+        <string name="error_generic">Đã xảy ra lỗi, vui lòng thử lại</string>
+
 </resources>
