@@ -221,7 +221,7 @@ class WeatherHelper(
     fun initialize() {
         setupBindingWebView()
         setupSearchListener()
-        observeViewModel()
+//        observeViewModel()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
         updateWindyMapWithCurrentLocation()
@@ -252,31 +252,31 @@ class WeatherHelper(
             override fun onQueryTextChange(newText: String?) = false
         })
     }
-
-    private fun observeViewModel() {
-        viewModel.weatherData.observe(lifecycleOwner) { weather ->
-            val current = weather.current
-            val forecast = weather.daily.take(3).joinToString("\n") { day ->
-                val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(day.dt * 1000))
-                "Ngày: $date - Nhiệt độ: ${day.temp.day}°C, ${day.weather[0].description}"
-            }
-
-            binding.weatherInfo.text = """
-                🌤️ Thời tiết hiện tại:
-                Nhiệt độ: ${current.temp}°C
-                Độ ẩm: ${current.humidity}%
-                Sức gió: ${current.wind_speed} m/s
-                Mô tả: ${current.weather[0].description}
-                
-                🔮 Dự báo 3 ngày tới:
-                $forecast
-            """.trimIndent()
-        }
-
-        viewModel.error.observe(lifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
-    }
+//
+//    private fun observeViewModel() {
+//        viewModel.weatherData.observe(lifecycleOwner) { weather ->
+//            val current = weather.current
+//            val forecast = weather.daily.take(3).joinToString("\n") { day ->
+//                val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(day.dt * 1000))
+//                "Ngày: $date - Nhiệt độ: ${day.temp.day}°C, ${day.weather[0].description}"
+//            }
+//
+//            binding.weatherInfo.text = """
+//                🌤️ Thời tiết hiện tại:
+//                Nhiệt độ: ${current.temp}°C
+//                Độ ẩm: ${current.humidity}%
+//                Sức gió: ${current.wind_speed} m/s
+//                Mô tả: ${current.weather[0].description}
+//
+//                🔮 Dự báo 3 ngày tới:
+//                $forecast
+//            """.trimIndent()
+//        }
+//
+//        viewModel.error.observe(lifecycleOwner) {
+//            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     fun fetchLocationWeather(location: String) {
         val coordinates = getCoordinatesFromLocation(context, location)

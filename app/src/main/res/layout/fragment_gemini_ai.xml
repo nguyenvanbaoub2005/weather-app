@@ -418,7 +418,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp"
+                        android:textSize="17sp"
+                        android:fontFamily="sans-serif"
                         tools:text="Dựa trên thông tin thời tiết hiện tại, bạn nên uống nhiều nước, tránh ra ngoài trời vào giờ cao điểm, và bôi kem chống nắng để bảo vệ da khỏi tia UV cao." />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
