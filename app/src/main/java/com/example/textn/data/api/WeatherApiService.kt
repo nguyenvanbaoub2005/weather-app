@@ -3,6 +3,9 @@ import com.example.textn.data.model.WeatherResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 interface WeatherApiService {
     @GET("data/3.0/onecall")
     suspend fun getWeatherForecast(
@@ -12,4 +15,24 @@ interface WeatherApiService {
         @Query("units") units: String = "metric",
         @Query("lang") lang: String = "vi"
     ): Response<WeatherResponse>
+
+    @GET("forecast")
+    suspend fun getForecast(
+        @Query("lat") latitude: Double,
+        @Query("lon") longitude: Double,
+        @Query("model") model: String
+    ): Response<WeatherResponse>
+
+    companion object {
+        private const val BASE_URL = "https://api.example.com/weather/"
+
+        fun create(): WeatherApiService {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            return retrofit.create(WeatherApiService::class.java)
+        }
+    }
 }

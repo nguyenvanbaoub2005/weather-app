@@ -263,4 +263,25 @@
         <string name="error_network">Không thể kết nối đến máy chủ</string>
         <string name="error_generic">Đã xảy ra lỗi, vui lòng thử lại</string>
 
+    <!-- Wind Forecast  -->
+    <string name="info">Thông tin</string>
+    <string name="share">Chia sẻ</string>
+    <string name="options">Tùy chọn</string>
+    <string name="help_text">Cần giúp đỡ? Xem hướng dẫn</string>
+    <string name="model_best">TỐT NHẤT</string>
+    <string name="model_gfs">GFS27</string>
+    <string name="model_ecmwf">ECMWF</string>
+    <string name="model_sailing">SAILING</string>
+    <string name="wind_forecast">Dự báo gió</string>
+    <string name="wind_speed">Tốc độ gió</string>
+    <string name="beaufort_scale">Thang Beaufort</string>
+    <string name="error_loading_forecast">Không thể tải dự báo. Vui lòng thử lại sau.</string>
+    <string name="no_internet_connection">Không có kết nối Internet</string>
+    <string name="location_permission_denied">Cần quyền truy cập vị trí</string>
+    <string name="location_info_title">Thông tin vị trí</string>
+    <string name="ok">OK</string>
+    <string name="apply">Áp dụng</string>
+    <string name="share_forecast_title">Chia sẻ dự báo thời tiết</string>
+    <string name="share_forecast_text">Dự báo gió tại %1$s: %2$s m/s, %3$s°C</string>
+
 </resources>
