@@ -94,5 +94,59 @@
     <color name="rainy_color">#42A5F5</color>
     <color name="night_color">#3F51B5</color>
     <color name="button_AI">#3a5a70</color>
+
+    <color name="background_dark">#1E2530</color>
+    <color name="card_background_blue">#263545</color>
+    <color name="text_light">#FFFFFF</color>
+    <color name="text_light_secondary">#A0FFFFFF</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="light_blue">#FF81D4FA</color> <!-- Màu xanh nhạt -->
+    <color name="semi_transparent">#80FFFFFF</color> <!-- Trắng mờ 50% -->
+
+
+    <!-- Forecast view colors -->
+    <color name="forecast_background">#121212</color>
+    <color name="forecast_header_background">#212121</color>
+    <color name="map_background">#1A1A1A</color>
+
+    <!-- Wind colors by Beaufort scale -->
+    <color name="beaufort_0_2">#2196F3</color> <!-- Blue -->
+    <color name="beaufort_3_4">#4CAF50</color> <!-- Green -->
+    <color name="beaufort_5_6">#FFC107</color> <!-- Yellow -->
+    <color name="beaufort_7_9">#FF9800</color> <!-- Orange -->
+    <color name="beaufort_10_12">#F44336</color> <!-- Red -->
+
+    <!-- Temperature colors -->
+    <color name="temp_cold">#2196F3</color> <!-- Blue -->
+    <color name="temp_cool">#4CAF50</color> <!-- Green -->
+    <color name="temp_mild">#FFC107</color> <!-- Yellow -->
+    <color name="temp_warm">#FF9800</color> <!-- Orange -->
+    <color name="temp_hot">#F44336</color> <!-- Red -->
+
+    <!-- Wind Speed Colors -->
+    <color name="wind_speed_low">#2196F3</color>
+    <color name="wind_speed_medium">#4CAF50</color>
+    <color name="wind_speed_high">#FFC107</color>
+
+    <!-- Beaufort Scale Colors -->
+    <color name="beaufort_low">#2196F3</color>
+    <color name="beaufort_medium">#4CAF50</color>
+    <color name="beaufort_high">#FF9800</color>
+
+    <!-- Temperature Colors -->
+    <color name="temp_low">#2196F3</color>
+    <color name="temp_medium">#FF9800</color>
+    <color name="temp_high">#F44336</color>
+
+    <!-- Wave Height Colors -->
+    <color name="wave_low">#2196F3</color>
+    <color name="wave_medium">#4CAF50</color>
+    <color name="wave_high">#FFC107</color>
+
+    <!-- Forecast Model Button Colors -->
+    <color name="forecast_model_text">#FFFFFF</color>
+    <color name="forecast_model_selected_text">#000000</color>
+    <color name="forecast_model_bg">#4D5F72</color>
+    <color name="forecast_model_selected_bg">#4CAF50</color>
 </resources>
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WindDirectionView">
+        <attr name="arrowColor" format="color" />
+        <attr name="windDirection" format="integer" />
+    </declare-styleable>
+</resources>

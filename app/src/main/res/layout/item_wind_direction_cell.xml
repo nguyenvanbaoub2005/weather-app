@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="56dp"
+    android:layout_height="32dp"
+    android:layout_marginEnd="1dp">
+
+    <com.example.textn.ui.view.WindDirectionView
+        android:id="@+id/windDirectionView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        app:arrowColor="@color/white" />
+</FrameLayout>
