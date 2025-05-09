@@ -104,6 +104,19 @@
     <color name="semi_transparent">#80FFFFFF</color> <!-- Trắng mờ 50% -->
 
 
+    <!-- Màu nền và chữ -->
+    <color name="forecast_item_background">#252525</color>
+    <color name="time_slot_background">#252525</color>
+
+    <!-- Màu theo loại dữ liệu thời tiết -->
+    <color name="temperature_color">#FF6B6B</color>
+    <color name="temperature_high">#FF5252</color>
+    <color name="temperature_low">#64B5F6</color>
+    <color name="wind_color">#81C784</color>
+    <color name="precipitation_color">#64B5F6</color>
+    <color name="cloud_color">#90A4AE</color>
+    <color name="pressure_color">#BA68C8</color>
+
     <!-- Forecast view colors -->
     <color name="forecast_background">#121212</color>
     <color name="forecast_header_background">#212121</color>
@@ -148,5 +161,7 @@
     <color name="forecast_model_selected_text">#000000</color>
     <color name="forecast_model_bg">#4D5F72</color>
     <color name="forecast_model_selected_bg">#4CAF50</color>
+    <color name="accent_light">#FFECB3</color>         <!-- Vàng cam nhạt -->
+
 </resources>
 
