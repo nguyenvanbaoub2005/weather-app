@@ -263,40 +263,28 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
                 val weatherInfo = try {
                     val response = weatherRepository.getWeatherData(context, currentLocation)
                     val weatherData = convertWeatherResponseToWeatherData(response, currentLocation)
-                    """
-                Thông tin thời tiết hiện tại tại $currentLocation:
-                - Nhiệt độ: ${weatherData.temperature}°C
-                - Chỉ số UV: ${weatherData.uvIndex}
-                - Độ ẩm: ${weatherData.humidity}%
-                - Tình trạng: ${weatherData.condition}
-                """.trimIndent()
+                    "Thời tiết: ${weatherData.temperature}°C, ${weatherData.condition}, độ ẩm ${weatherData.humidity}%"
                 } catch (e: Exception) {
-                    "Không có thông tin thời tiết hiện tại."
+                    "Không có thông tin thời tiết."
                 }
 
                 // Xác định loại địa điểm cần gợi ý
                 val locationTypePrompt = when (locationType.lowercase(Locale.getDefault())) {
-                    "food" -> "nhà hàng, quán ăn, quán cafe"
-                    "entertainment" -> "địa điểm vui chơi, giải trí, công viên, khu du lịch"
-                    "shopping" -> "trung tâm mua sắm, chợ, cửa hàng"
-                    "accommodation" -> "khách sạn, homestay, khu nghỉ dưỡng"
-                    else -> "địa điểm du lịch, ăn uống, giải trí hoặc mua sắm"
+                    "food" -> "ăn uống"
+                    "entertainment" -> "giải trí"
+                    "shopping" -> "mua sắm"
+                    "accommodation" -> "lưu trú"
+                    else -> "du lịch, ăn uống, giải trí hoặc mua sắm"
                 }
 
-                // Tạo prompt cho AI
+                // Tạo prompt ngắn gọn cho AI
                 val prompt = """
-                Tôi đang ở $currentLocation.
-                $weatherInfo
-                
-                Hãy gợi ý $numberOfLocations ${locationTypePrompt} gần vị trí hiện tại của tôi mà phù hợp với điều kiện thời tiết hiện tại.
-                
-                Đối với mỗi địa điểm, vui lòng cung cấp:
-                1. Tên địa điểm
-                2. Khoảng cách ước tính từ vị trí hiện tại của tôi
-                3. Lý do tại sao địa điểm này phù hợp với thời tiết hiện tại
-                4. Một gợi ý ngắn về hoạt động có thể thực hiện tại đó
-                
-                Hãy đảm bảo đề xuất phù hợp với tình hình thời tiết hiện tại để tôi có trải nghiệm tốt nhất.
+            Vị trí hiện tại: $currentLocation
+            $weatherInfo
+            
+            Gợi ý $numberOfLocations địa điểm $locationTypePrompt gần đây phù hợp với thời tiết hiện tại.
+            
+            Cho mỗi địa điểm: tên, khoảng cách ước tính, lý do phù hợp với thời tiết và một gợi ý hoạt động ngắn gọn.
             """.trimIndent()
 
                 // Gọi hàm gửi yêu cầu tới API Gemini

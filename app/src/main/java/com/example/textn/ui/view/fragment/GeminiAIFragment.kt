@@ -18,6 +18,9 @@ import com.example.textn.viewmodel.GeminiViewModel
 import com.example.textn.data.model.WeatherData
 import com.example.textn.databinding.FragmentGeminiAiBinding
 import com.example.textn.viewmodel.GeminiViewModelFactory
+import io.noties.markwon.Markwon
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
+import io.noties.markwon.ext.tables.TablePlugin
 import java.util.Locale
 
 class GeminiAIFragment : Fragment() {
@@ -122,9 +125,20 @@ class GeminiAIFragment : Fragment() {
     }
 
     private fun showResponse(response: String) {
+        // Khởi tạo Markwon
+        // Tạo Markwon với các tùy chỉnh
+        val markwon = Markwon.builder(requireContext())
+            .usePlugin(StrikethroughPlugin.create())
+            .usePlugin(TablePlugin.create(requireContext()))
+            .build()
+
         binding.tvResponseTitle.isVisible = true
         binding.cardResponse.isVisible = true
         binding.tvResponse.text = response
+        binding.shimmerLayout.isVisible = false
+        // Xử lý và hiển thị văn bản Markdown
+        markwon.setMarkdown(binding.tvResponse, response)
+
         binding.shimmerLayout.isVisible = false
     }
 

@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
         // Thiết lập observers cho GeminiViewModel
         setupGeminiObservers()
 
-        // Thêm sự kiện click cho nút search
+        // Thêm sự kiện click cho nút btnFavoriteName
         binding.btnFavoriteName.setOnClickListener {
             findNavController().navigate(R.id.nav_Location_type)
         }

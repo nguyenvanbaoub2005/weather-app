@@ -118,12 +118,19 @@ dependencies {
 
     // Facebook Shimmer (hiệu ứng loading)
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    dependencies {
+        implementation ("io.noties.markwon:core:4.6.2")
+        // Nếu bạn muốn thêm một số tính năng khác, có thể thêm các module sau
+        implementation ("io.noties.markwon:ext-strikethrough:4.6.2")
+        implementation ("io.noties.markwon:ext-tables:4.6.2")
+    }
 }
 
 buildscript {
     dependencies {
         classpath ("com.google.gms:google-services:4.3.15")// mới nhất
     }
+
 }
 
 

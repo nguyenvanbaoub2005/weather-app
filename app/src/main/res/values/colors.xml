@@ -95,5 +95,19 @@
     <color name="night_color">#3F51B5</color>
     <color name="button_AI">#3a5a70</color>
 
+
+
+<!--        location entaiterment fragment-->
+        <color name="orange_primary">#FF5722</color>
+        <color name="orange_light">#FFAB91</color>
+        <color name="orange_dark">#E64A19</color>
+        <color name="background_light">#F5F5F5</color>
+
+    <!-- Card elevations -->
+    <dimen name="card_elevation_normal">2dp</dimen>
+    <dimen name="card_elevation_selected">6dp</dimen>
+
+<!--    button favorite home-->
+    <color name="teal">#00CEB4</color>
 </resources>
 
