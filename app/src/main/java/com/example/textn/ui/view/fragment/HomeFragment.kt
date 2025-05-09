@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
                 lastLat?.let { it1 -> putDouble("lat", it1) }
                 lastLon?.let { it1 -> putDouble("lon", it1) }
             }
-            // Điều hướng đến WindyFragment
+
               findNavController().navigate(R.id.action_tabularForecastFragment, bundle)
         }
 

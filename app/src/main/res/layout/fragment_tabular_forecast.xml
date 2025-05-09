@@ -11,6 +11,110 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Map Fragment với góc bo tròn -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/mapCardView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:layout_constraintHeight_percent="0.38"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/mapFragment"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Map Controls Overlay -->
+            <FrameLayout
+                android:id="@+id/mapControlsOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Compass Direction Indicators - Nâng cấp với hiệu ứng đổ bóng -->
+                <ImageView
+                    android:id="@+id/compassOverlay"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.8"
+                    android:src="@drawable/ic_compass_overlay"
+                    android:contentDescription="Compass directions" />
+
+                <!-- Thẻ hiển thị vị trí -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:layout_margin="16dp"
+                    app:cardBackgroundColor="#80000000"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
+
+                    <TextView
+                        android:id="@+id/textLocationInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_location"
+                        android:drawablePadding="4dp"
+                        android:padding="8dp"
+                        android:textColor="@color/text_light"
+                        android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
+                        tools:text="16.0544, 108.2022" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Nút tìm vị trí hiện tại -->
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabMyLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="16dp"
+                    android:contentDescription="My location"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_my_location" />
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Weather Layer Selection với thiết kế nút tabs -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardWeatherLayers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/mapCardView">
+
+            <HorizontalScrollView
+                android:id="@+id/scrollViewLayers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#30000000"
+                android:paddingVertical="8dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/weatherLayerContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Thông tin mô hình dự báo -->
         <TextView
             android:id="@+id/textModelInfo"
             android:layout_width="0dp"
@@ -19,128 +123,249 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/text_light"
-            android:textSize="12sp"
+            android:textSize="13sp"
+            android:fontFamily="sans-serif-light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardWeatherLayers"
             tools:text="GFS27 - Global forecast, 27km resolution, 76% accuracy" />
 
-        <HorizontalScrollView
-            android:id="@+id/scrollViewModels"
+        <!-- Card cho lựa chọn mô hình -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardModels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:scrollbars="none"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textModelInfo">
 
-            <LinearLayout
-                android:id="@+id/forecastModelContainer"
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:id="@+id/scrollViewModels"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
+                android:paddingVertical="8dp"
+                android:scrollbars="none">
 
-        <HorizontalScrollView
-            android:id="@+id/scrollTimeSlots"
+                <LinearLayout
+                    android:id="@+id/forecastModelContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Card cho các khung giờ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTimeSlots"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollViewModels">
+            app:layout_constraintTop_toBottomOf="@+id/cardModels">
 
-            <LinearLayout
-                android:id="@+id/timeSlotContainer"
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:id="@+id/scrollTimeSlots"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="80dp"
-                android:paddingEnd="16dp">
+                android:paddingVertical="10dp"
+                android:background="@color/background_dark">
 
-                <TextView
-                    android:layout_width="56dp"
+                <LinearLayout
+                    android:id="@+id/timeSlotContainer"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="7 AM"
-                    android:textColor="@color/text_light" />
+                    android:orientation="horizontal"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="16dp">
 
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="10 AM"
-                    android:textColor="@color/text_light" />
+                    <TextView
+                        android:id="@+id/timeSlot7AM"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="7 AM"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:padding="4dp"
+                        android:background="#4D000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="1 PM"
-                    android:textColor="@color/text_light" />
+                    <TextView
+                        android:id="@+id/timeSlot10AM"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="10 AM"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:padding="4dp"
+                        android:layout_marginStart="4dp"
+                        android:background="#4D000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="4 PM"
-                    android:textColor="@color/text_light" />
+                    <TextView
+                        android:id="@+id/timeSlot1PM"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="1 PM"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:padding="4dp"
+                        android:layout_marginStart="4dp"
+                        android:background="#4D000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="7 PM"
-                    android:textColor="@color/text_light" />
+                    <TextView
+                        android:id="@+id/timeSlot4PM"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="4 PM"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:padding="4dp"
+                        android:layout_marginStart="4dp"
+                        android:background="#4D000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="10 PM"
-                    android:textColor="@color/text_light" />
+                    <TextView
+                        android:id="@+id/timeSlot7PM"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="7 PM"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:padding="4dp"
+                        android:layout_marginStart="4dp"
+                        android:background="#4D000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="1 AM"
-                    android:textColor="@color/text_light" />
+                    <TextView
+                        android:id="@+id/timeSlot10PM"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="10 PM"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:padding="4dp"
+                        android:layout_marginStart="4dp"
+                        android:background="#4D000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="4 AM"
-                    android:textColor="@color/text_light" />
+                    <TextView
+                        android:id="@+id/timeSlot1AM"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="1 AM"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:padding="4dp"
+                        android:layout_marginStart="4dp"
+                        android:background="#4D000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
 
-            </LinearLayout>
-        </HorizontalScrollView>
+                    <TextView
+                        android:id="@+id/timeSlot4AM"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="4 AM"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:padding="4dp"
+                        android:layout_marginStart="4dp"
+                        android:background="#4D000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewForecast"
+        <!-- Card cho RecyclerView dự báo -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardForecast"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollTimeSlots" />
+            app:layout_constraintTop_toBottomOf="@+id/cardTimeSlots">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewForecast"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingVertical="8dp" />
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+    <!-- Progress bar với hiệu ứng -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/progressBarCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:cardCornerRadius="24dp"
+        app:cardBackgroundColor="#A0000000"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+            <TextView
+                android:id="@+id/loadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Đang tải dữ liệu..."
+                android:textColor="@color/text_light"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
