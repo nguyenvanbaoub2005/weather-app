@@ -125,4 +125,19 @@
         <item name="android:padding">8dp</item>
     </style>
 
+    <style name="TimeSlotStyle">
+    <item name="android:layout_width">80dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:padding">8dp</item>
+    <item name="android:layout_marginStart">4dp</item>
+    <item name="android:background">#4D000000</item>
+    <item name="android:fontFamily">sans-serif-medium</item>
+    <item name="android:textStyle">bold</item>
+</style>
+
+
+
 </resources>

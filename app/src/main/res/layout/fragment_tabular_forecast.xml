@@ -161,148 +161,6 @@
             </HorizontalScrollView>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Card cho các khung giờ -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardTimeSlots"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardModels">
-
-            <HorizontalScrollView
-                android:id="@+id/scrollTimeSlots"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:background="@color/background_dark">
-
-                <LinearLayout
-                    android:id="@+id/timeSlotContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="80dp"
-                    android:paddingEnd="16dp">
-
-                    <TextView
-                        android:id="@+id/timeSlot7AM"
-                        android:layout_width="56dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="7 AM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:padding="4dp"
-                        android:background="#4D000000"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/timeSlot10AM"
-                        android:layout_width="56dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="10 AM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:padding="4dp"
-                        android:layout_marginStart="4dp"
-                        android:background="#4D000000"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/timeSlot1PM"
-                        android:layout_width="56dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="1 PM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:padding="4dp"
-                        android:layout_marginStart="4dp"
-                        android:background="#4D000000"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/timeSlot4PM"
-                        android:layout_width="56dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="4 PM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:padding="4dp"
-                        android:layout_marginStart="4dp"
-                        android:background="#4D000000"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/timeSlot7PM"
-                        android:layout_width="56dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="7 PM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:padding="4dp"
-                        android:layout_marginStart="4dp"
-                        android:background="#4D000000"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/timeSlot10PM"
-                        android:layout_width="56dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="10 PM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:padding="4dp"
-                        android:layout_marginStart="4dp"
-                        android:background="#4D000000"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/timeSlot1AM"
-                        android:layout_width="56dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="1 AM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:padding="4dp"
-                        android:layout_marginStart="4dp"
-                        android:background="#4D000000"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/timeSlot4AM"
-                        android:layout_width="56dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="4 AM"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:padding="4dp"
-                        android:layout_marginStart="4dp"
-                        android:background="#4D000000"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </HorizontalScrollView>
-        </com.google.android.material.card.MaterialCardView>
 
         <!-- Card cho RecyclerView dự báo -->
         <com.google.android.material.card.MaterialCardView
@@ -318,14 +176,94 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardTimeSlots">
+            app:layout_constraintTop_toBottomOf="@+id/cardModels">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewForecast"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingVertical="8dp" />
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <!-- Header với các khung giờ -->
+                    <LinearLayout
+                        android:id="@+id/timeSlotHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="92dp"
+                        android:paddingEnd="0dp"
+                        android:paddingVertical="8dp">
+
+                        <!-- Đã điều chỉnh chiều rộng và margin để căn chỉnh với dữ liệu bên dưới -->
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:gravity="center"
+                            android:text="7 AM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="10 AM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="1 PM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="4 PM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="7 PM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="10 PM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="1 AM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="4 AM" />
+                    </LinearLayout>
+
+                    <!-- RecyclerView cho dữ liệu dự báo -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewForecast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
