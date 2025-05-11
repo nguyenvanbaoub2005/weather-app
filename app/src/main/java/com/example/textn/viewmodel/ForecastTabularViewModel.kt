@@ -24,17 +24,9 @@ class ForecastTabularViewModel(private val repository: ForecastRepository) : Vie
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-    private val _selectedForecastModel = MutableLiveData<String>()
-    val selectedForecastModel: LiveData<String> = _selectedForecastModel
-
-    init {
-        _selectedForecastModel.value = "GFS27"
-    }
-
     fun fetchForecastData(latitude: Double, longitude: Double, model: String = "GFS27") {
         _isLoading.value = true
         _errorMessage.value = null
-        _selectedForecastModel.value = model
 
         viewModelScope.launch {
             try {
@@ -45,12 +37,6 @@ class ForecastTabularViewModel(private val repository: ForecastRepository) : Vie
             } finally {
                 _isLoading.value = false
             }
-        }
-    }
-
-    fun changeForecastModel(model: String) {
-        _forecastData.value?.let {
-            fetchForecastData(it.latitude, it.longitude, model)
         }
     }
 
