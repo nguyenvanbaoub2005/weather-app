@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <item
+        android:id="@+id/menu_home"
+        android:title="Trang chính"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="never" />
+        
+    <item
+        android:id="@+id/menu_health_alerts"
+        android:title="Cảnh báo sức khỏe"
+        android:icon="@drawable/ic_health"
+        app:showAsAction="never" />
+        
+    <item
+        android:id="@+id/menu_ai_forecast"
+        android:title="AI dự báo thời tiết"
+        android:icon="@drawable/ic_ai"
+        app:showAsAction="never" />
+        
+    <item
+        android:id="@+id/menu_settings"
+        android:title="Cài đặt"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="never" />
+</menu>
