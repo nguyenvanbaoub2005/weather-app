@@ -12,7 +12,7 @@
         android:label="Trang chủ"
         tools:layout="@layout/fragment_home" />
 
-<!--     Thời tiết -->
+    <!--     Thời tiết -->
     <fragment
         android:id="@+id/nav_weather"
         android:name="com.example.textn.ui.view.fragment.MapWeatherFragment"
@@ -76,4 +76,38 @@
         android:id="@+id/nav_Location_type"
         android:name="com.example.textn.ui.view.fragment.LocationTypeFragment"
         tools:layout="@layout/fragment_location_type_selection" />
+<!--     Chi tiết bài đăng -->
+    <fragment
+        android:id="@+id/nav_communityFragment"
+        android:name="com.example.textn.ui.view.fragment.CommunityFragment"
+        android:label="Community"
+        tools:layout="@layout/fragment_community">
+        <action
+            android:id="@+id/action_communityFragment_to_postDetailFragment"
+            app:destination="@id/nav_postDetailFragment" />
+        <action
+            android:id="@+id/action_communityFragment_to_addPostFragment"
+            app:destination="@id/nav_addPostFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_postDetailFragment"
+        android:name="com.example.textn.ui.view.fragment.PostDetailFragment"
+        android:label="Post Detail"
+        tools:layout="@layout/fragment_post_detail" >
+        <argument
+           android:name="postId"
+            app:argType="string"
+           app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_addPostFragment"
+        android:name="com.example.textn.ui.view.fragment.AddPostFragment"
+        android:label="Add Post"
+        tools:layout="@layout/fragment_add_post" />
+
+    <!-- Action từ trang community đến chi tiết bài đăng -->
+    <action
+        android:id="@+id/action_communityFragment_to_postDetailFragment"
+        app:destination="@id/nav_addPostFragment" />
 </navigation>

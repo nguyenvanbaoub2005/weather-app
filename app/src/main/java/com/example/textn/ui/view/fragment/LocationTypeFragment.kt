@@ -112,7 +112,7 @@ class LocationTypeFragment : Fragment() {
 
     private fun getAISuggestions(locationType: String) {
         // Gọi API để lấy gợi ý
-        geminiViewModel.getSuggestedLocationsNearby(
+        geminiViewModel.getSuggestedLocationsNearbyEntertaiment(
             geminiApiKey,
             numberOfLocations = 5,
             locationType = locationType,
@@ -127,7 +127,7 @@ class LocationTypeFragment : Fragment() {
         }
 
         // Highlight card mới được chọn
-        selectedCard.setCardBackgroundColor(resources.getColor(R.color.orange_light, null))
+        selectedCard.setCardBackgroundColor(resources.getColor(R.color.divider_light, null))
         selectedCard.cardElevation = resources.getDimension(R.dimen.card_elevation_selected)
 
         // Lưu card đã chọn

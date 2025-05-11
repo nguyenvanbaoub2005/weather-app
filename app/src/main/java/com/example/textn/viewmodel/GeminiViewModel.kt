@@ -245,7 +245,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
         )
     }
     // Hàm gợi ý vị trí gần vị trí hiện tại bằng AI Gemini
-    fun getSuggestedLocationsNearby(apiKey: String, numberOfLocations: Int = 5, locationType: String = "all") {
+    fun getSuggestedLocationsNearbyEntertaiment(apiKey: String, numberOfLocations: Int = 5, locationType: String = "all") {
         _isLoading.value = true
         _error.value = null
 
@@ -290,6 +290,52 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
                 // Gọi hàm gửi yêu cầu tới API Gemini
                 getWeatherAdviceFromAI(prompt, apiKey)
 
+                Log.d("GeminiViewModel", "Đã gửi yêu cầu gợi ý địa điểm gần $currentLocation")
+            } catch (e: Exception) {
+                Log.e("GeminiViewModel", "Lỗi khi lấy gợi ý địa điểm: ${e.message}")
+                _error.postValue("Không thể lấy gợi ý địa điểm: ${e.message}")
+                _isLoading.postValue(false)
+            }
+        }
+    }
+    fun getSuggestedLocationsNearby(apiKey: String, numberOfLocations: Int = 5) {
+        _isLoading.value = true
+        _error.value = null
+
+        viewModelScope.launch {
+            try {
+                // Lấy vị trí hiện tại
+                val currentLocation = getLocation()
+                if (currentLocation == null) {
+                    _error.postValue("Không thể lấy vị trí hiện tại.")
+                    _isLoading.postValue(false)
+                    return@launch
+                }
+
+                // Lấy thông tin thời tiết hiện tại (nếu có)
+                val weatherInfo = try {
+                    val response = weatherRepository.getWeatherData(context, currentLocation)
+                    val weatherData = convertWeatherResponseToWeatherData(response, currentLocation)
+                    "Thời tiết: ${weatherData.temperature}°C, ${weatherData.condition}, độ ẩm ${weatherData.humidity}%"
+                } catch (e: Exception) {
+                    "Không có thông tin thời tiết."
+                }
+
+                // Tạo prompt đơn giản để lấy địa điểm gần vị trí hiện tại
+                val prompt = """
+            Vị trí hiện tại: $currentLocation
+            $weatherInfo
+            
+            Gợi ý $numberOfLocations địa điểm đáng chú ý gần vị trí hiện tại của tôi.
+            
+            Cho mỗi địa điểm hãy cung cấp:
+            - Tên địa điểm
+            - Khoảng cách ước tính từ vị trí hiện tại
+            - Mô tả ngắn về địa điểm đó và lý do nên ghé thăm
+            """.trimIndent()
+
+                // Gọi hàm gửi yêu cầu tới API Gemini
+                getWeatherAdviceFromAI(prompt, apiKey)
                 Log.d("GeminiViewModel", "Đã gửi yêu cầu gợi ý địa điểm gần $currentLocation")
             } catch (e: Exception) {
                 Log.e("GeminiViewModel", "Lỗi khi lấy gợi ý địa điểm: ${e.message}")

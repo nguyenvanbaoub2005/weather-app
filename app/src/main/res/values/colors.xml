@@ -98,9 +98,9 @@
 
 
 <!--        location entaiterment fragment-->
-        <color name="orange_primary">#FF5722</color>
-        <color name="orange_light">#FFAB91</color>
-        <color name="orange_dark">#E64A19</color>
+        <color name="divider_primary">#3a5a70</color>
+        <color name="divider_light">#FFAB82</color>
+        <color name="divider_color_lef">#3a5a70</color>
         <color name="background_light">#F5F5F5</color>
 
     <!-- Card elevations -->

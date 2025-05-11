@@ -106,6 +106,12 @@ class HomeFragment : Fragment() {
             showWeatherLayerOptions()
         }
 
+        // Thêm sự kiện click cho nút tìm kiếm địa điểm gần đây
+        binding.btnSearch.setOnClickListener {
+//            searchNearbyPlaces()
+            findNavController().navigate(R.id.nav_communityFragment)
+        }
+
         // Thiết lập WebView chỉ một lần
         if (!isWebViewInitialized) {
             WeatherHelper.setupWebView(binding.webViewWindyHome)
@@ -114,6 +120,22 @@ class HomeFragment : Fragment() {
             isWebViewInitialized = true
         }
     }
+
+//    // Hàm xử lý khi người dùng nhấn nút tìm kiếm
+//    private fun searchNearbyPlaces() {
+//        if (lastLat != null && lastLon != null) {
+//            // Giả sử bạn có API key cho Gemini hoặc sử dụng một giá trị mặc định
+//            val apiKey = "AIzaSyD647aAzMdwe0biy5gu_JP0jmEw1UDg3LQ" // Thay thế bằng API key thực tế hoặc lấy từ tài nguyên
+//
+//            // Gọi hàm lấy gợi ý địa điểm gần đó (đã được định nghĩa trong GeminiViewModel)
+//            geminiViewModel.getSuggestedLocationsNearby(apiKey, 5)
+//
+//            // Hiển thị thông báo đang tải (loading dialog sẽ được hiển thị qua observer)
+//            Toast.makeText(requireContext(), "Đang tìm kiếm địa điểm gần đây...", Toast.LENGTH_SHORT).show()
+//        } else {
+//            Toast.makeText(requireContext(), "Không thể lấy vị trí hiện tại", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     override fun onResume() {
         super.onResume()
@@ -147,27 +169,6 @@ class HomeFragment : Fragment() {
             }
         })
     }
-
-//    // Dialog để chọn loại địa điểm muốn tìm kiếm
-//    private fun showLocationTypeDialog() {
-//        val locationTypes = arrayOf("Tất cả", "Ăn uống", "Giải trí", "Mua sắm", "Lưu trú")
-//        val locationTypeValues = arrayOf("all", "food", "entertainment", "shopping", "accommodation")
-//
-//        AlertDialog.Builder(requireContext())
-//            .setTitle("Chọn loại địa điểm")
-//            .setItems(locationTypes) { _, which ->
-//                // Lấy giá trị loại địa điểm đã chọn
-//                val selectedLocationType = locationTypeValues[which]
-//
-//                // Gọi API để lấy gợi ý địa điểm gần đó
-//                geminiViewModel.getSuggestedLocationsNearby(
-//                    geminiApiKey,
-//                    numberOfLocations = 5,
-//                    locationType = selectedLocationType
-//                )
-//            }
-//            .show()
-//    }
 
     // Hiển thị loading dialog
     private fun showLoadingDialog() {
