@@ -63,6 +63,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     // **4️⃣ Gson (Chuyển đổi JSON)**
     implementation("com.google.code.gson:gson:2.9.0")
+
+    // RecyclerView and CardView
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.cardview:cardview:1.0.0")
 }
 dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")

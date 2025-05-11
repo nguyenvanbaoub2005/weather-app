@@ -98,7 +98,13 @@ class SettingsFragment : Fragment() {
     private fun setupCloseButton() {
         binding.buttonClose.setOnClickListener {
             val navController = findNavController()
-            navController.navigate(R.id.nav_home)
+            val previousDestinationId = navController.previousBackStackEntry?.destination?.id
+
+            if (previousDestinationId == R.id.tabularForecastFragment) {
+                navController.navigateUp()
+            } else {
+                navController.navigate(R.id.nav_home)
+            }
         }
     }
 

@@ -91,6 +91,18 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.nav_weather)
         }
 
+        // Thêm sự kiện click cho cardWeather để chuyển sang WindyFragment
+        binding.cardWeather.setOnClickListener {
+            // Truyền dữ liệu vị trí nếu cần
+            val bundle = Bundle().apply {
+                lastLat?.let { it1 -> putDouble("lat", it1) }
+                lastLon?.let { it1 -> putDouble("lon", it1) }
+            }
+
+              findNavController().navigate(R.id.action_tabularForecastFragment, bundle)
+        }
+
+
         // Nút mở menu navigation drawer
         binding.btnMenu.setOnClickListener {
             (activity as? MainActivity)?.openDrawer()

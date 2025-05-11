@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <!-- Top Navigation Bar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/background_dark"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back to home"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_light" />
+
+            <!-- City Name Title -->
+            <TextView
+                android:id="@+id/textCityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/text_light"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Da Nang" />
+
+            <!-- Information icon -->
+            <ImageButton
+                android:id="@+id/btnInfo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Information"
+                android:src="@drawable/ic_info"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnShare"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_light" />
+
+            <!-- Share Button -->
+            <ImageButton
+                android:id="@+id/btnShare"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Share"
+                android:src="@drawable/ic_share"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnMenu"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_light" />
+
+            <!-- Menu Button -->
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Menu"
+                android:src="@drawable/ic_more_vert"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_light" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/forecastContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Map Fragment với góc bo tròn -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/mapCardView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:layout_constraintHeight_percent="0.38"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/mapFragment"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Map Controls Overlay -->
+            <FrameLayout
+                android:id="@+id/mapControlsOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Compass Direction Indicators - Nâng cấp với hiệu ứng đổ bóng -->
+                <ImageView
+                    android:id="@+id/compassOverlay"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.8"
+                    android:src="@drawable/ic_compass_overlay"
+                    android:contentDescription="Compass directions" />
+
+<!--                &lt;!&ndash; Thẻ hiển thị vị trí &ndash;&gt;-->
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="bottom|start"-->
+<!--                    android:layout_margin="16dp"-->
+<!--                    app:cardBackgroundColor="#80000000"-->
+<!--                    app:cardCornerRadius="8dp"-->
+<!--                    app:cardElevation="2dp">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/textLocationInfo"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:drawableStart="@drawable/ic_location"-->
+<!--                        android:drawablePadding="4dp"-->
+<!--                        android:padding="8dp"-->
+<!--                        android:textColor="@color/text_light"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        tools:text="16.0544, 108.2022" />-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+                <!-- Nút tìm vị trí hiện tại -->
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabMyLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="16dp"
+                    android:contentDescription="My location"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_my_location" />
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Weather Layer Selection với thiết kế nút tabs -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardWeatherLayers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/mapCardView">
+
+            <HorizontalScrollView
+                android:id="@+id/scrollViewLayers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#30000000"
+                android:paddingVertical="8dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/weatherLayerContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Thông tin dự báo title -->
+        <TextView
+            android:id="@+id/textForecastTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Thông tin dự báo"
+            android:textColor="@color/text_light"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardWeatherLayers" />
+
+        <!-- Thông tin mô hình dự báo -->
+        <TextView
+            android:id="@+id/textModelInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/text_light"
+            android:textSize="13sp"
+            android:fontFamily="sans-serif-light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textForecastTitle"
+            tools:text="27km resolution, 76% accuracy" />
+
+        <!-- Card cho RecyclerView dự báo -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardForecast"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textModelInfo">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <!-- Header với các khung giờ -->
+                    <LinearLayout
+                        android:id="@+id/timeSlotHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="92dp"
+                        android:paddingEnd="0dp"
+                        android:paddingVertical="8dp">
+
+                        <!-- Đã điều chỉnh chiều rộng và margin để căn chỉnh với dữ liệu bên dưới -->
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:gravity="center"
+                            android:text="7 AM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="10 AM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="1 PM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="4 PM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="7 PM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="10 PM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="1 AM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="4 AM" />
+                    </LinearLayout>
+
+                    <!-- RecyclerView cho dữ liệu dự báo -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewForecast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Progress bar với hiệu ứng -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/progressBarCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:cardCornerRadius="24dp"
+        app:cardBackgroundColor="#A0000000"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+            <TextView
+                android:id="@+id/loadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Đang tải dữ liệu..."
+                android:textColor="@color/text_light"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

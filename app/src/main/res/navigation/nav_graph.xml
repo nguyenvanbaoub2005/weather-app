@@ -10,9 +10,14 @@
         android:id="@+id/nav_home"
         android:name="com.example.textn.ui.view.fragment.HomeFragment"
         android:label="Trang chủ"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <!-- Action để điều hướng sang WindyFragment -->
+        <action
+            android:id="@+id/action_tabularForecastFragment"
+            app:destination="@id/tabularForecastFragment" />
+    </fragment>
 
-<!--     Thời tiết -->
+    <!--     Thời tiết -->
     <fragment
         android:id="@+id/nav_weather"
         android:name="com.example.textn.ui.view.fragment.MapWeatherFragment"
@@ -24,17 +29,21 @@
         android:id="@+id/nav_health"
         android:name="com.example.textn.ui.view.fragment.HealthAlertsFragment"
         android:label="Cảnh báo sức khoẻ" />
+
     <!-- Cài đặt -->
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.textn.ui.view.fragment.SettingsFragment"
         android:label="Cài đặt"
         tools:layout="@layout/fragment_settings" />
+
+    <!-- Gemini AI -->
     <fragment
         android:id="@+id/geminiAIFragment"
         android:name="com.example.textn.ui.view.fragment.GeminiAIFragment"
         android:label="Gemini AI"
         tools:layout="@layout/fragment_gemini_ai" />
+
     <!-- Đơn vị -->
     <fragment
         android:id="@+id/nav_units"
@@ -72,8 +81,16 @@
         android:id="@+id/action_settingsFragment_to_termsOfUseFragment"
         app:destination="@id/navigation_terms_of_use" />
 
+    <!-- Loại vị trí -->
     <fragment
         android:id="@+id/nav_Location_type"
         android:name="com.example.textn.ui.view.fragment.LocationTypeFragment"
         tools:layout="@layout/fragment_location_type_selection" />
+
+    <!-- Dự báo bảng -->
+    <fragment
+        android:id="@+id/tabularForecastFragment"
+        android:name="com.example.textn.ui.fragment.TabularForecastFragment"
+        android:label="Forecast"
+        tools:layout="@layout/fragment_tabular_forecast" />
 </navigation>
