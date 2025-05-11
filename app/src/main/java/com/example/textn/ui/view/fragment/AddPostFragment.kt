@@ -10,12 +10,14 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -31,10 +33,15 @@ class AddPostFragment : Fragment() {
 
     private lateinit var viewModel: CommunityViewModel
     private lateinit var imagePreview: ImageView
+    private lateinit var layoutPlaceholder: View
     private lateinit var descriptionEditText: EditText
-    private lateinit var submitButton: Button
+    private lateinit var submitButton: CardView
     private lateinit var progressBar: ProgressBar
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var btnClose: View
+    private lateinit var locationLayout: LinearLayout
+    private lateinit var locationText: TextView
+    private lateinit var cardImage: CardView
 
     private var selectedImageUri: Uri? = null
     private var currentLocation: PostLocation? = null
@@ -60,6 +67,7 @@ class AddPostFragment : Fragment() {
             result.data?.data?.let { uri ->
                 selectedImageUri = uri
                 imagePreview.setImageURI(uri)
+                layoutPlaceholder.visibility = View.GONE
                 imagePreview.visibility = View.VISIBLE
             }
         }
@@ -84,14 +92,28 @@ class AddPostFragment : Fragment() {
 
         // Ánh xạ view
         imagePreview = view.findViewById(R.id.iv_image_preview)
+        layoutPlaceholder = view.findViewById(R.id.layout_placeholder)
         descriptionEditText = view.findViewById(R.id.et_description)
         submitButton = view.findViewById(R.id.btn_submit)
         progressBar = view.findViewById(R.id.progress_bar)
+        btnClose = view.findViewById(R.id.btn_close)
+        locationLayout = view.findViewById(R.id.layout_location)
+        locationText = view.findViewById(R.id.tv_location)
+        cardImage = view.findViewById(R.id.card_image)
 
-        // Nút chọn ảnh
-        val selectImageButton: Button = view.findViewById(R.id.btn_select_image)
-        selectImageButton.setOnClickListener {
+        // Thiết lập sự kiện click cho nút đóng
+        btnClose.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        // Thiết lập sự kiện chọn ảnh
+        cardImage.setOnClickListener {
             openGallery()
+        }
+
+        // Thiết lập sự kiện cho nút chọn vị trí
+        locationLayout.setOnClickListener {
+            checkLocationPermission()
         }
 
         // Nút đăng bài
@@ -178,6 +200,8 @@ class AddPostFragment : Fragment() {
                         longitude = location.longitude,
                         locationName = "Vị trí hiện tại" // Có thể dùng Geocoder để lấy tên địa điểm
                     )
+                    // Cập nhật UI để hiển thị vị trí đã chọn
+                    locationText.text = currentLocation?.locationName ?: "Lựa chọn vị trí"
                     Toast.makeText(
                         requireContext(),
                         "Đã lấy được vị trí hiện tại",

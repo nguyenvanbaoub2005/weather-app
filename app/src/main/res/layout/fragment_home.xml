@@ -277,11 +277,11 @@
                         app:layout_constraintTop_toTopOf="@id/iv_community_icon"
                         app:layout_constraintBottom_toBottomOf="@id/iv_community_icon"
                         app:layout_constraintStart_toEndOf="@id/iv_community_icon"
-                        app:layout_constraintEnd_toStartOf="@id/btnFavoriteName" />
+                        app:layout_constraintEnd_toStartOf="@id/btn_blog" />
 
                     <!-- Nút thêm -->
                     <ImageButton
-                        android:id="@+id/btnFavoriteName"
+                        android:id="@+id/btn_blog"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:background="?attr/selectableItemBackgroundBorderless"

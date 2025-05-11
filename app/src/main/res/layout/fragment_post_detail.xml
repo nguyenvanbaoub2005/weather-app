@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#1E88E5"
+            android:background="#FFFFFFFF"
             android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -39,9 +39,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CHI TIẾT BÀI ĐĂNG"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:layout_marginStart="16dp"/>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -168,7 +168,7 @@
                 android:id="@+id/btn_like"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@android:drawable/btn_star"
+                android:src="@drawable/ic_heath"
                 android:scaleType="fitCenter"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Thích bài viết"

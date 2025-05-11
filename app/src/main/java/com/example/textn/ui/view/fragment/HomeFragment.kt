@@ -80,11 +80,6 @@ class HomeFragment : Fragment() {
         // Thiết lập observers cho GeminiViewModel
         setupGeminiObservers()
 
-        // Thêm sự kiện click cho nút btnFavoriteName
-        binding.btnFavoriteName.setOnClickListener {
-            findNavController().navigate(R.id.nav_Location_type)
-        }
-
         // Thêm sự kiện click cho cardMap để chuyển sang Fragment bản đồ chi tiết
         binding.btnExpandMap.setOnClickListener {
             // Sử dụng NavController để điều hướng đến FullMapFragment
@@ -107,8 +102,11 @@ class HomeFragment : Fragment() {
         }
 
         // Thêm sự kiện click cho nút tìm kiếm địa điểm gần đây
-        binding.btnSearch.setOnClickListener {
-//            searchNearbyPlaces()
+//        binding.btnSearch.setOnClickListener {
+////            searchNearbyPlaces()
+//            findNavController().navigate(R.id.nav_communityFragment)
+//        }
+        binding.btnBlog.setOnClickListener {
             findNavController().navigate(R.id.nav_communityFragment)
         }
 

@@ -5,13 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ import com.example.textn.R
 import com.example.textn.data.model.Comment
 import com.example.textn.data.model.Post
 import com.example.textn.viewmodel.CommunityViewModel
+import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -28,14 +30,16 @@ class PostDetailFragment : Fragment() {
 
     private lateinit var viewModel: CommunityViewModel
     private lateinit var ivPostImage: ImageView
+    private lateinit var ivUserAvatar: CircleImageView
     private lateinit var tvPostDescription: TextView
     private lateinit var tvPostLocation: TextView
     private lateinit var tvPostDate: TextView
     private lateinit var tvUsername: TextView
     private lateinit var tvLikesCount: TextView
-    private lateinit var btnLike: Button
+    private lateinit var btnLike: ImageButton
+    private lateinit var btnBack: ImageButton
     private lateinit var etComment: EditText
-    private lateinit var btnSendComment: ImageView
+    private lateinit var btnSendComment: ImageButton
     private lateinit var rvComments: RecyclerView
 
     private val args: PostDetailFragmentArgs by navArgs()
@@ -57,12 +61,14 @@ class PostDetailFragment : Fragment() {
 
         // Ánh xạ views
         ivPostImage = view.findViewById(R.id.iv_post_image)
+        ivUserAvatar = view.findViewById(R.id.iv_user_avatar)
         tvPostDescription = view.findViewById(R.id.tv_post_description)
         tvPostLocation = view.findViewById(R.id.tv_post_location)
         tvPostDate = view.findViewById(R.id.tv_post_date)
         tvUsername = view.findViewById(R.id.tv_username)
         tvLikesCount = view.findViewById(R.id.tv_likes_count)
         btnLike = view.findViewById(R.id.btn_like)
+        btnBack = view.findViewById(R.id.btn_back)
         etComment = view.findViewById(R.id.et_comment)
         btnSendComment = view.findViewById(R.id.btn_send_comment)
         rvComments = view.findViewById(R.id.rv_comments)
@@ -71,6 +77,11 @@ class PostDetailFragment : Fragment() {
         rvComments.layoutManager = LinearLayoutManager(requireContext())
         val commentAdapter = CommentAdapter()
         rvComments.adapter = commentAdapter
+
+        // Nút quay lại
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         // Quan sát danh sách posts
         viewModel.posts.observe(viewLifecycleOwner) { posts ->
@@ -108,15 +119,20 @@ class PostDetailFragment : Fragment() {
     }
 
     private fun displayPostDetails() {
-        // Hiển thị hình ảnh
+        // Hiển thị hình ảnh bài đăng
         Glide.with(requireContext())
             .load(post.imageUrl)
             .into(ivPostImage)
         Log.d("PostDetailFragment", "Image URL: ${post.imageUrl}")
 
+//        // Hiển thị avatar người dùng
+//        Glide.with(requireContext())
+////            .load(post.userPhotoUrl ?: R.drawable.ic_menu_gallery) // Sử dụng default nếu không có URL
+////            .into(ivUserAvatar)
+
         // Hiển thị thông tin chi tiết
         tvPostDescription.text = post.description
-        tvPostLocation.text = post.location.locationName
+        tvPostLocation.text = "Vị trí: ${post.location.locationName}"
         tvUsername.text = post.displayName
         tvLikesCount.text = "${post.likes} lượt thích"
 

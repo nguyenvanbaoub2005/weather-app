@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#1E88E5"
+        android:background="#FFFFFFFF"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -28,7 +28,7 @@
                 app:navigationIcon="@drawable/ic_menu_back"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Quay lại"
-                app:tint="@android:color/white" />
+                app:tint="@android:color/black" />
 
             <Space
                 android:layout_width="0dp"
@@ -45,8 +45,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="COMMUNITY"
-                android:textColor="@android:color/white"
+                android:text="Community"
+                android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginStart="8dp"/>
