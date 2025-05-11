@@ -114,53 +114,38 @@
             </HorizontalScrollView>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Thông tin dự báo title -->
+        <TextView
+            android:id="@+id/textForecastTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Thông tin dự báo"
+            android:textColor="@color/text_light"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardWeatherLayers" />
+
         <!-- Thông tin mô hình dự báo -->
         <TextView
             android:id="@+id/textModelInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/text_light"
             android:textSize="13sp"
             android:fontFamily="sans-serif-light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardWeatherLayers"
-            tools:text="GFS27 - Global forecast, 27km resolution, 76% accuracy" />
-
-        <!-- Card cho lựa chọn mô hình -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardModels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textModelInfo">
-
-            <HorizontalScrollView
-                android:id="@+id/scrollViewModels"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:id="@+id/forecastModelContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
-        </com.google.android.material.card.MaterialCardView>
-
+            app:layout_constraintTop_toBottomOf="@+id/textForecastTitle"
+            tools:text="27km resolution, 76% accuracy" />
 
         <!-- Card cho RecyclerView dự báo -->
         <com.google.android.material.card.MaterialCardView
@@ -176,7 +161,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardModels">
+            app:layout_constraintTop_toBottomOf="@+id/textModelInfo">
 
             <HorizontalScrollView
                 android:layout_width="match_parent"

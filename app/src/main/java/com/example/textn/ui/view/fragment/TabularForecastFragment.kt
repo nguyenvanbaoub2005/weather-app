@@ -36,8 +36,8 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
     private lateinit var forecastAdapter: ForecastTabularAdapter
     private lateinit var googleMap: GoogleMap
 
-    private val forecastModels = listOf("GFS27", "ECMWF", "ICON")
-    private val modelButtons = mutableListOf<TextView>()
+    // Default model is hardcoded since we've removed the selection UI
+    private val defaultModel = "GFS27"
 
     // Default location coordinates (Da Nang, Vietnam)
     private lateinit var defaultLocation: LatLng
@@ -61,7 +61,6 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
 
         setupViewModel()
         setupRecyclerView()
-        setupForecastModelButtons()
         setupWeatherLayerButtons()
         setupObservers()
         setupMap()
@@ -70,9 +69,8 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         val lon = requireArguments().getDouble("lon")
         defaultLocation = LatLng(lat, lon)
 
-
-        // Initial data load
-        viewModel.fetchForecastData(defaultLocation.latitude, defaultLocation.longitude)
+        // Initial data load with default model
+        viewModel.fetchForecastData(defaultLocation.latitude, defaultLocation.longitude, defaultModel)
     }
 
     private fun setupMap() {
@@ -106,7 +104,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
             updateSelectedLocation(latLng)
 
             // Fetch new forecast data for selected location
-            viewModel.fetchForecastData(latLng.latitude, latLng.longitude)
+            viewModel.fetchForecastData(latLng.latitude, latLng.longitude, defaultModel)
         }
     }
 
@@ -131,7 +129,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         // Create new tile overlay based on selected layer and model
         val tileProvider = createWeatherTileProvider(
             layerType,
-            viewModel.selectedForecastModel.value ?: forecastModels[0]
+            defaultModel
         )
 
         currentLayerOverlay = googleMap.addTileOverlay(
@@ -148,7 +146,13 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         // In a real app, you would use your weather data provider's API
         return object : UrlTileProvider(256, 256) {
             override fun getTileUrl(x: Int, y: Int, zoom: Int): URL? {
-                val layerCode = "clouds" // Hoặc "wind", "temp", "precipitation"...
+                val layerCode = when (layerType.lowercase()) {
+                    "wind" -> "wind"
+                    "temperature" -> "temp"
+                    "precipitation" -> "precipitation"
+                    "clouds" -> "clouds"
+                    else -> "clouds"
+                }
                 val apiKey = "455ecceeeb343a351bdba343de087d00"
                 val urlStr = "https://tile.openweathermap.org/map/$layerCode/$zoom/$x/$y.png?appid=$apiKey"
                 return try {
@@ -173,31 +177,6 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun setupForecastModelButtons() {
-        // Dynamically create model selection buttons
-        forecastModels.forEach { model ->
-            val modelButton = layoutInflater.inflate(
-                R.layout.item_forecast_model_button,
-                binding.forecastModelContainer,
-                false
-            ) as TextView
-
-            modelButton.text = model
-            modelButton.setOnClickListener {
-                viewModel.changeForecastModel(model)
-                updateSelectedModelButton(model)
-
-                // Update weather layer with new model
-                if (::googleMap.isInitialized) {
-                    applyWeatherLayer(currentLayer)
-                }
-            }
-
-            binding.forecastModelContainer.addView(modelButton)
-            modelButtons.add(modelButton)
-        }
-    }
-
     private fun setupWeatherLayerButtons() {
         // Dynamically create weather layer buttons
         weatherLayers.forEach { layer ->
@@ -219,24 +198,6 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
 
         // Set default selected layer
         updateSelectedLayerButton(currentLayer)
-    }
-
-
-
-    private fun updateSelectedModelButton(selectedModel: String) {
-        modelButtons.forEachIndexed { index, button ->
-            val isSelected = forecastModels[index] == selectedModel
-            button.isSelected = isSelected
-            button.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    if (isSelected) R.color.forecast_model_selected_text else R.color.forecast_model_text
-                )
-            )
-            button.setBackgroundResource(
-                if (isSelected) R.drawable.bg_forecast_model_selected else R.drawable.bg_forecast_model
-            )
-        }
     }
 
     private fun updateSelectedLayerButton(selectedLayer: String) {
@@ -266,7 +227,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.progressBarCard.visibility = if (isLoading) View.VISIBLE else View.GONE
             binding.forecastContent.visibility = if (isLoading) View.GONE else View.VISIBLE
         }
 
@@ -275,10 +236,6 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
                 Toast.makeText(context, it, Toast.LENGTH_LONG).show()
             }
         }
-
-        viewModel.selectedForecastModel.observe(viewLifecycleOwner) { model ->
-            updateSelectedModelButton(model)
-        }
     }
 
     private fun updateForecastDisplay(data: ForecastTabularData) {
@@ -286,7 +243,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun updateModelInfo(data: ForecastTabularData) {
-        val modelInfoText = "${data.modelName} - ${data.modelResolution}km resolution, ${data.modelAccuracy}% accuracy"
+        val modelInfoText = "${data.modelResolution}km resolution, ${data.modelAccuracy}% accuracy"
         binding.textModelInfo.text = modelInfoText
     }
 
