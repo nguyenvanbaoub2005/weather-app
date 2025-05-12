@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -76,6 +78,7 @@ dependencies{
     implementation("androidx.drawerlayout:drawerlayout:1.1.1")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.5")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
 }
 
@@ -129,10 +132,17 @@ dependencies {
         implementation ("io.noties.markwon:ext-tables:4.6.2")
     }
 }
-
+dependencies {
+// Cloudinary
+implementation ("com.cloudinary:cloudinary-android:2.3.1")
+    // Glide để hiển thị hình ảnh
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    kapt ("com.github.bumptech.glide:compiler:4.15.1")
+}
 buildscript {
     dependencies {
         classpath ("com.google.gms:google-services:4.3.15")// mới nhất
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5")
     }
 
 }

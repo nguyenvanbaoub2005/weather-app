@@ -85,7 +85,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_food"
-                            app:tint="@color/orange_primary" />
+                            app:tint="@color/divider_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_entertainment"
-                            app:tint="@color/orange_primary" />
+                            app:tint="@color/divider_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -161,7 +161,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_shopping"
-                            app:tint="@color/orange_primary" />
+                            app:tint="@color/divider_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -199,7 +199,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_accommodation"
-                            app:tint="@color/orange_primary" />
+                            app:tint="@color/divider_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -237,7 +237,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_all"
-                            app:tint="@color/orange_primary" />
+                            app:tint="@color/divider_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -312,14 +312,14 @@
                 android:id="@+id/progressBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:indeterminateTint="@color/orange_primary" />
+                android:indeterminateTint="@color/divider_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Đang tải gợi ý..."
-                android:textColor="@color/orange_primary"
+                android:textColor="@color/divider_primary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>

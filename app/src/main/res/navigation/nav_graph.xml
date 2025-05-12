@@ -17,7 +17,7 @@
             app:destination="@id/tabularForecastFragment" />
     </fragment>
 
-    <!--     Thời tiết -->
+<!--     Thời tiết -->
     <fragment
         android:id="@+id/nav_weather"
         android:name="com.example.textn.ui.view.fragment.MapWeatherFragment"
@@ -29,21 +29,17 @@
         android:id="@+id/nav_health"
         android:name="com.example.textn.ui.view.fragment.HealthAlertsFragment"
         android:label="Cảnh báo sức khoẻ" />
-
     <!-- Cài đặt -->
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.textn.ui.view.fragment.SettingsFragment"
         android:label="Cài đặt"
         tools:layout="@layout/fragment_settings" />
-
-    <!-- Gemini AI -->
     <fragment
         android:id="@+id/geminiAIFragment"
         android:name="com.example.textn.ui.view.fragment.GeminiAIFragment"
         android:label="Gemini AI"
         tools:layout="@layout/fragment_gemini_ai" />
-
     <!-- Đơn vị -->
     <fragment
         android:id="@+id/nav_units"
@@ -93,4 +89,38 @@
         android:name="com.example.textn.ui.fragment.TabularForecastFragment"
         android:label="Forecast"
         tools:layout="@layout/fragment_tabular_forecast" />
+<!--     Chi tiết bài đăng -->
+    <fragment
+        android:id="@+id/nav_communityFragment"
+        android:name="com.example.textn.ui.view.fragment.CommunityFragment"
+        android:label="Community"
+        tools:layout="@layout/fragment_community">
+        <action
+            android:id="@+id/action_communityFragment_to_postDetailFragment"
+            app:destination="@id/nav_postDetailFragment" />
+        <action
+            android:id="@+id/action_communityFragment_to_addPostFragment"
+            app:destination="@id/nav_addPostFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_postDetailFragment"
+        android:name="com.example.textn.ui.view.fragment.PostDetailFragment"
+        android:label="Post Detail"
+        tools:layout="@layout/fragment_post_detail" >
+        <argument
+           android:name="postId"
+            app:argType="string"
+           app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_addPostFragment"
+        android:name="com.example.textn.ui.view.fragment.AddPostFragment"
+        android:label="Add Post"
+        tools:layout="@layout/fragment_add_post" />
+
+    <!-- Action từ trang community đến chi tiết bài đăng -->
+    <action
+        android:id="@+id/action_communityFragment_to_postDetailFragment"
+        app:destination="@id/nav_addPostFragment" />
 </navigation>

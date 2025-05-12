@@ -245,98 +245,102 @@
                 app:cardBackgroundColor="@color/dark_blue_card"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_favorites_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_favorites_title">
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Header với icon, tiêu đề và nút thêm -->
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_image_button1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
 
-            <TextView
-                android:id="@+id/tv_community_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="Cộng đồng"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/iv_community_icon"
-                app:layout_constraintStart_toEndOf="@id/iv_community_icon"
-                app:layout_constraintTop_toTopOf="@id/iv_community_icon" />
+                    <!-- Icon bên trái -->
+                    <ImageView
+                        android:id="@+id/iv_community_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_image_button1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:tint="@color/white" />
 
-            <ImageButton
-                android:id="@+id/btnFavoriteName"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Thêm nội dung"
-                android:src="@drawable/ic_add"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/teal" />
+                    <!-- Tiêu đề -->
+                    <TextView
+                        android:id="@+id/tv_community_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Cộng đồng"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="@id/iv_community_icon"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_community_icon"
+                        app:layout_constraintStart_toEndOf="@id/iv_community_icon"
+                        app:layout_constraintEnd_toStartOf="@id/btn_blog" />
 
-            <!-- Grid hình ảnh -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_community_images"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:clipToPadding="false"
-                app:layout_constraintTop_toBottomOf="@id/tv_community_title" />
+                    <!-- Nút thêm -->
+                    <ImageButton
+                        android:id="@+id/btn_blog"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Thêm nội dung"
+                        android:src="@drawable/ic_add"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:tint="@color/teal" />
 
-            <!-- Đoạn mã dưới đây là giải pháp thay thế RecyclerView để hiển thị cố định 4 hình ảnh như trong ảnh -->
+                    <!-- GridLayout chứa 4 ảnh -->
+                    <GridLayout
+                        android:id="@+id/grid_community_images"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:columnCount="4"
+                        android:rowCount="1"
+                        app:layout_constraintTop_toBottomOf="@id/iv_community_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
 
-            <GridLayout
-                android:id="@+id/grid_community_images"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:columnCount="4"
-                app:layout_constraintTop_toBottomOf="@id/tv_community_title">
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/community_image1"
+                            android:background="@drawable/rounded_corners" />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="2dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/community_image1"
-                    android:background="@drawable/rounded_corners" />
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/community_image2"
+                            android:background="@drawable/rounded_corners" />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="2dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/community_image2"
-                    android:background="@drawable/rounded_corners" />
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/community_image3"
+                            android:background="@drawable/rounded_corners" />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="2dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/community_image3"
-                    android:background="@drawable/rounded_corners" />
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="2dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/community_image4"
+                            android:background="@drawable/rounded_corners" />
+                    </GridLayout>
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="2dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/community_image4"
-                    android:background="@drawable/rounded_corners" />
-            </GridLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
                     <!-- Weather Stations Section -->
@@ -490,7 +494,7 @@
                     android:paddingEnd="16dp">
 
                     <ImageView
-                        android:id="@+id/iv_community_icon"
+                        android:id="@+id/iv_community_icon1"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_community"
@@ -506,9 +510,9 @@
                         android:text="Cộng đồng"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_community_icon"
-                        app:layout_constraintStart_toEndOf="@id/iv_community_icon"
-                        app:layout_constraintTop_toTopOf="@id/iv_community_icon" />
+                        app:layout_constraintBottom_toBottomOf="@id/iv_community_icon1"
+                        app:layout_constraintStart_toEndOf="@id/iv_community_icon1"
+                        app:layout_constraintTop_toTopOf="@id/iv_community_icon1" />
 
                     <ImageButton
                         android:id="@+id/btn_add"
