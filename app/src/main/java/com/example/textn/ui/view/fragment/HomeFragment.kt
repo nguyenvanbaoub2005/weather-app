@@ -107,6 +107,9 @@ class HomeFragment : Fragment() {
         binding.btnMap.setOnClickListener {
             findNavController().navigate(R.id.nav_weather)
         }
+        binding.tvChat.setOnClickListener {
+            findNavController().navigate(R.id.nav_gemini_ai)
+        }
 
         // Nút chọn lớp dữ liệu thời tiết (wind, temp, rain,...)
         binding.cardWeather.findViewById<View>(R.id.btn_settings).setOnClickListener {
@@ -118,6 +121,10 @@ class HomeFragment : Fragment() {
 ////            searchNearbyPlaces()
 //            findNavController().navigate(R.id.nav_communityFragment)
 //        }
+
+        binding.tvLocationType.setOnClickListener {
+            findNavController().navigate(R.id.nav_Location_type)
+       }
         binding.btnBlog.setOnClickListener {
             findNavController().navigate(R.id.nav_communityFragment)
         }

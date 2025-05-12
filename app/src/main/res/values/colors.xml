@@ -176,7 +176,9 @@
     <color name="forecast_model_selected_text">#000000</color>
     <color name="forecast_model_bg">#4D5F72</color>
     <color name="forecast_model_selected_bg">#4CAF50</color>
-    <color name="accent_light">#FFECB3</color>         <!-- Vàng cam nhạt -->
+    <color name="accent_light">#FFECB3</color>
+    <!-- Vàng cam nhạt -->
+        <color name="pink">#E91E63</color>
 
 </resources>
 

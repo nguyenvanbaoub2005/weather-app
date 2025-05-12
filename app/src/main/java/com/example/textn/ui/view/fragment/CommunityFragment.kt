@@ -37,11 +37,10 @@ class CommunityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Thiết lập nút quay lại
-//        val btnBack: ImageButton = view.findViewById(R.id.btn_back)
-//        btnBack.setOnClickListener {
-//            findNavController().navigateUp()
-//        }
+        val btnBack: ImageButton = view.findViewById(R.id.btn_close)
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         // Thiết lập RecyclerView
         recyclerView = view.findViewById(R.id.rv_community)

@@ -1,5 +1,8 @@
+package com.example.textn.data.repository
+
 import com.example.textn.data.model.Comment
 import com.example.textn.data.model.Post
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await
@@ -17,10 +20,48 @@ class PostRepository {
                 .get()
                 .await()
 
-            return@withContext snapshot.toObjects(Post::class.java)
+            val posts = mutableListOf<Post>()
+
+            // Xử lý từng document để lấy thông tin likes
+            for (document in snapshot.documents) {
+                val post = document.toObject(Post::class.java)?.copy(id = document.id)
+
+                if (post != null) {
+                    // Lấy danh sách người dùng đã like bài viết
+                    val likesSnapshot = document.reference.collection("likes").get().await()
+                    val likedUserIds = likesSnapshot.documents.map { it.id }
+
+                    // Cập nhật post với danh sách người đã like
+                    val updatedPost = post.copy(likedUserIds = likedUserIds)
+                    posts.add(updatedPost)
+                }
+            }
+
+            return@withContext posts
         } catch (e: Exception) {
             e.printStackTrace()
             return@withContext emptyList()
+        }
+    }
+
+    suspend fun getPostById(postId: String): Post? = withContext(Dispatchers.IO) {
+        try {
+            val document = postsCollection.document(postId).get().await()
+            val post = document.toObject(Post::class.java)?.copy(id = document.id)
+
+            if (post != null) {
+                // Lấy danh sách người dùng đã like bài viết
+                val likesSnapshot = document.reference.collection("likes").get().await()
+                val likedUserIds = likesSnapshot.documents.map { it.id }
+
+                // Cập nhật post với danh sách người đã like
+                return@withContext post.copy(likedUserIds = likedUserIds)
+            }
+
+            return@withContext null
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return@withContext null
         }
     }
 
@@ -44,7 +85,23 @@ class PostRepository {
                 .get()
                 .await()
 
-            return@withContext snapshot.toObjects(Post::class.java)
+            val posts = mutableListOf<Post>()
+
+            for (document in snapshot.documents) {
+                val post = document.toObject(Post::class.java)?.copy(id = document.id)
+
+                if (post != null) {
+                    // Lấy danh sách người dùng đã like bài viết
+                    val likesSnapshot = document.reference.collection("likes").get().await()
+                    val likedUserIds = likesSnapshot.documents.map { it.id }
+
+                    // Cập nhật post với danh sách người đã like
+                    val updatedPost = post.copy(likedUserIds = likedUserIds)
+                    posts.add(updatedPost)
+                }
+            }
+
+            return@withContext posts
         } catch (e: Exception) {
             e.printStackTrace()
             return@withContext emptyList()
@@ -69,12 +126,23 @@ class PostRepository {
                     .get()
                     .await()
 
-                val posts = snapshot.toObjects(Post::class.java)
+                val posts = mutableListOf<Post>()
 
-                // Lọc thêm theo longitude (vì Firestore chỉ hỗ trợ 1 phạm vi inequality)
-                return@withContext posts.filter { post ->
-                    post.location.longitude in minLon..maxLon
+                for (document in snapshot.documents) {
+                    val post = document.toObject(Post::class.java)?.copy(id = document.id)
+
+                    if (post != null && post.location.longitude in minLon..maxLon) {
+                        // Lấy danh sách người dùng đã like bài viết
+                        val likesSnapshot = document.reference.collection("likes").get().await()
+                        val likedUserIds = likesSnapshot.documents.map { it.id }
+
+                        // Cập nhật post với danh sách người đã like
+                        val updatedPost = post.copy(likedUserIds = likedUserIds)
+                        posts.add(updatedPost)
+                    }
                 }
+
+                return@withContext posts
             } catch (e: Exception) {
                 e.printStackTrace()
                 return@withContext emptyList()
@@ -82,15 +150,43 @@ class PostRepository {
         }
     }
 
-    suspend fun likePost(postId: String): Boolean = withContext(Dispatchers.IO) {
+    suspend fun toggleLike(postId: String, userId: String): Boolean = withContext(Dispatchers.IO) {
         try {
             val postRef = postsCollection.document(postId)
-            db.runTransaction { transaction ->
-                val snapshot = transaction.get(postRef)
-                val currentLikes = snapshot.getLong("likes") ?: 0
-                transaction.update(postRef, "likes", currentLikes + 1)
-            }.await()
+            val likeRef = postRef.collection("likes").document(userId)
+
+            val likeDoc = likeRef.get().await()
+
+            if (likeDoc.exists()) {
+                // Nếu đã like rồi → unlike
+                db.runTransaction { transaction ->
+                    val snapshot = transaction.get(postRef)
+                    val currentLikes = snapshot.getLong("likes") ?: 0
+                    transaction.update(postRef, "likes", Math.max(0, currentLikes - 1))
+                    transaction.delete(likeRef)
+                }.await()
+            } else {
+                // Nếu chưa like → like
+                db.runTransaction { transaction ->
+                    val snapshot = transaction.get(postRef)
+                    val currentLikes = snapshot.getLong("likes") ?: 0
+                    transaction.update(postRef, "likes", currentLikes + 1)
+                    transaction.set(likeRef, mapOf("timestamp" to FieldValue.serverTimestamp()))
+                }.await()
+            }
+
             return@withContext true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return@withContext false
+        }
+    }
+
+    suspend fun isPostLikedByUser(postId: String, userId: String): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val likeRef = postsCollection.document(postId).collection("likes").document(userId)
+            val document = likeRef.get().await()
+            return@withContext document.exists()
         } catch (e: Exception) {
             e.printStackTrace()
             return@withContext false
