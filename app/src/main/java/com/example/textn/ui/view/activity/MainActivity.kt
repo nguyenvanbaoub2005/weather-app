@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.bumptech.glide.Glide
 import com.example.textn.R
 import com.example.textn.data.local.UserPreferences
 import com.google.android.material.navigation.NavigationView
@@ -74,29 +75,59 @@ class MainActivity : AppCompatActivity() {
 
     // Cập nhật thông tin người dùng ở phần header của Navigation Drawer
     private fun updateDrawerHeader() {
-        val username = userPrefs.getUserName() ?: "Nguyễn Văn Bảo"
-        val email = userPrefs.getUserEmail() ?: "Chưa có email"
-
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         val headerView: View = navigationView.getHeaderView(0)
 
         val avatarImageView = headerView.findViewById<ImageView>(R.id.avatar)
         val usernameTextView = headerView.findViewById<TextView>(R.id.username)
-        val proStatusTextView = headerView.findViewById<TextView>(R.id.proStatus)
+//        val proStatusTextView = headerView.findViewById<TextView>(R.id.proStatus)
         val logoutButton = headerView.findViewById<Button>(R.id.logoutButton)
 
-        usernameTextView.text = username
-        proStatusTextView.text = if (email.isNotEmpty()) "Có PRO" else "Không phải PRO"
-        avatarImageView.setImageResource(R.drawable.__1_bao)
+        // Lấy tài khoản Google hiện tại
+        val account = com.google.android.gms.auth.api.signin.GoogleSignIn.getLastSignedInAccount(this)
+
+        if (account != null) {
+            val displayName = account.displayName ?: "Người dùng"
+            val email = account.email ?: "Không rõ email"
+            val photoUrl = account.photoUrl
+
+            usernameTextView.text = displayName
+
+            // Hiển thị ảnh avatar nếu có
+            if (photoUrl != null) {
+                Glide.with(this)
+                    .load(photoUrl)
+                    .placeholder(R.drawable.__1_bao) // Ảnh tạm trong lúc chờ load
+                    .error(R.drawable.__1_bao)       // Ảnh fallback nếu lỗi
+                    .into(avatarImageView)
+            } else {
+                avatarImageView.setImageResource(R.drawable.__1_bao)
+            }
+        } else {
+            // Nếu chưa đăng nhập bằng Google, dùng dữ liệu local
+            val username = userPrefs.getUserName() ?: "Nguyễn Văn Bảo"
+            val email = userPrefs.getUserEmail() ?: "Chưa có email"
+
+            usernameTextView.text = username
+//            proStatusTextView.text = if (email.isNotEmpty()) "Có PRO" else "Không phải PRO"
+            avatarImageView.setImageResource(R.drawable.__1_bao)
+        }
 
         // Bắt sự kiện Đăng xuất
         logoutButton.setOnClickListener {
+            // Nếu có đăng nhập Google thì sign out luôn
+            com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(
+                this,
+                com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN
+            ).signOut()
+
             userPrefs.clearUserData()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
+
 
     // Hàm mở Drawer
     fun openDrawer() {

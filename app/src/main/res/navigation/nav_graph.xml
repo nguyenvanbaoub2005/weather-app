@@ -119,6 +119,12 @@
         android:label="Add Post"
         tools:layout="@layout/fragment_add_post" />
 
+    <fragment
+        android:id="@+id/nav_gemini_ai"
+        android:name="com.example.textn.ui.view.fragment.GeminiAIFragment"
+        android:label="Forecast"
+        tools:layout="@layout/fragment_gemini_ai" />
+
     <!-- Action từ trang community đến chi tiết bài đăng -->
     <action
         android:id="@+id/action_communityFragment_to_postDetailFragment"

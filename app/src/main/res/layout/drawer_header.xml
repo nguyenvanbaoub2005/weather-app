@@ -24,15 +24,15 @@
         android:layout_gravity="center_horizontal"
         android:paddingTop="8dp" />
 
-    <TextView
-        android:id="@+id/proStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Không phải PRO"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="2dp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/proStatus"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Không phải PRO"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:textSize="14sp"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:paddingTop="2dp"/>-->
 
     <!-- Thêm nút Đăng xuất -->
     <Button

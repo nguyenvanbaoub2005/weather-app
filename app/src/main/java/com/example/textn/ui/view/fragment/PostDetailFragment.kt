@@ -41,9 +41,11 @@ class PostDetailFragment : Fragment() {
     private lateinit var etComment: EditText
     private lateinit var btnSendComment: ImageButton
     private lateinit var rvComments: RecyclerView
-
     private val args: PostDetailFragmentArgs by navArgs()
-    private lateinit var post: Post
+    private lateinit var commentAdapter: CommentAdapter
+
+    // Biến theo dõi trạng thái hiện tại của nút like
+    private var isLiked = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,7 +77,7 @@ class PostDetailFragment : Fragment() {
 
         // Thiết lập RecyclerView cho comments
         rvComments.layoutManager = LinearLayoutManager(requireContext())
-        val commentAdapter = CommentAdapter()
+        commentAdapter = CommentAdapter()
         rvComments.adapter = commentAdapter
 
         // Nút quay lại
@@ -83,14 +85,18 @@ class PostDetailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        // Quan sát danh sách posts
-        viewModel.posts.observe(viewLifecycleOwner) { posts ->
-            val currentPost = posts.find { it.id == args.postId }
-            if (currentPost != null) {
-                post = currentPost
-                displayPostDetails()
-                commentAdapter.submitList(post.comments.reversed())
-            }
+        // Hiển thị loading state
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            // Có thể thêm ProgressBar và cập nhật trạng thái ở đây
+        }
+
+        // Quan sát bài viết hiện tại
+        viewModel.currentPost.observe(viewLifecycleOwner) { post ->
+            displayPostDetails(post)
+            commentAdapter.submitList(post.comments.reversed())
+
+            // Cập nhật trạng thái like
+            updateLikeStatus(post)
         }
 
         // Quan sát thông báo lỗi
@@ -102,8 +108,33 @@ class PostDetailFragment : Fragment() {
 
         // Nút like
         btnLike.setOnClickListener {
-            viewModel.likePost(args.postId)
+            val userId = viewModel.currentUserId
+            if (userId != null) {
+                // Vô hiệu hóa tạm thời nút Like để tránh spam
+                btnLike.isEnabled = false
+
+                // Cập nhật UI ngay
+                isLiked = !isLiked
+                updateLikeButtonColor(isLiked)
+
+                val currentPost = viewModel.currentPost.value
+                if (currentPost != null) {
+                    val newLikeCount = if (isLiked) currentPost.likes + 1 else maxOf(0, currentPost.likes - 1)
+                    tvLikesCount.text = "$newLikeCount lượt thích"
+                }
+
+                // Gọi API cập nhật
+                viewModel.toggleLike(args.postId, userId)
+
+                // Bật lại nút sau 1 giây (tùy chỉnh theo nhu cầu)
+                btnLike.postDelayed({
+                    btnLike.isEnabled = true
+                }, 2000)
+            } else {
+                Toast.makeText(requireContext(), "Bạn cần đăng nhập để thích bài viết", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
         // Nút gửi comment
         btnSendComment.setOnClickListener {
@@ -111,24 +142,50 @@ class PostDetailFragment : Fragment() {
             if (commentText.isNotEmpty()) {
                 viewModel.addComment(args.postId, commentText)
                 etComment.text.clear()
+            } else {
+                Toast.makeText(requireContext(), "Vui lòng nhập nội dung bình luận", Toast.LENGTH_SHORT).show()
             }
         }
 
         // Tải thông tin của post
-        viewModel.loadPosts()
+        viewModel.loadPostById(args.postId)
     }
 
-    private fun displayPostDetails() {
+    private fun updateLikeStatus(post: Post) {
+        val userId = viewModel.currentUserId
+        if (userId != null) {
+            isLiked = post.likedUserIds.contains(userId)
+            updateLikeButtonColor(isLiked)
+        }
+    }
+
+    private fun updateLikeButtonColor(isLiked: Boolean) {
+        val color = if (isLiked) {
+            // màu hồng khi đã like
+            requireContext().getColor(R.color.pink)  // Bạn cần định nghĩa màu này trong colors.xml
+        } else {
+            // màu trắng khi chưa like
+            requireContext().getColor(android.R.color.white)
+        }
+        btnLike.setColorFilter(color)
+    }
+
+    private fun displayPostDetails(post: Post) {
         // Hiển thị hình ảnh bài đăng
         Glide.with(requireContext())
             .load(post.imageUrl)
             .into(ivPostImage)
         Log.d("PostDetailFragment", "Image URL: ${post.imageUrl}")
 
-//        // Hiển thị avatar người dùng
-//        Glide.with(requireContext())
-////            .load(post.userPhotoUrl ?: R.drawable.ic_menu_gallery) // Sử dụng default nếu không có URL
-////            .into(ivUserAvatar)
+        // Hiển thị avatar người dùng nếu có
+        // Phần này có thể cần điều chỉnh tùy thuộc vào model User của bạn
+//        try {
+//            Glide.with(requireContext())
+//                .load(R.drawable.ic_menu_gallery) // Default placeholder
+//                .into(ivUserAvatar)
+//        } catch (e: Exception) {
+//            Log.e("PostDetailFragment", "Error loading avatar", e)
+//        }
 
         // Hiển thị thông tin chi tiết
         tvPostDescription.text = post.description

@@ -21,19 +21,22 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
+            <!-- Nút thoát (dấu X) bên trái -->
             <ImageButton
-                android:id="@+id/btn_back"
+                android:id="@+id/btn_close"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:navigationIcon="@drawable/ic_menu_back"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|center_vertical"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Quay lại"
+                android:contentDescription="Thoát"
+                android:padding="12dp"
+                android:src="@drawable/ic_arrow_back"
                 app:tint="@android:color/black" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="0.45"/>
 
             <ImageView
                 android:layout_width="24dp"

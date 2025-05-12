@@ -7,9 +7,10 @@ data class Post(
     val imageUrl: String = "",
     val location: PostLocation = PostLocation(),
     val description: String = "",
-    val timestamp: Long = System.currentTimeMillis(),
+    val timestamp: Long = 0,
     val likes: Int = 0,
-    val comments: List<Comment> = emptyList()
+    val comments: List<Comment> = listOf(),
+    val likedUserIds: List<String> = listOf() // Thêm trường này để lưu danh sách userIds đã like bài viết
 )
 
 data class PostLocation(
@@ -22,5 +23,5 @@ data class Comment(
     val userId: String = "",
     val displayName: String = "",
     val text: String = "",
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = 0
 )

@@ -228,7 +228,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:text="Gợi ý địa điểm giải trí "
+                android:text="Khám phá kì quan "
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -259,7 +259,7 @@
                         android:id="@+id/iv_community_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_image_button1"
+                        android:src="@drawable/community"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:tint="@color/white" />
@@ -453,9 +453,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Trò chuyện"
+                        android:text="Trò chuyện cùng Ai Weather"
                         android:textColor="@color/white"
                         android:textSize="18sp"
+                        android:clickable="true"
+                        android:focusable="true"
                         app:layout_constraintBottom_toBottomOf="@id/iv_chat_icon"
                         app:layout_constraintStart_toEndOf="@id/iv_chat_icon"
                         app:layout_constraintTop_toTopOf="@id/iv_chat_icon" />
@@ -503,16 +505,20 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_community"
+                        android:id="@+id/tv_location_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Cộng đồng"
+                        android:text="Gợi ý địa điểm giải trí"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_community_icon1"
-                        app:layout_constraintStart_toEndOf="@id/iv_community_icon1"
-                        app:layout_constraintTop_toTopOf="@id/iv_community_icon1" />
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?android:attr/selectableItemBackground"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_community_icon1"
+                    app:layout_constraintStart_toEndOf="@id/iv_community_icon1"
+                    app:layout_constraintTop_toTopOf="@id/iv_community_icon1" />
+
 
                     <ImageButton
                         android:id="@+id/btn_add"
