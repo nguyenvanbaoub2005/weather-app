@@ -34,28 +34,22 @@ class ForecastTabularViewModel(
      * @param modelName Tên mô hình dự báo (mặc định là "GFS27")
      */
     @RequiresApi(Build.VERSION_CODES.O)
+    // Hàm để lấy dữ liệu dự báo thời tiết dựa trên vĩ độ và kinh độ
     fun fetchForecastData(lat: Double, lon: Double, modelName: String = "GFS27") {
-        // Đặt trạng thái tải và xóa thông báo lỗi trước khi bắt đầu
-        _isLoading.value = true
-        _errorMessage.value = null
+        _isLoading.value = true // Đánh dấu đang trong quá trình tải dữ liệu
+        _errorMessage.value = null // Xóa thông báo lỗi trước đó
 
-        // Sử dụng coroutine để thực hiện tác vụ không đồng bộ
+        // Sử dụng coroutine để thực hiện tải dữ liệu không đồng bộ
         viewModelScope.launch {
             try {
-                // Gọi repository để lấy dữ liệu dự báo
+                // Gọi hàm để lấy dữ liệu dự báo từ repository
                 val result = repository.getForecastData(lat, lon)
-
-                // Cập nhật LiveData với dữ liệu nhận được
-                _forecastData.postValue(result)
-
-                // Kết thúc quá trình tải
-                _isLoading.postValue(false)
+                _forecastData.postValue(result) // Cập nhật dữ liệu dự báo
+                _isLoading.postValue(false) // Đánh dấu quá trình tải hoàn tất
             } catch (e: Exception) {
-                // Xử lý lỗi
-                _isLoading.postValue(false)
-                _errorMessage.postValue(e.localizedMessage ?: "Đã xảy ra lỗi khi tải dữ liệu")
-                Log.e("ForecastTabularViewModel", "Fetch error", e)
-
+                _isLoading.postValue(false) // Đánh dấu quá trình tải hoàn tất trong trường hợp có lỗi
+                _errorMessage.postValue(e.localizedMessage ?: "Đã xảy ra lỗi khi tải dữ liệu") // Cập nhật thông báo lỗi
+                Log.e("ForecastTabularViewModel", "Fetch error", e) // Ghi log lỗi
             }
         }
     }

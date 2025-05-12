@@ -180,5 +180,12 @@
     <!-- Vàng cam nhạt -->
         <color name="pink">#E91E63</color>
 
+    <!-- Màu sắc cho lượng mưa -->
+    <color name="precipitation_very_light">#E3F2FD</color>  <!-- Màu xanh nhạt rất nhẹ -->
+    <color name="precipitation_light">#90CAF9</color>       <!-- Màu xanh nhẹ -->
+    <color name="precipitation_moderate">#2196F3</color>    <!-- Màu xanh vừa -->
+    <color name="precipitation_heavy">#1976D2</color>       <!-- Màu xanh đậm -->
+    <color name="precipitation_very_heavy">#0D47A1</color>  <!-- Màu xanh rất đậm -->
+
 </resources>
 

@@ -12,7 +12,9 @@ import com.example.textn.data.network.RetrofitClient
 import java.util.Date
 import java.time.LocalDate
 import java.time.LocalDate.of
+import java.time.ZoneId
 import java.util.Calendar
+import java.util.TimeZone
 
 class ForecastRepository(private val apiService: WeatherApiService) {
 
@@ -54,63 +56,75 @@ class ForecastRepository(private val apiService: WeatherApiService) {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun convertToForecastDays(hourlyData: List<HourlyData>): List<DayForecast> {
         val today = LocalDate.now()
-        val allowedHours = listOf(1, 4, 7, 10, 13, 16, 19, 22) // Giờ tương ứng: 1AM, 4AM, ..., 10PM
+        val allowedHours = listOf(1, 4, 7, 10, 13, 16, 19, 22)
 
+        // Nhóm dữ liệu theo ngày
         val groupedByDay = hourlyData.groupBy {
-            Date(it.dt * 1000L).toLocalDate()
+            Date(it.dt * 1000L).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
         }
 
         return groupedByDay
-            .filterKeys { it.isAfter(today) }
-            .toSortedMap() // Đảm bảo sắp xếp theo thứ tự ngày tăng dần
+            .filterKeys { it.isAfter(today.minusDays(1)) }
+            .toSortedMap()
             .entries
-            .take(5) // ✅ Lấy đúng 5 ngày tiếp theo
+            .take(5) // lấy 5 ngày
             .map { (date, hourlyEntries) ->
+                val forecastsByHour = hourlyEntries.associateBy { entry ->
+                    Calendar.getInstance().apply { time = Date(entry.dt * 1000L) }
+                        .get(Calendar.HOUR_OF_DAY)
+                }
+
+                val hourlyForecasts = allowedHours.mapNotNull { hour ->
+                    val matched = forecastsByHour[hour]
+                        ?: forecastsByHour.entries.minByOrNull { entry ->
+                            kotlin.math.abs(entry.key - hour)
+                        }?.value
+
+                    matched?.let { hourly ->
+                        HourlyForecast(
+                            time = Date(hourly.dt * 1000L),
+                            windSpeed = hourly.windSpeed,
+                            windDirection = hourly.windDeg,
+                            beaufortValue = calculateBeaufortScale(hourly.windSpeed),
+                            beaufortGusts = calculateBeaufortScale(hourly.windGust ?: hourly.windSpeed),
+                            temperature = hourly.temp,
+                            feelsLike = hourly.feelsLike,
+                            precipitation = hourly.pop?.let { it.toFloat() * 10f } ?: 0f,
+                            waveHeight = null
+                        )
+                    }
+                }
+
                 DayForecast(
-                    date = date.toDate(),
-                    hourlyForecasts = hourlyEntries
-                        .filter { entry ->
-                            val calendar = Calendar.getInstance().apply { time = Date(entry.dt * 1000L) }
-                            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-                            hour in allowedHours
-                        }
-                        .map { hourly ->
-                            HourlyForecast(
-                                time = Date(hourly.dt * 1000L),
-                                windSpeed = hourly.windSpeed,
-                                windDirection = hourly.windDeg,
-                                beaufortValue = calculateBeaufortScale(hourly.windSpeed),
-                                beaufortGusts = calculateBeaufortScale(hourly.windGust ?: hourly.windSpeed),
-                                temperature = hourly.temp,
-                                feelsLike = hourly.feelsLike,
-                                precipitation = (hourly.pop ?: 0.0).toFloat(),
-                                waveHeight = null
-                            )
-                        }
+                    date = date.atStartOfDay(ZoneId.systemDefault()).toInstant().let { Date.from(it) },
+                    hourlyForecasts = hourlyForecasts
                 )
             }
-
     }
 
 
 
 
-    // Calculate Beaufort scale from wind speed
+
+
+
+
+    // Hàm để tính thang Beaufort dựa trên tốc độ gió (m/s)
     private fun calculateBeaufortScale(windSpeed: Float): Int {
         return when {
-            windSpeed < 0.5 -> 0 // Calm
-            windSpeed < 1.5 -> 1 // Light air
-            windSpeed < 3.3 -> 2 // Light breeze
-            windSpeed < 5.5 -> 3 // Gentle breeze
-            windSpeed < 8.0 -> 4 // Moderate breeze
-            windSpeed < 10.8 -> 5 // Fresh breeze
-            windSpeed < 13.9 -> 6 // Strong breeze
-            windSpeed < 17.2 -> 7 // High wind
-            windSpeed < 20.7 -> 8 // Gale
-            windSpeed < 24.4 -> 9 // Strong gale
-            windSpeed < 28.4 -> 10 // Storm
-            windSpeed < 32.6 -> 11 // Violent storm
-            else -> 12 // Hurricane
+            windSpeed < 0.3f -> 0  // 0: Yên lặng
+            windSpeed < 1.6f -> 1  // 1: Gió nhẹ
+            windSpeed < 3.4f -> 2  // 2: Gió nhẹ
+            windSpeed < 5.5f -> 3  // 3: Gió nhẹ nhàng
+            windSpeed < 8.0f -> 4  // 4: Gió vừa
+            windSpeed < 10.8f -> 5 // 5: Gió mạnh
+            windSpeed < 13.9f -> 6 // 6: Gió rất mạnh
+            windSpeed < 17.2f -> 7 // 7: Gió cao
+            windSpeed < 20.8f -> 8 // 8: Gió bão
+            windSpeed < 24.5f -> 9 // 9: Gió bão mạnh
+            windSpeed < 28.5f -> 10 // 10: Bão
+            windSpeed < 32.7f -> 11 // 11: Bão dữ dội
+            else -> 12             // 12: Bão lớn
         }
     }
 

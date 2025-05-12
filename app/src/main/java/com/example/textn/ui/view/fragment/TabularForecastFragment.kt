@@ -346,11 +346,24 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Hàm để cập nhật hiển thị dự báo thời tiết
     private fun updateForecastDisplay(data: ForecastTabularData) {
-        forecastAdapter.submitData(data.days)
+        // Kiểm tra xem có dữ liệu dự báo hay không
+        if (data.days.isEmpty() || data.days[0].hourlyForecasts.isEmpty()) {
+            // Hiển thị thông báo nếu không có dữ liệu
+            Toast.makeText(
+                context,
+                "Không có dữ liệu dự báo cho vị trí này", // Thông báo lỗi
+                Toast.LENGTH_SHORT
+            ).show()
+            binding.forecastContent.visibility = View.GONE // Ẩn nội dung dự báo
+            return
+        }
 
-        // You can either remove the model info text view or update with generic info
-        binding.textModelInfo.text = "Weather forecast based on OpenWeatherMap data"
+        // Cập nhật dữ liệu cho adapter
+        forecastAdapter.submitData(data.days)
+        binding.forecastContent.visibility = View.VISIBLE // Hiển thị nội dung dự báo
+        binding.textModelInfo.text = "Weather forecast " // Cập nhật thông tin mô hình  :Weather forecast based on OpenWeatherMap data
     }
 
     private fun updateModelInfo(data: ForecastTabularData) {

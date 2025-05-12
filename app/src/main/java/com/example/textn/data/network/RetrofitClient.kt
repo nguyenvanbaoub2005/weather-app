@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     private const val WEATHER_BASE_URL = "https://api.openweathermap.org/"
     private const val GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/"
-    private const val WIND_BASE_URL = "https://api.openweathermap.org/"    // Sử dụng cùng base URL với Weather API vì Wind API cũng là một phần của OpenWeatherMap
 
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
@@ -37,18 +36,18 @@ object RetrofitClient {
     }
 
 
-    // Phương thức để lấy client OkHttpClient
-    fun getClient(): OkHttpClient {
-        return client
-    }
-
-    // Phương thức để tạo API service với URL tùy chỉnh
-    fun <T> createService(serviceClass: Class<T>, baseUrl: String): T {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        return retrofit.create(serviceClass)
-    }
+//    // Phương thức để lấy client OkHttpClient
+//    fun getClient(): OkHttpClient {
+//        return client
+//    }
+//
+//    // Phương thức để tạo API service với URL tùy chỉnh
+//    fun <T> createService(serviceClass: Class<T>, baseUrl: String): T {
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl(baseUrl)
+//            .client(client)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//        return retrofit.create(serviceClass)
+//    }
 }

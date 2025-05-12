@@ -19,6 +19,8 @@ data class WeatherResponse(
     val updateTime: String
 )
 
+
+
 data class ForecastItem(
     val time: String,
     @SerializedName("wind_speed")
@@ -34,15 +36,31 @@ data class ForecastItem(
     val waveHeight: Float?
 )
 
+// Lớp dữ liệu để lưu trữ thông tin thời tiết theo giờ
 data class HourlyData(
-    val dt: Long,
-    val temp: Float,
-    val windSpeed: Float,
+    val dt: Long, // Thời gian (timestamp Unix)
+    val temp: Float, // Nhiệt độ
+    @SerializedName("wind_speed")  // Sử dụng SerializedName nếu tên trường JSON khác
+    val windSpeed: Float, // Tốc độ gió
+    @SerializedName("wind_deg") // Hướng gió (độ)
     val windDeg: Int,
+    @SerializedName("feels_like") // Nhiệt độ cảm nhận
     val feelsLike: Float,
+    @SerializedName("wind_gust") // Tốc độ gió mạnh (có thể không có giá trị)
     val windGust: Float?,
-    val pop: Double? // precipitation probability
+    val pop: Double? // Xác suất mưa
 )
+
+// Lớp dữ liệu để lưu trữ thông tin thời tiết theo giờ
+//data class HourlyData(
+//    val dt: Long,                // Thời gian (Unix timestamp)
+//    val temp: Float,             // Nhiệt độ
+//    val windSpeed: Float,        // Tốc độ gió (đảm bảo ánh xạ đúng từ phản hồi của API)
+//    val windDeg: Int,            // Hướng gió (độ)
+//    val feelsLike: Float,        // Nhiệt độ cảm nhận
+//    val windGust: Float?,        // Tốc độ gió mạnh (cần thiết cho những cơn gió mạnh)
+//    val pop: Double?             // Xác suất mưa
+//)
 
 data class CurrentWeather(
     val temp: Double,
