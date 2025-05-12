@@ -13,26 +13,23 @@ interface WeatherApiService {
         @Query("lon") lon: Double,
         @Query("appid") apiKey: String,
         @Query("units") units: String = "metric",
+        @Query("exclude") exclude: String = "minutely,alerts",//
         @Query("lang") lang: String = "vi"
     ): Response<WeatherResponse>
 
-    @GET("forecast")
-    suspend fun getForecast(
-        @Query("lat") latitude: Double,
-        @Query("lon") longitude: Double,
-        @Query("model") model: String
-    ): Response<WeatherResponse>
 
-    companion object {
-        private const val BASE_URL = "https://api.example.com/weather/"
 
-        fun create(): WeatherApiService {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
 
-            return retrofit.create(WeatherApiService::class.java)
-        }
-    }
+//    companion object {
+//        private const val BASE_URL = "https://api.openweathermap.org/"
+//
+//        fun create(apiKey: String): WeatherApiService {
+//            val retrofit = Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build()
+//
+//            return retrofit.create(WeatherApiService::class.java)
+//        }
+//    }
 }

@@ -273,6 +273,20 @@
                             style="@style/TimeSlotStyle"
                             android:layout_width="60dp"
                             android:gravity="center"
+                            android:text="1 AM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
+                            android:text="4 AM" />
+
+                        <TextView
+                            style="@style/TimeSlotStyle"
+                            android:layout_width="60dp"
+                            android:layout_marginStart="1dp"
+                            android:gravity="center"
                             android:text="7 AM" />
 
                         <TextView
@@ -309,20 +323,6 @@
                             android:layout_marginStart="1dp"
                             android:gravity="center"
                             android:text="10 PM" />
-
-                        <TextView
-                            style="@style/TimeSlotStyle"
-                            android:layout_width="60dp"
-                            android:layout_marginStart="1dp"
-                            android:gravity="center"
-                            android:text="1 AM" />
-
-                        <TextView
-                            style="@style/TimeSlotStyle"
-                            android:layout_width="60dp"
-                            android:layout_marginStart="1dp"
-                            android:gravity="center"
-                            android:text="4 AM" />
                     </LinearLayout>
 
                     <!-- RecyclerView cho dữ liệu dự báo -->

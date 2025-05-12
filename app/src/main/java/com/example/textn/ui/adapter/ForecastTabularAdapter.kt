@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textn.R
 import com.example.textn.data.model.DayForecast
@@ -16,7 +17,8 @@ import java.util.Locale
 class ForecastTabularAdapter : RecyclerView.Adapter<ForecastTabularAdapter.ForecastViewHolder>() {
 
     private val forecastDays = mutableListOf<DayForecast>()
-    private val timeSlots = listOf("7 AM", "10 AM", "1 PM", "4 PM", "7 PM", "10 PM", "1 AM", "4 AM")
+    private val timeSlots = listOf("1AM", "4AM", "7 AM", "10 AM", "1 PM", "4 PM", "7 PM", "10 PM")
+
 
     fun submitData(days: List<DayForecast>) {
         forecastDays.clear()
@@ -84,7 +86,11 @@ class ForecastTabularAdapter : RecyclerView.Adapter<ForecastTabularAdapter.Forec
             val label: TextView = row.findViewById(R.id.textRowLabel)
             val cells: ViewGroup = row.findViewById(R.id.container_cells)
 
-            label.text = ""  // Arrow icons show direction
+            // Thiết lập biểu tượng hướng gió cho label thay vì để trống
+            val windDirectionIcon = ContextCompat.getDrawable(itemView.context, R.drawable.ic_wind_direction)
+            label.setCompoundDrawablesWithIntrinsicBounds(windDirectionIcon, null, null, null)
+//            label.compoundDrawablePadding = resources.getDimensionPixelSize(R.dimen.small_padding)
+            label.text = ""  // Hoặc để trống nếu chỉ muốn hiển thị biểu tượng
 
             // Create cells with wind direction arrows
             dayForecast.hourlyForecasts.forEach { hourlyForecast ->

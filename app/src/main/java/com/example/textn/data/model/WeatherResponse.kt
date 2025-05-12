@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class WeatherResponse(
     val current: CurrentWeather,
     val daily: List<DailyWeather>,
+    val hourly: List<HourlyData>,
     //
     val latitude: Double,
     val longitude: Double,
@@ -31,6 +32,16 @@ data class ForecastItem(
     val precipitation: Float?,
     @SerializedName("wave_height")
     val waveHeight: Float?
+)
+
+data class HourlyData(
+    val dt: Long,
+    val temp: Float,
+    val windSpeed: Float,
+    val windDeg: Int,
+    val feelsLike: Float,
+    val windGust: Float?,
+    val pop: Double? // precipitation probability
 )
 
 data class CurrentWeather(

@@ -1,6 +1,7 @@
 package com.example.textn.ui.fragment
 
 import android.location.Geocoder
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 
 class TabularForecastFragment : Fragment(), OnMapReadyCallback {
 
@@ -66,6 +68,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,7 +88,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         updateCityName(defaultLocation)
 
         // Initial data load with default model
-        viewModel.fetchForecastData(defaultLocation.latitude, defaultLocation.longitude, defaultModel)
+        viewModel.fetchForecastData(defaultLocation.latitude, defaultLocation.longitude)
     }
 
     private fun setupToolbar() {
@@ -199,19 +202,19 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         applyWeatherLayer(currentLayer)
 
         // Thiết lập sự kiện khi nhấp vào bản đồ - Cho phép chọn vị trí bằng cách chạm vào bản đồ
-        googleMap.setOnMapClickListener { latLng ->
-            // Cập nhật vị trí marker đến vị trí người dùng đã chọn
-            updateSelectedLocation(latLng)
-
-            // Update the city name for the new location
-            updateCityName(latLng)
-
-            // Lấy dữ liệu dự báo thời tiết mới cho vị trí đã chọn
-            viewModel.fetchForecastData(latLng.latitude, latLng.longitude, defaultModel)
-
-            // Di chuyển camera đến vị trí mới được chọn
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-        }
+//        googleMap.setOnMapClickListener { latLng ->
+//            // Cập nhật vị trí marker đến vị trí người dùng đã chọn
+//            updateSelectedLocation(latLng)
+//
+//            // Update the city name for the new location
+//            updateCityName(latLng)
+//
+//            // Lấy dữ liệu dự báo thời tiết mới cho vị trí đã chọn
+//            viewModel.fetchForecastData(latLng.latitude, latLng.longitude, defaultModel)
+//
+//            // Di chuyển camera đến vị trí mới được chọn
+//            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+//        }
     }
 
 
@@ -233,11 +236,8 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         // Remove existing overlay if any
         currentLayerOverlay?.remove()
 
-        // Create new tile overlay based on selected layer and model
-        val tileProvider = createWeatherTileProvider(
-            layerType,
-            defaultModel
-        )
+        // Create new tile overlay based on selected layer
+        val tileProvider = createWeatherTileProvider(layerType)
 
         currentLayerOverlay = googleMap.addTileOverlay(
             TileOverlayOptions()
@@ -249,8 +249,8 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         updateSelectedLayerButton(layerType)
     }
 
-    private fun createWeatherTileProvider(layerType: String, modelName: String): UrlTileProvider {
-        // In a real app, you would use your weather data provider's API
+    private fun createWeatherTileProvider(layerType: String): UrlTileProvider {
+        // Remove modelName parameter from the method signature
         return object : UrlTileProvider(256, 256) {
             override fun getTileUrl(x: Int, y: Int, zoom: Int): URL? {
                 val layerCode = when (layerType.lowercase()) {
@@ -331,7 +331,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
     private fun setupObservers() {
         viewModel.forecastData.observe(viewLifecycleOwner) { data ->
             updateForecastDisplay(data)
-            updateModelInfo(data)
+            // Removed model info update since we don't need it anymore
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -348,6 +348,9 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
 
     private fun updateForecastDisplay(data: ForecastTabularData) {
         forecastAdapter.submitData(data.days)
+
+        // You can either remove the model info text view or update with generic info
+        binding.textModelInfo.text = "Weather forecast based on OpenWeatherMap data"
     }
 
     private fun updateModelInfo(data: ForecastTabularData) {
