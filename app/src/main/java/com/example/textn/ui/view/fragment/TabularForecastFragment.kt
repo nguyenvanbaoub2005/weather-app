@@ -260,7 +260,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
                     "mây" -> "clouds"
                     else -> "wind"
                 }
-                val apiKey = "455ecceeeb343a351bdba343de087d00"
+                val apiKey = "32ea3752b81cf12722a46358a7a9739c"
                 val urlStr = "https://tile.openweathermap.org/map/$layerCode/$zoom/$x/$y.png?appid=$apiKey"
                 return try {
                     URL(urlStr)

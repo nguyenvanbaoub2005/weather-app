@@ -1,16 +1,19 @@
 package com.example.textn.ui.view.fragment
 
+import android.Manifest
 import android.app.AlertDialog
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.ProgressBar
+import android.webkit.WebView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,34 +28,55 @@ import com.example.textn.utils.WeatherHelper
 import com.example.textn.viewmodel.GeminiViewModel
 import com.example.textn.viewmodel.WeatherViewModel
 import com.example.textn.viewmodel.WeatherViewModelFactory
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class HomeFragment : Fragment() {
-
+    // View Binding
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    // Lưu lại lớp thời tiết hiện tại (mặc định là "wind")
-    private var currentLayer = "wind"
-
-    // Cờ để chỉ setup WebView một lần
-    private var isWebViewInitialized = false
-
-    // Lưu trữ vị trí đã lấy được
-    private var lastLat: Double? = null
-    private var lastLon: Double? = null
-
+    // ViewModels
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var geminiViewModel: GeminiViewModel
+
+    // Adapters
     private lateinit var forecastAdapter: DayForecastAdapter
 
-    // Biến để giữ tham chiếu đến loading dialog
-    private var loadingDialog: AlertDialog? = null
+    // Location tracking
+    private var currentLocation: Pair<Double, Double>? = null
+    private var currentWeatherLayer = "wind"
+
+    // Permission handling
+    private val locationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true -> {
+                // Fine location permission granted, attempt to get location
+                fetchCurrentLocation()
+            }
+            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true -> {
+                // Coarse location permission granted
+                fetchCurrentLocation()
+            }
+            else -> {
+                // No location permission
+                Toast.makeText(
+                    requireContext(),
+                    "Location permissions are required for weather information",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -62,201 +86,47 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Tạo WeatherViewModel sử dụng Repository và Retrofit
+        // Initialize ViewModels
+        initializeViewModels()
+
+        // Setup UI Components
+        setupRecyclerView()
+        setupObservers()
+        setupClickListeners()
+
+        // Initialize WebView and Fetch Location
+        initializeWebView()
+    }
+
+    private fun initializeViewModels() {
+        // Weather ViewModel Setup
         val apiService = RetrofitClient.instance
         val repository = WeatherRepository(apiService)
         val factory = WeatherViewModelFactory(repository)
         weatherViewModel = ViewModelProvider(requireActivity(), factory)[WeatherViewModel::class.java]
 
-        // Khởi tạo GeminiViewModel
+        // Gemini ViewModel
         geminiViewModel = GeminiViewModel(requireContext())
-
-        // Thiết lập RecyclerView dự báo thời tiết
-        setupForecastRecyclerView()
-
-        // Quan sát dữ liệu thời tiết
-        setupWeatherObservers()
-
-        // Thiết lập observers cho GeminiViewModel
-        setupGeminiObservers()
-
-        // Thêm sự kiện click cho cardMap để chuyển sang Fragment bản đồ chi tiết
-        binding.btnExpandMap.setOnClickListener {
-            // Sử dụng NavController để điều hướng đến FullMapFragment
-            findNavController().navigate(R.id.nav_weather)
-        }
-
-        // Thêm sự kiện click cho cardWeather để chuyển sang WindyFragment
-        binding.cardWeather.setOnClickListener {
-            // Truyền dữ liệu vị trí nếu cần
-            val bundle = Bundle().apply {
-                lastLat?.let { it1 -> putDouble("lat", it1) }
-                lastLon?.let { it1 -> putDouble("lon", it1) }
-            }
-
-              findNavController().navigate(R.id.action_tabularForecastFragment, bundle)
-        }
-
-
-        // Nút mở menu navigation drawer
-        binding.btnMenu.setOnClickListener {
-            (activity as? MainActivity)?.openDrawer()
-        }
-
-        // Nút bản đồ (hiển thị bản đồ đầy đủ)
-        binding.btnMap.setOnClickListener {
-            findNavController().navigate(R.id.nav_weather)
-        }
-        binding.tvChat.setOnClickListener {
-            findNavController().navigate(R.id.nav_gemini_ai)
-        }
-
-        // Nút chọn lớp dữ liệu thời tiết (wind, temp, rain,...)
-        binding.cardWeather.findViewById<View>(R.id.btn_settings).setOnClickListener {
-            showWeatherLayerOptions()
-        }
-
-        // Thêm sự kiện click cho nút tìm kiếm địa điểm gần đây
-//        binding.btnSearch.setOnClickListener {
-////            searchNearbyPlaces()
-//            findNavController().navigate(R.id.nav_communityFragment)
-//        }
-
-        binding.tvLocationType.setOnClickListener {
-            findNavController().navigate(R.id.nav_Location_type)
-       }
-        binding.btnBlog.setOnClickListener {
-            findNavController().navigate(R.id.nav_communityFragment)
-        }
-
-        // Thiết lập WebView chỉ một lần
-        if (!isWebViewInitialized) {
-            WeatherHelper.setupWebView(binding.webViewWindyHome)
-            // Lần đầu tiên lấy vị trí và tải bản đồ
-            getLocationAndUpdateMap()
-            isWebViewInitialized = true
-        }
     }
 
-//    // Hàm xử lý khi người dùng nhấn nút tìm kiếm
-//    private fun searchNearbyPlaces() {
-//        if (lastLat != null && lastLon != null) {
-//            // Giả sử bạn có API key cho Gemini hoặc sử dụng một giá trị mặc định
-//            val apiKey = "AIzaSyD647aAzMdwe0biy5gu_JP0jmEw1UDg3LQ" // Thay thế bằng API key thực tế hoặc lấy từ tài nguyên
-//
-//            // Gọi hàm lấy gợi ý địa điểm gần đó (đã được định nghĩa trong GeminiViewModel)
-//            geminiViewModel.getSuggestedLocationsNearby(apiKey, 5)
-//
-//            // Hiển thị thông báo đang tải (loading dialog sẽ được hiển thị qua observer)
-//            Toast.makeText(requireContext(), "Đang tìm kiếm địa điểm gần đây...", Toast.LENGTH_SHORT).show()
-//        } else {
-//            Toast.makeText(requireContext(), "Không thể lấy vị trí hiện tại", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
-    override fun onResume() {
-        super.onResume()
-        // Chỉ cập nhật dữ liệu thời tiết nếu đã có vị trí, không tải lại bản đồ
-        if (lastLat != null && lastLon != null) {
-            weatherViewModel.fetchWeather(lastLat!!, lastLon!!, WeatherHelper.API_KEY)
-        }
-    }
-
-    // Thiết lập observers cho GeminiViewModel
-    private fun setupGeminiObservers() {
-        // Observer cho kết quả từ AI
-        geminiViewModel.aiResponse.observe(viewLifecycleOwner, Observer { response ->
-            // Hiển thị kết quả trong dialog
-            showLocationSuggestionsDialog(response)
-        })
-
-        // Observer cho loading state
-        geminiViewModel.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
-            if (isLoading) {
-                showLoadingDialog()
-            } else {
-                dismissLoadingDialog()
-            }
-        })
-
-        // Observer cho lỗi
-        geminiViewModel.error.observe(viewLifecycleOwner, Observer { error ->
-            error?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-            }
-        })
-    }
-
-    // Hiển thị loading dialog
-    private fun showLoadingDialog() {
-        val progressBar = ProgressBar(context).apply {
-            indeterminateTintList = ContextCompat.getColorStateList(requireContext(), R.color.dark_blue_background)
-        }
-
-        val builder = AlertDialog.Builder(requireContext())
-            .setView(progressBar)
-            .setMessage("Đang tìm kiếm địa điểm gần đây...")
-            .setCancelable(false)
-
-        loadingDialog = builder.create()
-        loadingDialog?.show()
-    }
-
-    // Đóng loading dialog
-    private fun dismissLoadingDialog() {
-        loadingDialog?.dismiss()
-        loadingDialog = null
-    }
-
-    // Hiển thị kết quả tìm kiếm trong dialog
-    private fun showLocationSuggestionsDialog(response: String) {
-        // Tạo dialog với nội dung từ AI
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Địa điểm gần đây")
-            .setMessage(response)
-            .setPositiveButton("Đóng") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-            .apply {
-                // Đảm bảo dialog không bị giới hạn chiều cao
-                window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-                window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
-            }
-    }
-
-    // Thiết lập RecyclerView hiển thị danh sách dự báo
-    private fun setupForecastRecyclerView() {
+    private fun setupRecyclerView() {
         forecastAdapter = DayForecastAdapter()
         binding.cardWeather.findViewById<androidx.recyclerview.widget.RecyclerView>(
             R.id.rv_forecast
         ).apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
             adapter = forecastAdapter
         }
     }
 
-    // Lắng nghe thay đổi dữ liệu từ ViewModel
-    private fun setupWeatherObservers() {
+    private fun setupObservers() {
+        // Weather Data Observer
         weatherViewModel.weatherData.observe(viewLifecycleOwner) { weatherData ->
-            // Lấy vị trí hiện tại và cập nhật UI
-            WeatherHelper.updateWindyMapWithCurrentLocation(
-                requireActivity(),
-                binding.webViewWindyHome,
-                "wind"
-            ) { lat, lon ->
-                // Lưu lại vị trí
-                lastLat = lat
-                lastLon = lon
-
-                // Sử dụng hàm static để lấy tên địa điểm
-                val cityName = WeatherHelper.getLocationFromCoordinates(requireContext(), lat, lon)
-                binding.cardWeather.findViewById<android.widget.TextView>(
-                    R.id.tv_location_name
-                ).text = cityName
-            }
-
-            // Hiển thị 5 ngày đầu trong daily forecast
+            // Update forecast list
             val forecastItems = weatherData.daily.take(5).map { dayForecast ->
                 val date = Date(dayForecast.dt * 1000)
                 val dayFormat = SimpleDateFormat("EEE", Locale.getDefault())
@@ -276,62 +146,161 @@ class HomeFragment : Fragment() {
             forecastAdapter.submitList(forecastItems)
         }
 
-        // Hiển thị thông báo khi có lỗi
+        // Error Observer
         weatherViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
         }
+
+        // Gemini AI Observers
+        setupGeminiObservers()
     }
 
-    // Hàm mới để lấy vị trí và cập nhật bản đồ
-    private fun getLocationAndUpdateMap() {
-        // Reset biến isLocationFetched để có thể lấy vị trí mới
-        WeatherHelper.resetLocationFetched()
+    private fun setupGeminiObservers() {
+        geminiViewModel.aiResponse.observe(viewLifecycleOwner) { response ->
+            showLocationSuggestionsDialog(response)
+        }
 
-        WeatherHelper.updateWindyMapWithCurrentLocation(
-            requireActivity(),
-            binding.webViewWindyHome,
-            currentLayer
-        ) { lat, lon ->
-            // Lưu lại vị trí
-            lastLat = lat
-            lastLon = lon
+        geminiViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) showLoadingDialog() else dismissLoadingDialog()
+        }
 
-            // Cập nhật thông tin thời tiết
-            weatherViewModel.fetchWeather(lat, lon, WeatherHelper.API_KEY)
-            getLocationNameFromCoordinates(lat, lon)
+        geminiViewModel.error.observe(viewLifecycleOwner) { error ->
+            error?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
-    // Hiển thị danh sách lớp thời tiết để chọn
-    private fun showWeatherLayerOptions() {
-        val layers = arrayOf("wind", "temp", "rain", "clouds", "pressure")
-        AlertDialog.Builder(requireContext())
-            .setTitle("Chọn lớp thời tiết")
-            .setItems(layers) { _, which ->
-                currentLayer = layers[which]
-
-                // Cập nhật lớp thời tiết mà không tải lại toàn bộ bản đồ
-                if (lastLat != null && lastLon != null) {
-                    WeatherHelper.updateMapLayer(
-                        binding.webViewWindyHome,
-                        currentLayer,
-                        lastLat!!,
-                        lastLon!!
-                    )
-                }
+    private fun setupClickListeners() {
+        // Navigation listeners
+        binding.apply {
+            btnExpandMap.setOnClickListener {
+                findNavController().navigate(R.id.nav_weather)
             }
-            .show()
+
+            cardWeather.setOnClickListener {
+                val bundle = Bundle().apply {
+                    currentLocation?.let { loc ->
+                        putDouble("lat", loc.first)
+                        putDouble("lon", loc.second)
+                    }
+                }
+                findNavController().navigate(R.id.action_tabularForecastFragment, bundle)
+            }
+
+            btnMenu.setOnClickListener {
+                (activity as? MainActivity)?.openDrawer()
+            }
+
+            btnMap.setOnClickListener {
+                findNavController().navigate(R.id.nav_weather)
+            }
+
+            tvChat.setOnClickListener {
+                findNavController().navigate(R.id.nav_gemini_ai)
+            }
+
+            tvLocationType.setOnClickListener {
+                findNavController().navigate(R.id.nav_Location_type)
+            }
+
+            btnBlog.setOnClickListener {
+                findNavController().navigate(R.id.nav_communityFragment)
+            }
+
+            // Weather layer settings
+            cardWeather.findViewById<View>(R.id.btn_settings).setOnClickListener {
+                showWeatherLayerOptions()
+            }
+        }
     }
 
-    // Lấy tên địa điểm từ tọa độ (hiển thị trên UI)
-    private fun getLocationNameFromCoordinates(lat: Double, lon: Double) {
+    private fun initializeWebView() {
+        // Setup WebView
+        WeatherHelper.setupWebView(binding.webViewWindyHome)
+
+        // Check and request location permissions
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // Permission already granted
+                fetchCurrentLocation()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
+                // Explain why location is needed
+                showLocationPermissionRationaleDialog()
+            }
+            else -> {
+                // Request permissions
+                locationPermissionRequest.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            }
+        }
+    }
+
+    private fun fetchCurrentLocation() {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        try {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                location?.let {
+                    val lat = it.latitude
+                    val lon = it.longitude
+
+                    // Update current location
+                    currentLocation = Pair(lat, lon)
+
+                    // Update map and weather data
+                    updateMapAndWeatherData(lat, lon)
+                } ?: run {
+                    Toast.makeText(
+                        requireContext(),
+                        "Không thể lấy vị trí hiện tại",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        } catch (securityException: SecurityException) {
+            Toast.makeText(
+                requireContext(),
+                "Location permission denied",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun updateMapAndWeatherData(lat: Double, lon: Double) {
+        // Update Windy map
+        WeatherHelper.updateWindyMapWithCurrentLocation(
+            requireActivity(),
+            binding.webViewWindyHome,
+            currentWeatherLayer
+        )
+
+        // Fetch weather data
+        weatherViewModel.fetchWeather(lat, lon, WeatherHelper.API_KEY)
+
+        // Update location name
+        updateLocationName(lat, lon)
+    }
+
+    private fun updateLocationName(lat: Double, lon: Double) {
         try {
             val geocoder = android.location.Geocoder(requireContext(), Locale.getDefault())
             val addresses = geocoder.getFromLocation(lat, lon, 1)
 
             if (!addresses.isNullOrEmpty()) {
                 val address = addresses[0]
-                val locationName = address.locality ?: address.adminArea ?: address.countryName ?: "Unknown Location"
+                val locationName = address.locality
+                    ?: address.adminArea
+                    ?: address.countryName
+                    ?: "Unknown Location"
 
                 binding.cardWeather.findViewById<android.widget.TextView>(
                     R.id.tv_location_name
@@ -342,7 +311,65 @@ class HomeFragment : Fragment() {
         }
     }
 
-    // Trả về icon tương ứng với mã thời tiết
+    private fun showLocationPermissionRationaleDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Location Permission")
+            .setMessage("This app needs location access to provide accurate weather information.")
+            .setPositiveButton("OK") { _, _ ->
+                locationPermissionRequest.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun showWeatherLayerOptions() {
+        val layers = arrayOf("wind", "temp", "rain", "clouds", "pressure")
+        AlertDialog.Builder(requireContext())
+            .setTitle("Chọn lớp thời tiết")
+            .setItems(layers) { _, which ->
+                currentWeatherLayer = layers[which]
+
+                // Update map layer if location is available
+                currentLocation?.let { loc ->
+                    WeatherHelper.updateMapLayer(
+                        binding.webViewWindyHome,
+                        currentWeatherLayer,
+                        loc.first,
+                        loc.second
+                    )
+                }
+            }
+            .show()
+    }
+
+    private fun showLoadingDialog() {
+        // Implement loading dialog if needed
+    }
+
+    private fun dismissLoadingDialog() {
+        // Dismiss loading dialog if needed
+    }
+
+    private fun showLocationSuggestionsDialog(response: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Địa điểm gần đây")
+            .setMessage(response)
+            .setPositiveButton("Đóng") { dialog, _ -> dialog.dismiss() }
+            .show()
+            .apply {
+                window?.clearFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                            WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+                )
+                window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+            }
+    }
+
     private fun getWeatherIconResource(iconCode: String): Int {
         return when (iconCode) {
             "01d" -> R.drawable.ic_clear_day
@@ -360,10 +387,16 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Refresh location and weather data if location is available
+        currentLocation?.let { loc ->
+            updateMapAndWeatherData(loc.first, loc.second)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        // Đảm bảo đóng dialog khi fragment bị hủy
-        dismissLoadingDialog()
     }
 }
