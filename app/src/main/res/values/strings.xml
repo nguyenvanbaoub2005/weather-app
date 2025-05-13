@@ -284,4 +284,8 @@
     <string name="share_forecast_title">Chia sẻ dự báo thời tiết</string>
     <string name="share_forecast_text">Dự báo gió tại %1$s: %2$s m/s, %3$s°C</string>
 
+
+    <string name="search_hint">Nhập tên vị trí hoặc tọa độ</string>
+
+
 </resources>
