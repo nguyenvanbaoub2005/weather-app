@@ -17,7 +17,7 @@
             app:destination="@id/tabularForecastFragment" />
     </fragment>
 
-<!--     Thời tiết -->
+    <!--     Thời tiết -->
     <fragment
         android:id="@+id/nav_weather"
         android:name="com.example.textn.ui.view.fragment.MapWeatherFragment"
@@ -89,7 +89,7 @@
         android:name="com.example.textn.ui.fragment.TabularForecastFragment"
         android:label="Forecast"
         tools:layout="@layout/fragment_tabular_forecast" />
-<!--     Chi tiết bài đăng -->
+    <!--     Chi tiết bài đăng -->
     <fragment
         android:id="@+id/nav_communityFragment"
         android:name="com.example.textn.ui.view.fragment.CommunityFragment"
@@ -109,9 +109,9 @@
         android:label="Post Detail"
         tools:layout="@layout/fragment_post_detail" >
         <argument
-           android:name="postId"
+            android:name="postId"
             app:argType="string"
-           app:nullable="false" />
+            app:nullable="false" />
     </fragment>
     <fragment
         android:id="@+id/nav_addPostFragment"
