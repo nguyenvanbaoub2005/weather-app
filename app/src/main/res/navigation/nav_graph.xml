@@ -15,6 +15,19 @@
         <action
             android:id="@+id/action_tabularForecastFragment"
             app:destination="@id/tabularForecastFragment" />
+
+        <action
+            android:id="@+id/action_mainActivity_to_searchFragment"
+            app:destination="@id/searchFragment" />
+
+        <argument
+            android:name="lat"
+            app:argType="float"
+            android:defaultValue="0.0" />
+        <argument
+            android:name="lon"
+            app:argType="float"
+            android:defaultValue="0.0" />
     </fragment>
 
     <!--     Thời tiết -->
@@ -129,4 +142,17 @@
     <action
         android:id="@+id/action_communityFragment_to_postDetailFragment"
         app:destination="@id/nav_addPostFragment" />
+
+    <!--    Search   -->
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.textn.ui.fragment.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_tabularForecastFragment"
+            app:destination="@id/tabularForecastFragment" />
+    </fragment>
+
+
 </navigation>

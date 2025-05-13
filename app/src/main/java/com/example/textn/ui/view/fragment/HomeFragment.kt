@@ -188,6 +188,11 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.action_tabularForecastFragment, bundle)
             }
 
+            btnSearch.setOnClickListener {
+
+                findNavController().navigate(R.id.action_mainActivity_to_searchFragment)
+            }
+
             btnMenu.setOnClickListener {
                 (activity as? MainActivity)?.openDrawer()
             }
@@ -207,6 +212,7 @@ class HomeFragment : Fragment() {
             btnBlog.setOnClickListener {
                 findNavController().navigate(R.id.nav_communityFragment)
             }
+
 
             // Weather layer settings
             cardWeather.findViewById<View>(R.id.btn_settings).setOnClickListener {

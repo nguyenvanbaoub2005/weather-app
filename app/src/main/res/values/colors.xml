@@ -187,5 +187,14 @@
     <color name="precipitation_heavy">#1976D2</color>       <!-- Màu xanh đậm -->
     <color name="precipitation_very_heavy">#0D47A1</color>  <!-- Màu xanh rất đậm -->
 
+    <!-- Màu sắc cho màn hình tìm kiếm -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_700">#FF018786</color>
+    <!-- App specific colors -->
+    <color name="green_indicator">#4CAF50</color>
+    <color name="gray_text">#98A2AB</color>
+
 </resources>
 
