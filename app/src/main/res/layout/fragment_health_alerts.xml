@@ -4,13 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/title_health_alerts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Cảnh báo sức khỏe"
+        android:textColor="@color/text_health_alerts"
         android:textSize="20sp"
         android:textStyle="bold"
         android:padding="16dp"
@@ -36,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Không có cảnh báo sức khỏe nào"
+        android:textColor="@color/text_health_alerts"
         android:textSize="16sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

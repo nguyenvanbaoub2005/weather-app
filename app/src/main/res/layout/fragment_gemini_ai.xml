@@ -208,7 +208,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/health_advice"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_AIfg"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardCurrentWeather" />
@@ -246,6 +246,7 @@
                         android:layout_marginTop="16dp"
                         android:backgroundTint="@color/button_AI"
                         android:text="@string/get_health_advice"
+                        android:textColor="@android:color/white"
                         android:textAllCaps="false"
                         app:cornerRadius="12dp"
                         app:icon="@drawable/ic_health"
@@ -262,7 +263,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/custom_question"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_AIfg"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardHealthAdvice" />
@@ -291,6 +292,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/custom_question_hint"
+                        app:hintTextColor="?attr/colorOnSurface"
                         app:boxCornerRadiusBottomEnd="12dp"
                         app:boxCornerRadiusBottomStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
@@ -301,6 +303,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top|start"
+                            app:hintTextColor="@color/text_AIfg"
                             android:minLines="3"
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -311,8 +314,10 @@
                         android:layout_height="56dp"
                         android:layout_marginTop="16dp"
                         android:backgroundTint="@color/button_AI"
+                        android:tint="@android:color/white"
                         android:text="@string/ask_ai"
                         android:textAllCaps="false"
+                        android:textColor="@android:color/white"
                         app:cornerRadius="12dp"
                         app:icon="@drawable/ic_chat"
                         app:iconGravity="textStart"
@@ -328,7 +333,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/ai_response_title"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_AIfg"
                 android:textSize="18sp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
@@ -366,14 +371,15 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:contentDescription="@string/ai_icon"
-                            android:src="@drawable/ic_ai_assistant" />
+                            android:src="@drawable/ic_ai_assistant"
+                            app:tint="@color/text_AIfg"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="@string/ai_response"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/text_AIfg"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -417,7 +423,7 @@
                         android:id="@+id/tvResponse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/text_AIfg"
                         android:textSize="17sp"
                         android:fontFamily="sans-serif"
                         tools:text="Dựa trên thông tin thời tiết hiện tại, bạn nên uống nhiều nước, tránh ra ngoài trời vào giờ cao điểm, và bôi kem chống nắng để bảo vệ da khỏi tia UV cao." />
