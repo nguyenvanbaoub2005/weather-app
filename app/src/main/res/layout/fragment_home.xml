@@ -24,7 +24,7 @@
             android:src="@drawable/ic_menu"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/white" />
+            app:tint="@color/button_white" />
 
         <ImageButton
             android:id="@+id/btn_search"
@@ -34,7 +34,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_search"
             app:layout_constraintEnd_toStartOf="@id/btn_map"
-            app:layout_constraintTop_toTopOf="@id/btn_menu" />
+            app:layout_constraintTop_toTopOf="@id/btn_menu"
+            app:tint="@color/button_white" />
 
         <ImageButton
             android:id="@+id/btn_map"
@@ -43,7 +44,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_map"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btn_search" />
+            app:layout_constraintTop_toTopOf="@id/btn_search"
+            app:tint="@color/button_white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- ScrollView để chứa phần nội dung có thể lướt -->
@@ -85,6 +87,7 @@
                         android:layout_height="24dp"
                         android:src="@drawable/ic_location"
                         app:layout_constraintStart_toStartOf="parent"
+                        android:textColor="@color/text_primary"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -93,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="ゴルフ"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="@id/iv_location"
                         app:layout_constraintStart_toEndOf="@id/iv_location"
@@ -106,7 +109,8 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_settings"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/button_white"/>
 
                     <View
                         android:id="@+id/divider"
@@ -177,7 +181,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:text="Bản đồ thời tiết"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -214,7 +218,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="10dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_expand" />
+                        android:src="@drawable/ic_expand"
+                        app:tint="@color/button_white"/>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -229,7 +234,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:text="Khám phá kì quan "
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -262,7 +267,7 @@
                         android:src="@drawable/community"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:tint="@color/white" />
+                        app:tint="@color/text_primary" />
 
                     <!-- Tiêu đề -->
                     <TextView
@@ -271,7 +276,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="Cộng đồng"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toTopOf="@id/iv_community_icon"
@@ -289,7 +294,8 @@
                         android:src="@drawable/ic_add"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:tint="@color/teal" />
+                        app:tint="@color/teal"
+                        />
 
                     <!-- GridLayout chứa 4 ảnh -->
                     <GridLayout
@@ -351,7 +357,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:text="Trạm thời tiết gần nhất"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -382,7 +388,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DA_NANG (VVDN)"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -404,7 +410,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="3 m/s"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -446,7 +452,9 @@
                         android:src="@drawable/ic_chat"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_primary" />
+
 
                     <TextView
                         android:id="@+id/tv_chat"
@@ -454,7 +462,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="Trò chuyện cùng Ai Weather"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         android:clickable="true"
                         android:focusable="true"
@@ -484,7 +492,7 @@
                             android:background="@drawable/circle_notification"
                             android:gravity="center"
                             android:text="1"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_primary"
                             android:textSize="12sp" />
                     </FrameLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -502,7 +510,8 @@
                         android:src="@drawable/ic_community"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_primary"/>
 
                     <TextView
                         android:id="@+id/tv_location_type"
@@ -510,7 +519,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="Gợi ý địa điểm giải trí"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         android:clickable="true"
                         android:focusable="true"

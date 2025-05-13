@@ -2,7 +2,6 @@ package com.example.textn.repository
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.core.content.edit
 import com.example.textn.viewmodel.SettingsViewModel
 
 class PreferencesRepository(private val context: Context? = null) {

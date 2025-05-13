@@ -1,0 +1,14 @@
+<resources>
+    <!-- Nền màn hình -->
+<!--    <color name="background">#121212</color>-->
+<!--    <color name="surface">#1E1E1E</color>-->
+<!--    <color name="background_dark">#000000</color>-->
+    <color name="dark_blue_background">#F8F9FA</color>
+    <color name="dark_blue_card">#FFFFFFFF</color>
+    <color name="button_white">#000000</color>
+
+    <!-- Văn bản -->
+    <color name="text_primary">#000000</color>
+    <color name="light_text">#000000</color>
+
+</resources>

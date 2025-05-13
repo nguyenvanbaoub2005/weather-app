@@ -61,6 +61,7 @@ class SettingsFragment : Fragment() {
         binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
             if (viewModel.isDarkTheme.value != isChecked) {
                 viewModel.toggleTheme()
+                // Apply theme immediately without waiting for ViewModel update
                 ThemeManager.applyTheme(isChecked)
             }
         }

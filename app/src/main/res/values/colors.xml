@@ -1,9 +1,14 @@
 <resources>
     <!-- Màu cơ bản -->
     <color name="black">#FF000000</color>
+
+    //
     <color name="white">#FFFFFFFF</color>
     <color name="gray_light">#F5F5F5</color>
     <color name="gray_dark">#757575</color>
+
+
+    <color name="button_white">#FFFFFFFF</color>
 
     <!-- Màu chủ đạo (primary color) -->
     <color name="primary">#2196F3</color> <!-- Xanh trời -->
@@ -22,10 +27,11 @@
     <color name="background">#003b4d</color>
     <color name="surface">#FAFAFA</color>
 
-    <!-- Văn bản -->
-    <color name="text_primary">#212121</color>
+    <!-- Văn bản và icon -->
+    <color name="text_primary">#FFFFFFFF</color>
     <color name="text_secondary">#757575</color>
-
+    <color name="text_AIfg">#FF000000</color>
+    <color name="text_health_alerts">#FF000000</color>
     <!-- Đường viền / line -->
     <color name="divider">#BDBDBD</color>
     <!--    màu nền -->
@@ -37,6 +43,7 @@
     <color name="divider_color">#3a5a70</color>
     <color name="light_blue_text">#a0c0d0</color>
     <color name="green_teal">#33cc99</color>
+    ///
     <color name="light_text">#CCCCCC</color>
 
     <!-- Màu cho cảnh báo sức khỏe -->
@@ -50,10 +57,7 @@
 
     <color name="colorPrimary">#4A6FDC</color>
     <color name="colorPrimaryDark">#3D5FC8</color>
-<!--    <color name="colorAccent">#FF6B6B</color>-->
     <color name="colorBackground">#F5F7FA</color>
-<!--    <color name="white">#FFFFFF</color>-->
-<!--    <color name="black">#000000</color>-->
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#757575</color>
     <color name="cardStrokeColor">#E0E0E0</color>
@@ -67,8 +71,6 @@
 
     <!-- Chip Colors -->
     <color name="chipBackgroundColor">#ECF1FF</color>
-
-
 <!--    màu AIgemini-->
     <color name="primary_color">#1E88E5</color>
     <color name="primary_dark_color">#1565C0</color>
@@ -77,16 +79,11 @@
     <color name="background_color">#F5F7FA</color>
     <color name="card_background">#FFFFFF</color>
 
-<!--    <color name="text_primary">#212121</color>-->
-<!--    <color name="text_secondary">#757575</color>-->
+
     <color name="text_tertiary">#9E9E9E</color>
 
-<!--    <color name="divider_color">#E0E0E0</color>-->
     <color name="shimmer_color">#EEEEEE</color>
     <color name="progress_track_color">#B3E5FC</color>
-
-<!--    <color name="white">#FFFFFF</color>-->
-<!--    <color name="black">#000000</color>-->
 
     <!-- Weather card additional colors -->
     <color name="sunny_color">#FF9800</color>
@@ -94,8 +91,6 @@
     <color name="rainy_color">#42A5F5</color>
     <color name="night_color">#3F51B5</color>
     <color name="button_AI">#3a5a70</color>
-
-
 
 <!--        location entaiterment fragment-->
         <color name="divider_primary">#3a5a70</color>

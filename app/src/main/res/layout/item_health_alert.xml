@@ -21,6 +21,7 @@
             android:layout_height="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:tint="@color/text_health_alerts"
             tools:src="@android:drawable/ic_dialog_alert" />
 
         <TextView
@@ -32,6 +33,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/alert_icon"
+            android:textColor="@color/text_health_alerts"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Nhiệt độ cao" />
 
@@ -44,6 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/alert_icon"
             app:layout_constraintTop_toBottomOf="@+id/alert_title"
+            android:textColor="@color/text_health_alerts"
             tools:text="Nhiệt độ cao có thể gây mất nước. Uống đủ nước và tránh nắng." />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
