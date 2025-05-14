@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home,
                 R.id.nav_weather,
                 R.id.nav_health,
+                R.id.nav_place_recommend,
+                R.id.nav_communityFragment,
                 R.id.nav_settings -> {
                     navController.popBackStack()
                     navController.navigate(menuItem.itemId)

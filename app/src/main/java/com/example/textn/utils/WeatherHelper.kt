@@ -156,24 +156,26 @@ class WeatherHelper(
         }
 
 
-        // Hàm trợ giúp để tạo HTML cho Windy Map
+        // Hàm trợ giúp để tạo HTML cho Windy Map với mô hình GFS cố định
+// Hàm trợ giúp để tạo HTML cho Windy Map với mô hình GFS
         private fun generateWindyHtml(lat: Double, lon: Double, layer: String): String {
+            // Thiết lập trực tiếp mô hình GFS trong URL thay vì sử dụng postMessage
             return """
-                <html>
-                <head>
-                  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-                  <style>
-                    html, body { margin: 0; height: 100%; }
-                    iframe { width: 100%; height: 100%; border: none; }
-                  </style>
-                </head>
-                <body>
-                  <iframe
-                    src="https://embed.windy.com/embed2.html?lat=$lat&lon=$lon&detailLat=$lat&detailLon=$lon&width=100%25&height=100%25&zoom=7&level=surface&overlay=$layer&menu=&message=true&marker=&calendar=24&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
-                  ></iframe>
-                </body>
-                </html>
-            """.trimIndent()
+        <html>
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+          <style>
+            html, body { margin: 0; height: 100%; overflow: hidden; }
+            iframe { width: 100%; height: 100%; border: none; }
+          </style>
+        </head>
+        <body>
+          <iframe id="windyFrame"
+            src="https://embed.windy.com/embed2.html?lat=$lat&lon=$lon&detailLat=$lat&detailLon=$lon&width=100%25&height=100%25&zoom=7&level=surface&overlay=$layer&menu=&message=&marker=&calendar=24&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1&product=gfs"
+          ></iframe>
+        </body>
+        </html>
+    """.trimIndent()
         }
 
         // Chuyển đổi địa chỉ thành tọa độ
@@ -252,7 +254,7 @@ class WeatherHelper(
             override fun onQueryTextChange(newText: String?) = false
         })
     }
-//
+
 //    private fun observeViewModel() {
 //        viewModel.weatherData.observe(lifecycleOwner) { weather ->
 //            val current = weather.current

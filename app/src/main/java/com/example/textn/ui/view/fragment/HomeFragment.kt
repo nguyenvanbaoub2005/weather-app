@@ -206,7 +206,7 @@ class HomeFragment : Fragment() {
             }
 
             tvLocationType.setOnClickListener {
-                findNavController().navigate(R.id.nav_Location_type)
+                findNavController().navigate(R.id.nav_place_recommend)
             }
 
             btnBlog.setOnClickListener {

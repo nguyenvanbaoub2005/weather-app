@@ -98,9 +98,9 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         }
 
         // Set info button click listener if needed
-        binding.btnInfo.setOnClickListener {
-            Toast.makeText(context, "Thông tin dự báo thời tiết chi tiết", Toast.LENGTH_SHORT).show()
-        }
+//        binding.btnInfo.setOnClickListener {
+//            Toast.makeText(context, "Thông tin dự báo thời tiết chi tiết", Toast.LENGTH_SHORT).show()
+//        }
 
         // Set share button click listener if needed
         binding.btnShare.setOnClickListener {

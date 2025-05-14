@@ -28,7 +28,6 @@
     <color name="surface">#FAFAFA</color>
 
     <!-- Văn bản và icon -->
-    <color name="text_primary">#FFFFFFFF</color>
     <color name="text_secondary">#757575</color>
     <color name="text_AIfg">#FF000000</color>
     <color name="text_health_alerts">#FF000000</color>
@@ -37,14 +36,15 @@
     <!--    màu nền -->
     <!-- colors.xml -->
     <!-- màu home-->
-    <color name="dark_blue_background">#1b3b50</color>
     <color name="dark_blue_card">#264b63</color>
     <color name="light_blue_card">#1976D2</color>
     <color name="divider_color">#3a5a70</color>
     <color name="light_blue_text">#a0c0d0</color>
     <color name="green_teal">#33cc99</color>
-    ///
+<!--    ///màu có dùng darkmode-->
     <color name="light_text">#CCCCCC</color>
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="dark_blue_background">#1b3b50</color>
 
     <!-- Màu cho cảnh báo sức khỏe -->
     <color name="alert_low">#E3F2FD</color>
@@ -72,6 +72,7 @@
     <!-- Chip Colors -->
     <color name="chipBackgroundColor">#ECF1FF</color>
 <!--    màu AIgemini-->
+    <color name="text_AI">#FF000000</color>
     <color name="primary_color">#1E88E5</color>
     <color name="primary_dark_color">#1565C0</color>
     <color name="accent_color">#FFC107</color>
@@ -87,7 +88,7 @@
 
     <!-- Weather card additional colors -->
     <color name="sunny_color">#FF9800</color>
-    <color name="cloudy_color">#78909C</color>
+    <color name="cloudy_color">#263545</color>
     <color name="rainy_color">#42A5F5</color>
     <color name="night_color">#3F51B5</color>
     <color name="button_AI">#3a5a70</color>

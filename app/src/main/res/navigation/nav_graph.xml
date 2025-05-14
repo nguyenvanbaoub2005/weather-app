@@ -85,7 +85,7 @@
 
     <!-- Loại vị trí -->
     <fragment
-        android:id="@+id/nav_Location_type"
+        android:id="@+id/nav_place_recommend"
         android:name="com.example.textn.ui.view.fragment.LocationTypeFragment"
         tools:layout="@layout/fragment_location_type_selection" />
 

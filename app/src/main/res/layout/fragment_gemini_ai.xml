@@ -303,8 +303,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top|start"
-                            app:hintTextColor="@color/text_AIfg"
                             android:minLines="3"
+                            android:textColor="@color/text_secondary"
+                            android:textColorLink="#2E2828"
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 

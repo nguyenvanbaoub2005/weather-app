@@ -18,6 +18,7 @@
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/back"
+            app:tint="@color/light_blue"
             android:padding="12dp"
             android:src="@drawable/ic_chevron_left" />
 
@@ -49,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:cardBackgroundColor="#142238"
+                app:cardBackgroundColor="#3a5a70"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"

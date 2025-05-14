@@ -26,7 +26,7 @@
                 android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:text="Lựa chọn loại địa điểm"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_AI"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +92,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="Ăn uống"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/text_AI"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -130,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="Giải trí"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/text_AI"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -168,7 +168,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="Mua sắm"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/text_AI"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -206,7 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="Lưu trú"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/text_AI"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -244,7 +244,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="Tất cả"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/text_AI"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -259,7 +259,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
                 android:text="Các địa điểm gợi ý gần đây"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_AI"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:visibility="gone"
@@ -277,7 +277,7 @@
                 android:layout_marginBottom="100dp"
                 android:background="@drawable/rounded_light_background"
                 android:padding="16dp"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_AI"
                 android:textSize="16sp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"

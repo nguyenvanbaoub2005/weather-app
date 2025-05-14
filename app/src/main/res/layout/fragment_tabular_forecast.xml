@@ -29,7 +29,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/text_light" />
+                app:tint="@color/light_text" />
 
             <!-- City Name Title -->
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/text_light"
+                android:textColor="@color/light_text"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -45,19 +45,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Tên thành phố" />
 
-            <!-- Information icon -->
-            <ImageButton
-                android:id="@+id/btnInfo"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Information"
-                android:src="@drawable/ic_info"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnShare"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/text_light" />
+<!--            &lt;!&ndash; Information icon &ndash;&gt;-->
+<!--            <ImageButton-->
+<!--                android:id="@+id/btnInfo"-->
+<!--                android:layout_width="48dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--                android:contentDescription="Information"-->
+<!--                android:src="@drawable/ic_info"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/btnShare"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:tint="@color/light_text" />-->
 
             <!-- Share Button -->
             <ImageButton
@@ -71,7 +71,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnMenu"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/text_light" />
+                app:tint="@color/light_text" />
 
             <!-- Menu Button -->
             <ImageButton
@@ -84,7 +84,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/text_light" />
+                app:tint="@color/light_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -208,7 +208,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="Thông tin dự báo"
-            android:textColor="@color/text_light"
+            android:textColor="@color/light_text"
             android:textSize="16sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"
@@ -224,7 +224,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/text_light"
+            android:textColor="@color/light_text"
             android:textSize="13sp"
             android:fontFamily="sans-serif-light"
             app:layout_constraintEnd_toEndOf="parent"
@@ -371,7 +371,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Đang tải dữ liệu..."
-                android:textColor="@color/text_light"
+                android:textColor="@color/light_text"
                 android:fontFamily="sans-serif-medium" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

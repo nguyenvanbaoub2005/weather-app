@@ -14,6 +14,8 @@ import kotlinx.coroutines.tasks.await
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class GeminiViewModel(private val context: Context) : ViewModel() {
@@ -69,7 +71,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
                     
                     Hãy đóng vai là bác sĩ và đưa ra lời khuyên ngắn gọn về sức khỏe phù hợp với điều kiện thời tiết này. 
                     Hãy đề cập đến các biện pháp phòng ngừa cần thiết và những hoạt động nên tránh hoặc nên làm.
-                    Hãy đảm bảo kết thúc bằng một câu khích lệ tích cực.
+                    Hãy đảm bảo kết thúc bằng một câu khích lệ tích cực, có dùng nhiều icon .
                 """.trimIndent()
 
                 // Gọi hàm gửi yêu cầu tới API Gemini để nhận lời khuyên
@@ -97,29 +99,35 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
                     try {
                         val response = weatherRepository.getWeatherData(context, location)
                         val weatherData = convertWeatherResponseToWeatherData(response, location)
+                        // Lấy dự báo 3 ngày
+                        val forecast = response.daily.take(5).joinToString("\n") { day ->
+                            val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(day.dt * 1000))
+                            "Ngày: $date - Nhiệt độ: ${day.temp.day}°C, ${day.weather[0].description}"
+                        }
                         """
-                        Thông tin thời tiết hiện tại tại $location:
-                        - Nhiệt độ: ${weatherData.temperature}°C
-                        - Chỉ số UV: ${weatherData.uvIndex}
-                        - Độ ẩm: ${weatherData.humidity}%
-                        - Tình trạng: ${weatherData.condition}
-                        """.trimIndent()
+                    Thông tin thời tiết hiện tại tại $location:
+                    - Nhiệt độ: ${weatherData.temperature}°C
+                    - Chỉ số UV: ${weatherData.uvIndex}
+                    - Độ ẩm: ${weatherData.humidity}%
+                    - Tình trạng: ${weatherData.condition}
+                    $forecast
+                    """.trimIndent()
                     } catch (e: Exception) {
-                        "Không có thông tin thời tiết hiện tại."
+                        "Không có thông tin thời tiết hiện tại hoặc dự báo."
                     }
                 } else {
-                    "Không có thông tin thời tiết hiện tại."
+                    "Không có thông tin thời tiết hiện tại hoặc dự báo."
                 }
 
                 // Tạo prompt kết hợp câu hỏi của người dùng và thông tin thời tiết
                 val prompt = """
-                    $weatherInfo
-                    
-                    Câu hỏi của người dùng: $customPrompt
-                    
-                    Hãy trả lời câu hỏi trên một cách ngắn gọn, rõ ràng và cung cấp thông tin hữu ích. 
-                    Nếu câu hỏi liên quan đến thời tiết, hãy sử dụng thông tin thời tiết đã cung cấp, k dùng icon.
-                """.trimIndent()
+                $weatherInfo
+                
+                Câu hỏi của người dùng: $customPrompt
+                
+                Hãy trả lời câu hỏi trên một cách ngắn gọn, rõ ràng và cung cấp thông tin hữu ích. 
+                Nếu câu hỏi liên quan đến thời tiết, hãy sử dụng thông tin thời tiết đã cung cấp, dùng icon đẹp.
+            """.trimIndent()
                 // Gửi yêu cầu đến API Gemini
                 getWeatherAdviceFromAI(prompt, apiKey)
             } catch (e: Exception) {
@@ -284,7 +292,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
             
             Gợi ý $numberOfLocations địa điểm $locationTypePrompt gần đây phù hợp với thời tiết hiện tại.
             
-            Cho mỗi địa điểm: tên, khoảng cách ước tính, lý do phù hợp với thời tiết và một gợi ý hoạt động ngắn gọn.
+            Cho mỗi địa điểm: tên, khoảng cách ước tính, lý do phù hợp với thời tiết và một gợi ý hoạt động ngắn gọn,chỉ cho 3 địa điểm ,thêm nhiều icon.
             """.trimIndent()
 
                 // Gọi hàm gửi yêu cầu tới API Gemini

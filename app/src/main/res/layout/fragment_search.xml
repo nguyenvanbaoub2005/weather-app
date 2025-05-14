@@ -26,7 +26,8 @@
                 android:contentDescription="@string/back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tint="@color/light_text" />
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_view"
