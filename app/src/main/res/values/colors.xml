@@ -186,5 +186,8 @@
     <color name="search_background">#273747</color>
     <color name="light_gray">#B3FFFFFF</color>
 
+<!--    draew menu-->
+    <color name="line_divider">#33FFFFFF</color>
+    <color name="indicator_color">#FFFFFF</color>
 </resources>
 

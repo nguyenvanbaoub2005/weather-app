@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textn.R
+import com.example.textn.model.LocationData
 import com.example.textn.ui.adapter.SearchResultAdapter
 import com.example.textn.viewmodel.SearchViewModel
 import com.example.textn.viewmodel.SearchViewModelFactory
@@ -40,22 +42,16 @@ class SearchFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = SearchResultAdapter { location ->
             // When a location is clicked, navigate to the forecast screen with its coordinates
-            val bundle = Bundle().apply {
-                putDouble("lat", location.latitude)
-                putDouble("lon", location.longitude)
-            }
-            findNavController().navigate(R.id.action_searchFragment_to_tabularForecastFragment, bundle)
+            navigateToForecast(location.latitude, location.longitude)
         }
         recyclerView.adapter = adapter
 
-        // Initialize ViewModel
-        viewModel = ViewModelProvider(this, SearchViewModelFactory())
+        // Initialize ViewModel with Factory
+        viewModel = ViewModelProvider(this, SearchViewModelFactory(requireContext()))
             .get(SearchViewModel::class.java)
 
         // Set up observers
-        viewModel.searchResults.observe(viewLifecycleOwner) { results ->
-            adapter.submitList(results)
-        }
+        setupObservers()
 
         // Set up search functionality
         setupSearch()
@@ -71,8 +67,36 @@ class SearchFragment : Fragment() {
         return view
     }
 
+    private fun setupObservers() {
+        // Observe search results from repository
+        viewModel.searchResults.observe(viewLifecycleOwner) { results ->
+            adapter.submitList(results)
+        }
+
+        // Observe custom location found via Geocoder
+        viewModel.customLocation.observe(viewLifecycleOwner) { customLocation ->
+            customLocation?.let {
+                // If there's a custom location, display it as a single-item list
+                adapter.submitList(listOf(it))
+            }
+        }
+
+        // Observe loading state
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            // You could add a progress indicator here
+        }
+
+        // Observe errors
+        viewModel.error.observe(viewLifecycleOwner) { errorMsg ->
+            errorMsg?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                viewModel.clearError()
+            }
+        }
+    }
+
     private fun setupSearch() {
-        // Đổi màu icon kính lúp (🔍) thành trắng
+        // Change the magnifying glass (🔍) icon color to white
         val searchIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
         searchIcon.setColorFilter(android.graphics.Color.WHITE)
 
@@ -89,7 +113,8 @@ class SearchFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     if (it.isNotEmpty()) {
-                        viewModel.searchCities(it)
+                        // When user submits query, use the isSubmit flag to indicate direct submission
+                        viewModel.searchCities(it, isSubmit = true)
                     }
                 }
                 searchView.clearFocus()
@@ -99,6 +124,7 @@ class SearchFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
                     if (it.length >= 2) {
+                        // While typing, use the default isSubmit=false
                         viewModel.searchCities(it)
                     } else if (it.isEmpty()) {
                         viewModel.searchCities("Vietnam")
@@ -107,5 +133,14 @@ class SearchFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    // Navigation to forecast screen
+    private fun navigateToForecast(latitude: Double, longitude: Double) {
+        val bundle = Bundle().apply {
+            putDouble("lat", latitude)
+            putDouble("lon", longitude)
+        }
+        findNavController().navigate(R.id.action_searchFragment_to_tabularForecastFragment, bundle)
     }
 }

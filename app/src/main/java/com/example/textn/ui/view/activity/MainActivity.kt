@@ -74,44 +74,61 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Cập nhật thông tin người dùng ở phần header của Navigation Drawer
+    // Cập nhật thông tin người dùng ở phần header của Navigation Drawer
+// Cập nhật thông tin người dùng ở phần header của Navigation Drawer
     private fun updateDrawerHeader() {
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         val headerView: View = navigationView.getHeaderView(0)
 
         val avatarImageView = headerView.findViewById<ImageView>(R.id.avatar)
         val usernameTextView = headerView.findViewById<TextView>(R.id.username)
-//        val proStatusTextView = headerView.findViewById<TextView>(R.id.proStatus)
-        val logoutButton = headerView.findViewById<Button>(R.id.logoutButton)
+        val logoutButton = headerView.findViewById<Button>(R.id.btnLogout)
 
         // Lấy tài khoản Google hiện tại
         val account = com.google.android.gms.auth.api.signin.GoogleSignIn.getLastSignedInAccount(this)
 
         if (account != null) {
-            val displayName = account.displayName ?: "Người dùng"
-            val email = account.email ?: "Không rõ email"
-            val photoUrl = account.photoUrl
+            // Ưu tiên sử dụng tên hiển thị của Google nếu có
+            val displayName = account.displayName
+            val email = account.email ?: "unknown@example.com"
 
-            usernameTextView.text = displayName
+            // Nếu không có tên hiển thị từ Google, lấy từ email
+            val username = if (!displayName.isNullOrEmpty()) {
+                displayName
+            } else {
+                // Lấy tên người dùng từ phần đầu của email (trước dấu @)
+                email.split("@").firstOrNull() ?: "Người dùng"
+            }
+
+            usernameTextView.text = username
 
             // Hiển thị ảnh avatar nếu có
-            if (photoUrl != null) {
+            if (account.photoUrl != null) {
                 Glide.with(this)
-                    .load(photoUrl)
-                    .placeholder(R.drawable.__1_bao) // Ảnh tạm trong lúc chờ load
-                    .error(R.drawable.__1_bao)       // Ảnh fallback nếu lỗi
+                    .load(account.photoUrl)
+                    .placeholder(R.drawable.image_user) // Ảnh tạm trong lúc chờ load
+                    .error(R.drawable.image_user)       // Ảnh fallback nếu lỗi
                     .into(avatarImageView)
             } else {
-                avatarImageView.setImageResource(R.drawable.__1_bao)
+                avatarImageView.setImageResource(R.drawable.image_user)
             }
         } else {
             // Nếu chưa đăng nhập bằng Google, dùng dữ liệu local
-            val username = userPrefs.getUserName() ?: "Nguyễn Văn Bảo"
-            val email = userPrefs.getUserEmail() ?: "Chưa có email"
+            val username = userPrefs.getUserName()
+            val email = userPrefs.getUserEmail() ?: "user@example.com"
 
-            usernameTextView.text = username
-//            proStatusTextView.text = if (email.isNotEmpty()) "Có PRO" else "Không phải PRO"
-            avatarImageView.setImageResource(R.drawable.__1_bao)
+            // Nếu không có tên người dùng lưu trong preferences, lấy từ email
+            val displayName = if (!username.isNullOrEmpty()) {
+                username
+            } else {
+                // Lấy tên người dùng từ phần đầu của email (trước dấu @)
+                email.split("@").firstOrNull() ?: "Người dùng"
+            }
+
+            usernameTextView.text = displayName
+            avatarImageView.setImageResource(R.drawable.image_user)
         }
+
 
         // Bắt sự kiện Đăng xuất
         logoutButton.setOnClickListener {

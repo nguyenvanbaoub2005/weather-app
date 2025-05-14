@@ -111,6 +111,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-core:21.1.1")
     // Firebase Cloud Messaging
     implementation ("com.google.firebase:firebase-messaging:23.3.1")
+    implementation ("com.google.firebase:firebase-database:20.3.0")
+
 }
 
 

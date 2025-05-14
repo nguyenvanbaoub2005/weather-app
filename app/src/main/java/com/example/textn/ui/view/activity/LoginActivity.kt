@@ -12,7 +12,7 @@ import com.example.textn.databinding.ActivityLoginBinding
 import com.example.textn.ui.view.component.LoadingHandler
 import com.example.textn.utils.PasswordVisibility
 import com.example.textn.utils.Validate
-import com.example.textn.viewmodel.auth.AuthViewModel
+import com.example.textn.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -46,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
+        // Quan sát kết quả đăng nhập thành công
         authViewModel.loginSuccess.observe(this, Observer { success ->
             loadingHandler.hideLoading()
             if (success) {
@@ -57,9 +58,18 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        // Quan sát lỗi đăng nhập
         authViewModel.loginError.observe(this, Observer { error ->
             loadingHandler.hideLoading()
             Toast.makeText(this, "Lỗi: $error", Toast.LENGTH_SHORT).show()
+        })
+
+        // Quan sát thay đổi thông tin người dùng hiện tại
+        authViewModel.currentUser.observe(this, Observer { user ->
+            user?.let {
+                // Lưu thông tin người dùng vào SharedPreferences
+                saveUserInfo(it.email, it.displayName)
+            }
         })
     }
 
@@ -113,26 +123,12 @@ class LoginActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             if (task.isSuccessful) {
                 val account = task.result
-                firebaseAuthWithGoogle(account.idToken!!)
+                // Thay vì gọi firebaseAuthWithGoogle, chúng ta sử dụng ViewModel
+                val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
+                authViewModel.signInWithGoogle(credential)
             } else {
                 Toast.makeText(this, "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show()
                 loadingHandler.hideLoading()
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
-            loadingHandler.hideLoading()
-            if (task.isSuccessful) {
-                val user = auth.currentUser
-                saveUserInfo(user?.email, user?.displayName)
-                Toast.makeText(this, "Đăng nhập Google thành công", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                Toast.makeText(this, "Firebase Auth thất bại", Toast.LENGTH_SHORT).show()
             }
         }
     }

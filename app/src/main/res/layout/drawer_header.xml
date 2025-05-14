@@ -1,49 +1,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="bottom"
-    android:padding="16dp"
+    android:padding="12dp"
     android:background="@color/dark_blue_background">
 
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/__1_bao"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="03.Nguyễn Văn Bảo"
-        android:textColor="@color/text_primary"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="8dp" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/proStatus"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Không phải PRO"-->
-<!--        android:textColor="@android:color/white"-->
-<!--        android:textSize="14sp"-->
-<!--        android:layout_gravity="center_horizontal"-->
-<!--        android:paddingTop="2dp"/>-->
-
-    <!-- Thêm nút Đăng xuất -->
-    <Button
-        android:id="@+id/logoutButton"
+    <!-- Phần trên - Thông tin người dùng với ảnh đại diện -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng xuất"
-        android:textColor="@color/text_primary"
-        android:background="?attr/selectableItemBackground"
-        android:layout_marginTop="16dp"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:tint="@color/text_primary"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Ảnh đại diện dạng tròn - Giảm kích thước -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="2dp">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/__1_bao"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Thông tin người dùng -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03.Nguyễn Văn Bảo"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Thêm viền line phân cách -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_divider"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Phần dưới cùng - Nút đăng xuất -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Nút đăng xuất -->
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng xuất"
+            android:textColor="@color/text_primary"
+            android:background="?attr/selectableItemBackground"
+            android:textSize="16sp"
+            android:gravity="center" />
+    </LinearLayout>
 </LinearLayout>
