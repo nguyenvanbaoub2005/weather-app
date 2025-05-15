@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.textn.R
 import com.example.textn.viewmodel.GeminiViewModel
 import com.example.textn.data.model.WeatherData
@@ -78,6 +79,7 @@ class GeminiAIFragment : Fragment() {
 
         setupObservers()
         setupClickListeners()
+        setupCloseButton()
         checkLocationPermissionAndGetWeather()
     }
 
@@ -123,6 +125,13 @@ class GeminiAIFragment : Fragment() {
             }
         }
     }
+
+    private fun setupCloseButton() {
+        binding.btnReturn.setOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
+
 
     private fun showResponse(response: String) {
         // Khởi tạo Markwon

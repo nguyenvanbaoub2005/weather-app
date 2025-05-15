@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.textn.R
 import com.example.textn.databinding.FragmentLocationTypeSelectionBinding
 import com.example.textn.viewmodel.GeminiViewModel
@@ -49,11 +50,19 @@ class LocationTypeFragment : Fragment() {
 
         setupCardClickListeners()
         setupGeminiObservers()
+        setupCloseButton()
 
         // Ẩn kết quả AI ban đầu
         binding.tvAIResult.visibility = View.GONE
         binding.tvResultTitle.visibility = View.GONE
         binding.loadingContainer.visibility = View.GONE  // Ẩn container loading ban đầu
+    }
+
+    private fun setupCloseButton() {
+        binding.btnReturn.setOnClickListener {
+            val navController = findNavController()
+            navController.navigate(R.id.nav_home)
+        }
     }
 
     private fun setupCardClickListeners() {
