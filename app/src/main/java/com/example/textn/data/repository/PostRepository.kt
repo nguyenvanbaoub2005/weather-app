@@ -108,47 +108,47 @@ class PostRepository {
         }
     }
 
-    suspend fun getPostsByLocation(latitude: Double, longitude: Double, radiusKm: Double): List<Post> {
-        // Tính toán phạm vi tọa độ dựa trên bán kính
-        val latDelta = radiusKm / 111.0  // Khoảng 111km/1 độ latitude
-        val lonDelta = radiusKm / (111.0 * Math.cos(Math.toRadians(latitude)))
-
-        val minLat = latitude - latDelta
-        val maxLat = latitude + latDelta
-        val minLon = longitude - lonDelta
-        val maxLon = longitude + lonDelta
-
-        return withContext(Dispatchers.IO) {
-            try {
-                val snapshot = postsCollection
-                    .whereGreaterThanOrEqualTo("location.latitude", minLat)
-                    .whereLessThanOrEqualTo("location.latitude", maxLat)
-                    .get()
-                    .await()
-
-                val posts = mutableListOf<Post>()
-
-                for (document in snapshot.documents) {
-                    val post = document.toObject(Post::class.java)?.copy(id = document.id)
-
-                    if (post != null && post.location.longitude in minLon..maxLon) {
-                        // Lấy danh sách người dùng đã like bài viết
-                        val likesSnapshot = document.reference.collection("likes").get().await()
-                        val likedUserIds = likesSnapshot.documents.map { it.id }
-
-                        // Cập nhật post với danh sách người đã like
-                        val updatedPost = post.copy(likedUserIds = likedUserIds)
-                        posts.add(updatedPost)
-                    }
-                }
-
-                return@withContext posts
-            } catch (e: Exception) {
-                e.printStackTrace()
-                return@withContext emptyList()
-            }
-        }
-    }
+//    suspend fun getPostsByLocation(latitude: Double, longitude: Double, radiusKm: Double): List<Post> {
+//        // Tính toán phạm vi tọa độ dựa trên bán kính
+//        val latDelta = radiusKm / 411.0  // Khoảng 111km/1 độ latitude
+//        val lonDelta = radiusKm / (411.0 * Math.cos(Math.toRadians(latitude)))
+//
+//        val minLat = latitude - latDelta
+//        val maxLat = latitude + latDelta
+//        val minLon = longitude - lonDelta
+//        val maxLon = longitude + lonDelta
+//
+//        return withContext(Dispatchers.IO) {
+//            try {
+//                val snapshot = postsCollection
+//                    .whereGreaterThanOrEqualTo("location.latitude", minLat)
+//                    .whereLessThanOrEqualTo("location.latitude", maxLat)
+//                    .get()
+//                    .await()
+//
+//                val posts = mutableListOf<Post>()
+//
+//                for (document in snapshot.documents) {
+//                    val post = document.toObject(Post::class.java)?.copy(id = document.id)
+//
+//                    if (post != null && post.location.longitude in minLon..maxLon) {
+//                        // Lấy danh sách người dùng đã like bài viết
+//                        val likesSnapshot = document.reference.collection("likes").get().await()
+//                        val likedUserIds = likesSnapshot.documents.map { it.id }
+//
+//                        // Cập nhật post với danh sách người đã like
+//                        val updatedPost = post.copy(likedUserIds = likedUserIds)
+//                        posts.add(updatedPost)
+//                    }
+//                }
+//
+//                return@withContext posts
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                return@withContext emptyList()
+//            }
+//        }
+//    }
 
     suspend fun toggleLike(postId: String, userId: String): Boolean = withContext(Dispatchers.IO) {
         try {
@@ -206,5 +206,29 @@ class PostRepository {
             e.printStackTrace()
             return@withContext false
         }
+    }  /**
+     * Lấy danh sách tất cả bài viết
+     */
+    suspend fun getAllPosts(): Result<List<Post>> {
+        return try {
+            val snapshot = postsCollection.get().await()
+            val posts = snapshot.documents.mapNotNull { it.toObject(Post::class.java) }
+            Result.success(posts)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
+
+    /**
+     * Xóa bài viết
+     */
+    suspend fun deletePost(postId: String): Result<Unit> {
+        return try {
+            postsCollection.document(postId).delete().await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 }

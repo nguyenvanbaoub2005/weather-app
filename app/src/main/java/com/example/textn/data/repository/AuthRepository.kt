@@ -1,6 +1,5 @@
 package com.example.textn.data.repository
 
-import com.example.textn.data.model.User
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -77,5 +76,24 @@ class AuthRepository(private val auth: FirebaseAuth) {
      */
     fun logout() {
         auth.signOut()
+    }
+    /**
+     * Kiểm tra vai trò của người dùng
+     */
+    suspend fun checkRole(userId: String): String? {
+        return try {
+            val result = userRepository.getUser(userId)
+            if (result.isSuccess) {
+                val user = result.getOrNull()
+                println("User: $user")
+                user?.role ?: "user"
+            } else {
+                println("Get user failed: ${result.exceptionOrNull()}")
+                null
+            }
+        } catch (e: Exception) {
+            println("Error: $e")
+            null
+        }
     }
 }

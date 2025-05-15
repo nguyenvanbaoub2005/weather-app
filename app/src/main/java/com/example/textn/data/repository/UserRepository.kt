@@ -1,7 +1,6 @@
 package com.example.textn.data.repository
 
 import com.example.textn.data.model.User
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -21,7 +20,6 @@ class UserRepository {
             Result.failure(e)
         }
     }
-
     /**
      * Kiểm tra xem người dùng đã tồn tại trong database chưa
      */
@@ -33,7 +31,6 @@ class UserRepository {
             false
         }
     }
-
     /**
      * Lấy thông tin người dùng từ Firestore
      */
@@ -50,7 +47,6 @@ class UserRepository {
             Result.failure(e)
         }
     }
-
     /**
      * Chuyển đổi từ FirebaseUser sang User model
      */
@@ -60,7 +56,63 @@ class UserRepository {
             email = firebaseUser.email ?: "",
             displayName = firebaseUser.displayName ?: "",
             photoUrl = firebaseUser.photoUrl?.toString() ?: "",
-            createdAt = System.currentTimeMillis()
+            createdAt = System.currentTimeMillis(),
+            lastLogin = System.currentTimeMillis(),
+            isActive = true,
+            role = "user"
         )
+    }
+
+    /**
+     * Cập nhật vai trò của người dùng
+     */
+    suspend fun updateUserRole(userId: String, newRole: String): Result<Unit> {
+        return try {
+            usersCollection.document(userId).update("role", newRole).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Cập nhật trạng thái hoạt động của người dùng
+     */
+    suspend fun updateUserActiveStatus(userId: String, isActive: Boolean): Result<Unit> {
+        return try {
+            usersCollection.document(userId).update("isActive", isActive).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Lấy danh sách tất cả người dùng
+     */
+    suspend fun getAllUsers(): Result<List<User>> {
+        return try {
+            val snapshot = usersCollection.get().await()
+            val users = snapshot.documents.mapNotNull { it.toObject(User::class.java) }
+            Result.success(users)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Cập nhật role cho người dùng hiện có nếu thiếu
+     */
+    suspend fun updateUsersWithRole() {
+        try {
+            val users = usersCollection.get().await()
+            users.documents.forEach { doc ->
+                if (!doc.contains("role")) {
+                    doc.reference.update("role", "user").await()
+                }
+            }
+        } catch (e: Exception) {
+            // Xử lý lỗi nếu cần
+        }
     }
 }

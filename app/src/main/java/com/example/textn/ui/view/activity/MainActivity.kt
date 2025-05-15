@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI
 import com.bumptech.glide.Glide
 import com.example.textn.R
 import com.example.textn.data.local.UserPreferences
+import com.example.textn.ui.view.component.DraggableFloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -22,10 +23,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var userPrefs: UserPreferences
+    private lateinit var fabAskAi: DraggableFloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         // Ánh xạ các thành phần
         drawerLayout = findViewById(R.id.drawerLayout)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
+
+        // Khởi tạo nút AI có thể kéo lên kéo xuống
+        setupDraggableAiButton()
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as androidx.navigation.fragment.NavHostFragment
@@ -75,9 +78,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Thiết lập nút AI có thể kéo
+    private fun setupDraggableAiButton() {
+        fabAskAi = findViewById(R.id.fab_ask_ai)
+
+        // Thiết lập click listener cho nút AI
+        fabAskAi.setOnClickListener {
+            // Mở fragment AI khi click vào nút
+            val navController = findNavController(R.id.nav_host_fragment)
+            navController.popBackStack()
+            navController.navigate(R.id.geminiAIFragment)
+        }
+    }
+
     // Cập nhật thông tin người dùng ở phần header của Navigation Drawer
-    // Cập nhật thông tin người dùng ở phần header của Navigation Drawer
-// Cập nhật thông tin người dùng ở phần header của Navigation Drawer
     private fun updateDrawerHeader() {
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         val headerView: View = navigationView.getHeaderView(0)
@@ -131,7 +145,6 @@ class MainActivity : AppCompatActivity() {
             avatarImageView.setImageResource(R.drawable.image_user)
         }
 
-
         // Bắt sự kiện Đăng xuất
         logoutButton.setOnClickListener {
             // Nếu có đăng nhập Google thì sign out luôn
@@ -146,7 +159,6 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
     }
-
 
     // Hàm mở Drawer
     fun openDrawer() {

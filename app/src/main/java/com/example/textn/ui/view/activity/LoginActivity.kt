@@ -20,6 +20,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import com.example.textn.data.repository.AuthRepository
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -30,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 9001
     private lateinit var userPrefs: UserPreferences
+    private lateinit var authRepository: AuthRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
         userPrefs = UserPreferences(this)
         loadingHandler = LoadingHandler(supportFragmentManager)
+        authRepository = AuthRepository(auth)
 
         setupObservers()
         setupUI()
@@ -53,8 +59,17 @@ class LoginActivity : AppCompatActivity() {
                 val user = auth.currentUser
                 saveUserInfo(user?.email, user?.displayName)
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+
+                // Kiểm tra vai trò của người dùng
+                CoroutineScope(Dispatchers.Main).launch {
+                    val role = user?.uid?.let { authRepository.checkRole(it) }
+                    if (role == "admin") {
+                        startActivity(Intent(this@LoginActivity, AdminActivity::class.java))
+                    } else {
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    }
+                    finish()
+                }
             }
         })
 

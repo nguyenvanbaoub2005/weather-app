@@ -1,5 +1,6 @@
 package com.example.textn.ui.fragment
 
+import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
@@ -150,21 +151,103 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
 
                 withContext(Dispatchers.Main) {
                     if (addresses?.isNotEmpty() == true) {
-                        val cityName = addresses[0]?.locality
-                            ?: addresses[0]?.adminArea
-                            ?: addresses[0]?.subAdminArea
+                        val address = addresses[0]
+                        val wardAndDistrict = extractWardAndDistrictNames(address.getAddressLine(0))
+                            ?: fallbackToAddressComponents(address)
                             ?: "Unknown Location"
 
-                        binding.textCityName.text = cityName
+                        binding.textCityName.text = wardAndDistrict
                     } else {
                         binding.textCityName.text = "Unknown Location"
+                        Toast.makeText(
+                            requireContext(),
+                            "Không thể lấy tên địa điểm",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     binding.textCityName.text = "Unknown Location"
+                    Toast.makeText(
+                        requireContext(),
+                        "Lỗi khi lấy tên địa điểm: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
+        }
+    }
+
+    private fun extractWardAndDistrictNames(addressLine: String?): String? {
+        if (addressLine.isNullOrEmpty()) return null
+
+        val parts = addressLine.split(", ")
+
+        // Tìm phường và quận trong địa chỉ
+        val wardPart = parts.find {
+            it.contains("Phường", ignoreCase = true) ||
+                    it.contains("Xã", ignoreCase = true) ||
+                    it.contains("Thị trấn", ignoreCase = true)
+        }
+
+        val districtPart = parts.find {
+            it.contains("Quận", ignoreCase = true) ||
+                    it.contains("Huyện", ignoreCase = true) ||
+                    it.contains("Thành phố", ignoreCase = true) ||
+                    it.contains("Thị xã", ignoreCase = true)
+        }
+
+        // Trích xuất tên phường (bỏ tiền tố "Phường", "Xã", "Thị trấn")
+        val wardName = wardPart?.let { extractNameWithoutPrefix(it, listOf("Phường ", "Xã ", "Thị trấn ")) }
+
+        // Trích xuất tên quận (bỏ tiền tố "Quận", "Huyện", "Thành phố", "Thị xã")
+        val districtName = districtPart?.let {
+            extractNameWithoutPrefix(it, listOf("Quận ", "Huyện ", "Thành phố ", "Thị xã "))
+        }
+
+        return when {
+            wardName != null && districtName != null -> "$wardName, $districtName"
+            wardName != null -> wardName
+            districtName != null -> districtName
+            else -> null
+        }
+    }
+
+    private fun extractNameWithoutPrefix(text: String, prefixes: List<String>): String {
+        for (prefix in prefixes) {
+            if (text.startsWith(prefix, ignoreCase = true)) {
+                return text.substring(prefix.length).trim()
+            }
+        }
+        return text
+    }
+
+    private fun fallbackToAddressComponents(address: Address): String? {
+        // Trích xuất tên phường từ subLocality nếu có
+        val wardName = address.subLocality?.let {
+            extractNameWithoutPrefix(it, listOf("Phường ", "Xã ", "Thị trấn "))
+        }
+
+        // Lấy locality hoặc subAdminArea làm tên quận/huyện
+        val districtName = when {
+            address.locality != null -> extractNameWithoutPrefix(
+                address.locality,
+                listOf("Quận ", "Huyện ", "Thành phố ", "Thị xã ")
+            )
+            address.subAdminArea != null -> extractNameWithoutPrefix(
+                address.subAdminArea,
+                listOf("Quận ", "Huyện ", "Thành phố ", "Thị xã ")
+            )
+            else -> null
+        }
+
+        return when {
+            wardName != null && districtName != null -> "$wardName, $districtName"
+            wardName != null -> wardName
+            districtName != null -> districtName
+            address.adminArea != null -> address.adminArea
+            else -> null
         }
     }
 

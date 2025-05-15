@@ -38,7 +38,7 @@
         <activity  android:name=".ui.view.activity.LauncherActivity"></activity>
         <activity  android:name=".ui.view.activity.RegisterActivity"></activity>
         <activity  android:name=".ui.view.activity.LoginActivity"></activity>
-
+        <activity  android:name=".ui.view.activity.AdminActivity"></activity>
         <!-- Service FCM -->
         <service
             android:name=".data.services.HealthAlertFirebaseService"

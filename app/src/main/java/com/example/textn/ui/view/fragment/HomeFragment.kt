@@ -127,7 +127,7 @@ class HomeFragment : Fragment() {
         // Weather Data Observer
         weatherViewModel.weatherData.observe(viewLifecycleOwner) { weatherData ->
             // Update forecast list
-            val forecastItems = weatherData.daily.take(5).map { dayForecast ->
+            val forecastItems = weatherData.daily.take(6).map { dayForecast ->
                 val date = Date(dayForecast.dt * 1000)
                 val dayFormat = SimpleDateFormat("EEE", Locale.getDefault())
                 val dateFormat = SimpleDateFormat("dd/MM", Locale.getDefault())

@@ -1,6 +1,7 @@
 package com.example.textn.viewmodel
 
 import android.content.Context
+import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.*
@@ -9,8 +10,10 @@ import com.example.textn.data.network.RetrofitClient
 import com.example.textn.data.repository.WeatherRepository
 import com.example.textn.utils.WeatherHelper
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,8 +44,8 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
 
         viewModelScope.launch {
             try {
-                // Lấy vị trí từ SharedPreferences hoặc vị trí hiện tại
-                val location = getLocation()
+                // Lấy vị trí hiện tại
+                val location = getCurrentLocation()
                 if (location == null) {
                     _error.postValue("Không thể lấy vị trí hiện tại.")
                     _isLoading.postValue(false)
@@ -94,12 +97,12 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch {
             try {
                 // Lấy vị trí và thời tiết hiện tại để bổ sung thông tin cho câu hỏi tùy chỉnh
-                val location = getLocation()
+                val location = getCurrentLocation()
                 val weatherInfo = if (location != null) {
                     try {
                         val response = weatherRepository.getWeatherData(context, location)
                         val weatherData = convertWeatherResponseToWeatherData(response, location)
-                        // Lấy dự báo 3 ngày
+                        // Lấy dự báo 5 ngày
                         val forecast = response.daily.take(5).joinToString("\n") { day ->
                             val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(day.dt * 1000))
                             "Ngày: $date - Nhiệt độ: ${day.temp.day}°C, ${day.weather[0].description}"
@@ -186,32 +189,10 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
             })
     }
 
-    // Hàm lấy vị trí từ SharedPreferences hoặc vị trí hiện tại
-    private suspend fun getLocation(): String? {
-        val sharedPrefs = context.getSharedPreferences("weather_prefs", Context.MODE_PRIVATE)
 
-        // Lấy vị trí đã lưu và thời gian cập nhật
-        val savedLocation = sharedPrefs.getString("last_location", null)
-        val lastUpdateTime = sharedPrefs.getLong("location_update_time", 0)
-        val currentTime = System.currentTimeMillis()
-
-        // Kiểm tra nếu vị trí còn mới (dưới 6 giờ)
-        if (savedLocation != null && currentTime - lastUpdateTime < 6 * 60 * 60 * 1000) {
-            Log.d("GeminiViewModel", "Sử dụng vị trí đã lưu: $savedLocation")
-            return savedLocation
-        }
-
-        // Thử lấy vị trí hiện tại
-        return try {
-            getCurrentLocation()
-        } catch (e: Exception) {
-            Log.e("GeminiViewModel", "Không thể lấy vị trí hiện tại", e)
-            // Nếu không lấy được vị trí mới, dùng vị trí cũ hoặc mặc định
-            savedLocation ?: "Hồ Chí Minh" // Vị trí mặc định
-        }
-    }
 
     // Hàm lấy vị trí hiện tại (dùng Fused Location API)
+// Hàm lấy vị trí hiện tại (dùng Fused Location API)
     private suspend fun getCurrentLocation(): String? {
         try {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
@@ -219,20 +200,85 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
             // Kiểm tra quyền truy cập vị trí (trong Worker nên hạn chế yêu cầu quyền mới)
             val location: Location = fusedLocationClient.lastLocation.await() ?: return null
 
-            // Chuyển tọa độ thành tên địa điểm
-            val locationName = WeatherHelper.getLocationFromCoordinates(context, location.latitude, location.longitude)
+            // Chuyển tọa độ thành tên phường
+            val wardName = getWardName(context, location.latitude, location.longitude)
 
             // Lưu vị trí vào SharedPreferences
             context.getSharedPreferences("weather_prefs", Context.MODE_PRIVATE).edit()
-                .putString("last_location", locationName)
+                .putString("last_location", wardName)
                 .putLong("location_update_time", System.currentTimeMillis())
                 .apply()
 
-            Log.d("GeminiViewModel", "Đã cập nhật vị trí mới: $locationName")
-            return locationName
+            Log.d("GeminiViewModel", "Đã cập nhật vị trí mới: $wardName")
+            return wardName
         } catch (e: SecurityException) {
             Log.e("GeminiViewModel", "Không có quyền truy cập vị trí", e)
             return null
+        }
+    }
+
+    // Hàm mới để lấy tên phường từ tọa độ
+    private suspend fun getWardName(context: Context, latitude: Double, longitude: Double): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val geocoder = Geocoder(context, Locale.getDefault())
+
+                @Suppress("DEPRECATION")
+                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+
+                if (!addresses.isNullOrEmpty()) {
+                    val address = addresses[0]
+
+                    // Ưu tiên lấy phường từ addressLine
+                    val wardName = extractWardName(address.getAddressLine(0))
+                    if (wardName != null) {
+                        return@withContext wardName
+                    }
+
+                    // Nếu không tìm thấy, thử lấy thông tin từ subLocality
+                    val subLocality = address.subLocality  // Thường là phường/xã
+                    if (subLocality != null) {
+                        return@withContext extractWardNameFromText(subLocality)
+                    }
+
+                    // Fallback nếu không tìm được phường
+                    return@withContext "Unknown Location"
+                } else {
+                    return@withContext "Unknown Location"
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return@withContext "Unknown Location"
+            }
+        }
+    }
+
+    // Hàm trích xuất tên phường từ chuỗi địa chỉ
+    private fun extractWardName(addressLine: String?): String? {
+        if (addressLine.isNullOrEmpty()) return null
+
+        val parts = addressLine.split(", ")
+
+        // Tìm phường trong địa chỉ
+        val wardPart = parts.find {
+            it.contains("Phường", ignoreCase = true) ||
+                    it.contains("Xã", ignoreCase = true) ||
+                    it.contains("Thị trấn", ignoreCase = true)
+        }
+
+        return wardPart?.let { extractWardNameFromText(it) }
+    }
+
+    // Hàm loại bỏ tiền tố "Phường", "Xã", "Thị trấn"
+    private fun extractWardNameFromText(text: String): String {
+        return when {
+            text.startsWith("Phường ", ignoreCase = true) ->
+                text.substring("Phường ".length).trim()
+            text.startsWith("Xã ", ignoreCase = true) ->
+                text.substring("Xã ".length).trim()
+            text.startsWith("Thị trấn ", ignoreCase = true) ->
+                text.substring("Thị trấn ".length).trim()
+            else -> text
         }
     }
 
@@ -260,7 +306,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch {
             try {
                 // Lấy vị trí hiện tại
-                val currentLocation = getLocation()
+                val currentLocation = getCurrentLocation()
                 if (currentLocation == null) {
                     _error.postValue("Không thể lấy vị trí hiện tại.")
                     _isLoading.postValue(false)
@@ -292,7 +338,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
             
             Gợi ý $numberOfLocations địa điểm $locationTypePrompt gần đây phù hợp với thời tiết hiện tại.
             
-            Cho mỗi địa điểm: tên, khoảng cách ước tính, lý do phù hợp với thời tiết và một gợi ý hoạt động ngắn gọn,chỉ cho 3 địa điểm ,thêm nhiều icon.
+            Cho mỗi địa điểm: tên, khoảng cách ước tính, lý do phù hợp với thời tiết và một gợi ý hoạt động ngắn gọn,chỉ cho 3 địa điểm ,thêm nhiều icon,kết thúc bằng một câu chúc hay.
             """.trimIndent()
 
                 // Gọi hàm gửi yêu cầu tới API Gemini
@@ -313,7 +359,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch {
             try {
                 // Lấy vị trí hiện tại
-                val currentLocation = getLocation()
+                val currentLocation = getCurrentLocation()
                 if (currentLocation == null) {
                     _error.postValue("Không thể lấy vị trí hiện tại.")
                     _isLoading.postValue(false)

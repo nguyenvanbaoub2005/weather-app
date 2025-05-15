@@ -45,19 +45,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Tên thành phố" />
 
-<!--            &lt;!&ndash; Information icon &ndash;&gt;-->
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnInfo"-->
-<!--                android:layout_width="48dp"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:layout_marginEnd="8dp"-->
-<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                android:contentDescription="Information"-->
-<!--                android:src="@drawable/ic_info"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/btnShare"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:tint="@color/light_text" />-->
+            <!--            &lt;!&ndash; Information icon &ndash;&gt;-->
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/btnInfo"-->
+            <!--                android:layout_width="48dp"-->
+            <!--                android:layout_height="48dp"-->
+            <!--                android:layout_marginEnd="8dp"-->
+            <!--                android:background="?attr/selectableItemBackgroundBorderless"-->
+            <!--                android:contentDescription="Information"-->
+            <!--                android:src="@drawable/ic_info"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/btnShare"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:tint="@color/light_text" />-->
 
             <!-- Share Button -->
             <ImageButton
@@ -375,5 +375,6 @@
                 android:fontFamily="sans-serif-medium" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

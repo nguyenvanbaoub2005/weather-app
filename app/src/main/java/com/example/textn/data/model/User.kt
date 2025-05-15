@@ -7,8 +7,9 @@ data class User(
     val photoUrl: String = "",
     val createdAt: Long = 0,
     val lastLogin: Long = 0,
-    val isActive: Boolean = true
+    val isActive: Boolean = true,
+    val role: String = "" // Thêm trường role
 ) {
     // Firebase Realtime Database yêu cầu constructor rỗng
-    constructor() : this("", "", "", "", 0, 0)
+    constructor() : this("", "", "", "", 0, 0, true, "")
 }

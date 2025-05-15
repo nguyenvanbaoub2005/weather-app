@@ -106,19 +106,19 @@ class CommunityViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun loadPostsByLocation(latitude: Double, longitude: Double, radiusKm: Double = 10.0) {
-        _isLoading.value = true
-        viewModelScope.launch {
-            try {
-                val postsList = postRepository.getPostsByLocation(latitude, longitude, radiusKm)
-                _posts.value = postsList
-            } catch (e: Exception) {
-                _errorMessage.value = e.message ?: "Lỗi khi tải bài theo vị trí"
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
+//    fun loadPostsByLocation(latitude: Double, longitude: Double, radiusKm: Double = 10.0) {
+//        _isLoading.value = true
+//        viewModelScope.launch {
+//            try {
+//                val postsList = postRepository.getPostsByLocation(latitude, longitude, radiusKm)
+//                _posts.value = postsList
+//            } catch (e: Exception) {
+//                _errorMessage.value = e.message ?: "Lỗi khi tải bài theo vị trí"
+//            } finally {
+//                _isLoading.value = false
+//            }
+//        }
+//    }
 
     fun loadPostsByUserId(userId: String) {
         _isLoading.value = true

@@ -2,8 +2,10 @@ package com.example.textn.ui.view.fragment
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,12 +24,17 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.textn.R
 import com.example.textn.data.model.PostLocation
 import com.example.textn.viewmodel.CommunityViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Locale
 
 class AddPostFragment : Fragment() {
 
@@ -192,21 +199,60 @@ class AddPostFragment : Fragment() {
 
     private fun getLastLocation() {
         try {
+            // Kiểm tra quyền truy cập vị trí
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                Toast.makeText(
+                    requireContext(),
+                    "Cần quyền truy cập vị trí",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
                     // Lấy vị trí thành công
-                    currentLocation = PostLocation(
-                        latitude = location.latitude,
-                        longitude = location.longitude,
-                        locationName = "Vị trí hiện tại" // Có thể dùng Geocoder để lấy tên địa điểm
-                    )
-                    // Cập nhật UI để hiển thị vị trí đã chọn
-                    locationText.text = currentLocation?.locationName ?: "Lựa chọn vị trí"
-                    Toast.makeText(
-                        requireContext(),
-                        "Đã lấy được vị trí hiện tại",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        try {
+                            val locationName = getLocationName(
+                                requireContext(),
+                                location.latitude,
+                                location.longitude
+                            )
+                            currentLocation = PostLocation(
+                                latitude = location.latitude,
+                                longitude = location.longitude,
+                                locationName = locationName ?: "Vị trí hiện tại"
+                            )
+                            // Cập nhật UI
+                            locationText.text = currentLocation?.locationName ?: "Lựa chọn vị trí"
+                            Toast.makeText(
+                                requireContext(),
+                                "Đã lấy được vị trí: ${currentLocation?.locationName}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Lỗi khi lấy tên địa điểm: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            currentLocation = PostLocation(
+                                latitude = location.latitude,
+                                longitude = location.longitude,
+                                locationName = "Vị trí hiện tại"
+                            )
+                            locationText.text = currentLocation?.locationName ?: "Lựa chọn vị trí"
+                        }
+                    }
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -227,6 +273,26 @@ class AddPostFragment : Fragment() {
                 "Lỗi quyền truy cập vị trí",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private suspend fun getLocationName(context: Context, latitude: Double, longitude: Double): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val geocoder = Geocoder(context, Locale.getDefault())
+                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                if (!addresses.isNullOrEmpty()) {
+                    val address = addresses[0]
+                    // Tạo tên địa điểm từ các thành phần địa chỉ
+                    val addressLine = address.getAddressLine(0) // Địa chỉ đầy đủ
+                    addressLine ?: "${address.locality ?: ""}, ${address.countryName ?: ""}".trim()
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         }
     }
 
