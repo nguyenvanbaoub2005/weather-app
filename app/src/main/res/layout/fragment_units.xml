@@ -17,14 +17,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/close_button_description"
-        app:tint="@color/light_text" />
+        app:tint="@color/text_primary" />
 
     <TextView
         android:id="@+id/tvHeaderTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Đơn vị"
-        android:textColor="@color/light_text"
+        android:textColor="@color/text_primary"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@id/buttonClose"
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Widget thời tiết"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -89,7 +89,7 @@
                             android:minWidth="0dp"
                             android:maxWidth="70dp"
                             android:textAllCaps="false"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/dark_blue_card"
                             android:contentDescription="Tắt hiển thị" />
 
@@ -101,20 +101,20 @@
                             android:layout_height="36dp"
                             android:backgroundTint="@color/dark_blue_card"
                             android:contentDescription="@string/wind_direction"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             app:icon="@drawable/ic_wind"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
-                            app:iconTint="@android:color/white" />
+                            app:iconTint="@color/text_primary"/>
 
                         <Button
                             android:id="@+id/btnWeatherWaveHeight"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/primary"
-                            app:iconTint="@android:color/white"
+                            app:iconTint="@color/text_primary"
                             app:icon="@drawable/ic_wave"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
@@ -125,9 +125,9 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/dark_blue_card"
-                            app:iconTint="@android:color/white"
+                            app:iconTint="@color/text_primary"
                             app:icon="@drawable/ic_temperature"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
@@ -138,9 +138,9 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/dark_blue_card"
-                            app:iconTint="@android:color/white"
+                            app:iconTint="@color/text_primary"
                             app:icon="@drawable/ic_snowflake"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
@@ -155,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Điểm yêu thích"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -194,7 +194,7 @@
                             android:minWidth="0dp"
                             android:maxWidth="70dp"
                             android:textAllCaps="false"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/dark_blue_card"
                             android:contentDescription="Tắt hiển thị" />
 
@@ -204,9 +204,9 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/dark_blue_card"
-                            app:iconTint="@android:color/white"
+                            app:iconTint="@color/text_primary"
                             app:icon="@drawable/ic_wind"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
@@ -217,9 +217,9 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/primary"
-                            app:iconTint="@android:color/white"
+                            app:iconTint="@color/text_primary"
                             app:icon="@drawable/ic_wave"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
@@ -230,9 +230,9 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/dark_blue_card"
-                            app:iconTint="@android:color/white"
+                            app:iconTint="@color/text_primary"
                             app:icon="@drawable/ic_temperature"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
@@ -243,9 +243,9 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="wrap_content"
                             android:layout_height="36dp"
-                            android:textColor="@color/light_text"
+                            android:textColor="@color/text_primary"
                             android:backgroundTint="@color/dark_blue_card"
-                            app:iconTint="@android:color/white"
+                            app:iconTint="@color/text_primary"
                             app:icon="@drawable/ic_snowflake"
                             app:iconGravity="textStart"
                             app:iconPadding="0dp"
@@ -260,7 +260,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hoa hồng"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -283,7 +283,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="Sơ đồ" />
 
@@ -293,7 +293,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="Vệ tinh" />
 
@@ -305,7 +305,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tốc độ"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -328,7 +328,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="m/s" />
 
@@ -338,7 +338,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="mph" />
 
@@ -348,7 +348,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="kph" />
 
@@ -358,7 +358,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="knots" />
 
@@ -370,7 +370,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tốc độ dòng điện"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -393,7 +393,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="m/s" />
 
@@ -403,7 +403,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="mph" />
 
@@ -413,7 +413,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="kph" />
 
@@ -423,7 +423,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="knots" />
 
@@ -435,7 +435,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nhiệt độ không khí"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -458,7 +458,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="°C" />
 
@@ -468,7 +468,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="°F" />
 
@@ -478,7 +478,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="K" />
 
@@ -490,7 +490,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Áp lực khí quyển"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -513,7 +513,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="hPa" />
 
@@ -523,7 +523,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="inHg" />
 
@@ -533,7 +533,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="mmHg" />
 
@@ -545,7 +545,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Không có mức thủy triều"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -568,7 +568,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="LAT" />
 
@@ -578,7 +578,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="MLLW" />
 
@@ -588,7 +588,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="MSL" />
 
@@ -600,7 +600,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Khoảng cách"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -623,7 +623,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="Kilometers" />
 
@@ -633,7 +633,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="Miles" />
 
@@ -643,7 +643,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="dặm hải lý" />
 
@@ -656,7 +656,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Chiều cao"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -679,7 +679,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="Meters" />
 
@@ -689,7 +689,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="Feet" />
 
@@ -701,7 +701,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lượng mưa"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -724,7 +724,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="mm" />
 
@@ -734,7 +734,7 @@
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="in" />
 
@@ -746,7 +746,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Thời gian"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -769,7 +769,7 @@
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="24h" />
 
@@ -779,7 +779,7 @@
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="12h" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -790,7 +790,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Dự báo"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 
@@ -813,7 +813,7 @@
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/dark_blue_card"
                         android:text="1 giờ" />
 
@@ -823,7 +823,7 @@
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:textColor="@color/light_text"
+                        android:textColor="@color/text_primary"
                         android:backgroundTint="@color/primary"
                         android:text="3 giờ" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -835,7 +835,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cân nặng của bạn: 154 lbs"
-                android:textColor="@color/light_text"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
 

@@ -37,6 +37,7 @@ class SettingsFragment : Fragment() {
         // Initialize ViewModel
         viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
+        // Important: First set up observers before listeners
         setupObservers()
         setupListeners()
         setupCloseButton()
@@ -45,7 +46,10 @@ class SettingsFragment : Fragment() {
     private fun setupObservers() {
         // Observe theme changes
         viewModel.isDarkTheme.observe(viewLifecycleOwner) { isDarkTheme ->
-            binding.switchTheme.isChecked = isDarkTheme
+            // Đặt trạng thái của switch mà không kích hoạt listener
+            if (binding.switchTheme.isChecked != isDarkTheme) {
+                binding.switchTheme.isChecked = isDarkTheme
+            }
             updateThemeText(isDarkTheme)
         }
 
@@ -59,10 +63,12 @@ class SettingsFragment : Fragment() {
     private fun setupListeners() {
         // Theme switch
         binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
+            // Chỉ thay đổi theme khi trạng thái thực sự thay đổi
             if (viewModel.isDarkTheme.value != isChecked) {
-                viewModel.toggleTheme()
-                // Apply theme immediately without waiting for ViewModel update
+                // Áp dụng theme ngay lập tức
                 ThemeManager.applyTheme(isChecked)
+                // Sau đó cập nhật ViewModel
+                viewModel.toggleTheme()
             }
         }
 
