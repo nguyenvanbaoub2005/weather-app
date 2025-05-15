@@ -88,7 +88,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         // Get and display city name
         updateCityName(defaultLocation)
 
-        // Initial data load with default model
+        // Initial data load - không cần truyền modelName nữa
         viewModel.fetchForecastData(defaultLocation.latitude, defaultLocation.longitude)
     }
 
@@ -414,6 +414,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
     private fun setupObservers() {
         viewModel.forecastData.observe(viewLifecycleOwner) { data ->
             updateForecastDisplay(data)
+            updateModelInfo(data)
             // Removed model info update since we don't need it anymore
         }
 
@@ -436,7 +437,7 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
             // Hiển thị thông báo nếu không có dữ liệu
             Toast.makeText(
                 context,
-                "Không có dữ liệu dự báo cho vị trí này", // Thông báo lỗi
+                "Không có dữ liệu dự báo cho vị trí này",
                 Toast.LENGTH_SHORT
             ).show()
             binding.forecastContent.visibility = View.GONE // Ẩn nội dung dự báo
@@ -446,12 +447,13 @@ class TabularForecastFragment : Fragment(), OnMapReadyCallback {
         // Cập nhật dữ liệu cho adapter
         forecastAdapter.submitData(data.days)
         binding.forecastContent.visibility = View.VISIBLE // Hiển thị nội dung dự báo
-        binding.textModelInfo.text = "Weather forecast " // Cập nhật thông tin mô hình  :Weather forecast based on OpenWeatherMap data
     }
 
     private fun updateModelInfo(data: ForecastTabularData) {
-        val modelInfoText = "${data.modelResolution}km resolution, ${data.modelAccuracy}% accuracy"
-        binding.textModelInfo.text = modelInfoText
+        // Sử dụng thông tin từ API response để hiển thị thông tin mô hình dự báo
+//        val modelInfoText = "Weather forecast based on ${data.modelName} data - " +
+//                "${data.modelResolution}km resolution, ${data.modelAccuracy}% accuracy"
+//        binding.textModelInfo.text = modelInfoText
     }
 
     override fun onDestroyView() {

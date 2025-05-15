@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.textn.R
 import com.example.textn.data.network.RetrofitClient
 import com.example.textn.data.repository.WeatherRepository
 import com.example.textn.databinding.FragmentHealthAlertsBinding
@@ -38,6 +40,7 @@ class HealthAlertsFragment : Fragment() {
 
         setupRecyclerView()
         observeViewModel()
+        setupCloseButton()
 
         // Lấy vị trí đã lưu và gọi fetch dữ liệu
         val prefs = requireContext()
@@ -56,6 +59,13 @@ class HealthAlertsFragment : Fragment() {
         binding.recyclerHealthAlerts.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@HealthAlertsFragment.adapter
+        }
+    }
+
+    private fun setupCloseButton() {
+        binding.btnReturn.setOnClickListener {
+            val navController = findNavController()
+                navController.navigate(R.id.nav_home)
         }
     }
 

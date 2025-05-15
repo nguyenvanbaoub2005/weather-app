@@ -7,16 +7,28 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
+    <ImageButton
+        android:id="@+id/btn_return"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Quay lại"
+        android:padding="12dp"
+        android:src="@drawable/ic_chevron_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/text_health_alerts" />
+
     <TextView
         android:id="@+id/title_health_alerts"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cảnh báo sức khỏe"
         android:textColor="@color/text_health_alerts"
         android:textSize="20sp"
         android:textStyle="bold"
         android:padding="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_return"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

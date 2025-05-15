@@ -31,11 +31,9 @@ class ForecastTabularViewModel(
      * Phương thức để tải dữ liệu dự báo
      * @param lat Vĩ độ của địa điểm
      * @param lon Kinh độ của địa điểm
-     * @param modelName Tên mô hình dự báo (mặc định là "GFS27")
      */
     @RequiresApi(Build.VERSION_CODES.O)
-    // Hàm để lấy dữ liệu dự báo thời tiết dựa trên vĩ độ và kinh độ
-    fun fetchForecastData(lat: Double, lon: Double, modelName: String = "GFS27") {
+    fun fetchForecastData(lat: Double, lon: Double) {
         _isLoading.value = true // Đánh dấu đang trong quá trình tải dữ liệu
         _errorMessage.value = null // Xóa thông báo lỗi trước đó
 

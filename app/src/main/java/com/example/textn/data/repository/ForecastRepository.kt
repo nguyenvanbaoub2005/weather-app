@@ -11,33 +11,40 @@ import com.example.textn.data.model.HourlyForecast
 import com.example.textn.data.network.RetrofitClient
 import java.util.Date
 import java.time.LocalDate
-import java.time.LocalDate.of
 import java.time.ZoneId
 import java.util.Calendar
-import java.util.TimeZone
 
 class ForecastRepository(private val apiService: WeatherApiService) {
+
+    // Di chuyển API key vào hằng số riêng để dễ bảo trì
+    companion object {
+        private const val API_KEY = "32ea3752b81cf12722a46358a7a9739c"
+
+        // Factory method to create repository
+        fun create(): ForecastRepository {
+            val apiService = RetrofitClient.instance
+            return ForecastRepository(apiService)
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getForecastData(
         lat: Double,
         lon: Double
     ): ForecastTabularData {
-        val apiKey = "32ea3752b81cf12722a46358a7a9739c"
-
         try {
-            // Call API to get forecast data using getWeatherForecast instead of getForecast
-            val response = apiService.getWeatherForecast(lat, lon, apiKey)
+            // Gọi API để lấy dữ liệu dự báo
+            val response = apiService.getWeatherForecast(lat, lon, API_KEY)
 
             if (response.isSuccessful) {
                 val weatherResponse = response.body()
                     ?: throw Exception("Empty response data")
 
-                // Convert data from WeatherResponse to ForecastTabularData
+                // Chuyển đổi từ WeatherResponse sang ForecastTabularData
                 return ForecastTabularData(
                     latitude = weatherResponse.latitude,
                     longitude = weatherResponse.longitude,
-                    modelName = "", // Empty as we don't need model info anymore
+                    modelName = "OpenWeatherMap", // Sử dụng tên nguồn dữ liệu
                     modelAccuracy = weatherResponse.modelAccuracy,
                     modelResolution = weatherResponse.modelResolution,
                     days = convertToForecastDays(weatherResponse.hourly),
@@ -52,7 +59,7 @@ class ForecastRepository(private val apiService: WeatherApiService) {
         }
     }
 
-    // Convert hourly data from WeatherResponse to list of DayForecast
+    // Hàm chuyển đổi dữ liệu theo giờ từ WeatherResponse thành danh sách DayForecast
     @RequiresApi(Build.VERSION_CODES.O)
     private fun convertToForecastDays(hourlyData: List<HourlyData>): List<DayForecast> {
         val today = LocalDate.now()
@@ -64,10 +71,10 @@ class ForecastRepository(private val apiService: WeatherApiService) {
         }
 
         return groupedByDay
-            .filterKeys { it.isAfter(today.minusDays(1)) }
+            .filterKeys { it.isAfter(today) }
             .toSortedMap()
             .entries
-            .take(5) // lấy 5 ngày
+            .take(2) // lấy 2 ngày
             .map { (date, hourlyEntries) ->
                 val forecastsByHour = hourlyEntries.associateBy { entry ->
                     Calendar.getInstance().apply { time = Date(entry.dt * 1000L) }
@@ -102,13 +109,6 @@ class ForecastRepository(private val apiService: WeatherApiService) {
             }
     }
 
-
-
-
-
-
-
-
     // Hàm để tính thang Beaufort dựa trên tốc độ gió (m/s)
     private fun calculateBeaufortScale(windSpeed: Float): Int {
         return when {
@@ -125,33 +125,6 @@ class ForecastRepository(private val apiService: WeatherApiService) {
             windSpeed < 28.5f -> 10 // 10: Bão
             windSpeed < 32.7f -> 11 // 11: Bão dữ dội
             else -> 12             // 12: Bão lớn
-        }
-    }
-
-    // Extension utility to convert between Date and LocalDate
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun Date.toLocalDate(): LocalDate {
-        val calendar = Calendar.getInstance().apply { time = this@toLocalDate }
-        return of(
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH) + 1,
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun LocalDate.toDate(): Date {
-        val calendar = Calendar.getInstance().apply {
-            set(year, monthValue - 1, dayOfMonth)
-        }
-        return calendar.time
-    }
-
-    companion object {
-        // Factory method to create repository
-        fun create(): ForecastRepository {
-            val apiService = RetrofitClient.instance
-            return ForecastRepository(apiService)
         }
     }
 }
