@@ -1,6 +1,7 @@
 package com.example.textn.ui.view.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         // Ánh xạ các thành phần
         drawerLayout = findViewById(R.id.drawerLayout)
-        val navigationView: NavigationView = findViewById(R.id.navigation_view)
+        val navigationView: NavigationView = findViewById(R.id.navigation_view_inner)
 
         // Khởi tạo nút AI có thể kéo lên kéo xuống
         setupDraggableAiButton()
@@ -51,6 +52,9 @@ class MainActivity : AppCompatActivity() {
         // Cập nhật thông tin header
         updateDrawerHeader()
 
+        // Thiết lập footer (đã được include trong layout, chỉ cần xử lý sự kiện)
+        setupNavigationFooter()
+
         // Xử lý sự kiện chọn mục trong Navigation Drawer
         navigationView.setNavigationItemSelectedListener { menuItem ->
             val handled = when (menuItem.itemId) {
@@ -65,7 +69,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_gemini_ai -> {
-                    // Điều hướng đến Gemini AI Fragment
                     navController.popBackStack()
                     navController.navigate(R.id.geminiAIFragment)
                     true
@@ -82,9 +85,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupDraggableAiButton() {
         fabAskAi = findViewById(R.id.fab_ask_ai)
 
-        // Thiết lập click listener cho nút AI
         fabAskAi.setOnClickListener {
-            // Mở fragment AI khi click vào nút
             val navController = findNavController(R.id.nav_host_fragment)
             navController.popBackStack()
             navController.navigate(R.id.geminiAIFragment)
@@ -93,51 +94,42 @@ class MainActivity : AppCompatActivity() {
 
     // Cập nhật thông tin người dùng ở phần header của Navigation Drawer
     private fun updateDrawerHeader() {
-        val navigationView: NavigationView = findViewById(R.id.navigation_view)
-        val headerView: View = navigationView.getHeaderView(0)
+        val headerView: View = findViewById(R.id.nav_header)
 
         val avatarImageView = headerView.findViewById<ImageView>(R.id.avatar)
         val usernameTextView = headerView.findViewById<TextView>(R.id.username)
         val logoutButton = headerView.findViewById<Button>(R.id.btnLogout)
 
-        // Lấy tài khoản Google hiện tại
         val account = com.google.android.gms.auth.api.signin.GoogleSignIn.getLastSignedInAccount(this)
 
         if (account != null) {
-            // Ưu tiên sử dụng tên hiển thị của Google nếu có
             val displayName = account.displayName
             val email = account.email ?: "unknown@example.com"
 
-            // Nếu không có tên hiển thị từ Google, lấy từ email
             val username = if (!displayName.isNullOrEmpty()) {
                 displayName
             } else {
-                // Lấy tên người dùng từ phần đầu của email (trước dấu @)
                 email.split("@").firstOrNull() ?: "Người dùng"
             }
 
             usernameTextView.text = username
 
-            // Hiển thị ảnh avatar nếu có
             if (account.photoUrl != null) {
                 Glide.with(this)
                     .load(account.photoUrl)
-                    .placeholder(R.drawable.image_user) // Ảnh tạm trong lúc chờ load
-                    .error(R.drawable.image_user)       // Ảnh fallback nếu lỗi
+                    .placeholder(R.drawable.image_user)
+                    .error(R.drawable.image_user)
                     .into(avatarImageView)
             } else {
                 avatarImageView.setImageResource(R.drawable.image_user)
             }
         } else {
-            // Nếu chưa đăng nhập bằng Google, dùng dữ liệu local
             val username = userPrefs.getUserName()
             val email = userPrefs.getUserEmail() ?: "user@example.com"
 
-            // Nếu không có tên người dùng lưu trong preferences, lấy từ email
             val displayName = if (!username.isNullOrEmpty()) {
                 username
             } else {
-                // Lấy tên người dùng từ phần đầu của email (trước dấu @)
                 email.split("@").firstOrNull() ?: "Người dùng"
             }
 
@@ -145,9 +137,7 @@ class MainActivity : AppCompatActivity() {
             avatarImageView.setImageResource(R.drawable.image_user)
         }
 
-        // Bắt sự kiện Đăng xuất
         logoutButton.setOnClickListener {
-            // Nếu có đăng nhập Google thì sign out luôn
             com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(
                 this,
                 com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN
@@ -157,6 +147,36 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    // Thiết lập footer
+    private fun setupNavigationFooter() {
+        val footerView: View = findViewById(R.id.nav_footer)
+
+        val emailButton = footerView.findViewById<ImageView>(R.id.footer_email)
+        val facebookButton = footerView.findViewById<ImageView>(R.id.footer_facebook)
+        val instagramButton = footerView.findViewById<ImageView>(R.id.footer_instagram)
+        val twitterButton = footerView.findViewById<ImageView>(R.id.footer_twitter)
+
+        emailButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:"))
+            startActivity(intent)
+        }
+
+        facebookButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com"))
+            startActivity(intent)
+        }
+
+        instagramButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com"))
+            startActivity(intent)
+        }
+
+        twitterButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com"))
+            startActivity(intent)
         }
     }
 

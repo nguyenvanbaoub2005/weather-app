@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@color/dark_blue_background">
+
+    <!-- Email Icon -->
+    <ImageView
+        android:id="@+id/footer_email"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:contentDescription="Email"
+        android:src="@drawable/ic_gmail" />
+
+    <!-- Facebook Icon -->
+    <ImageView
+        android:id="@+id/footer_facebook"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:contentDescription="Facebook"
+        android:src="@drawable/ic_facebook" />
+
+    <!-- Instagram Icon -->
+    <ImageView
+        android:id="@+id/footer_instagram"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:contentDescription="Instagram"
+        android:src="@drawable/ic_instagram" />
+
+    <!-- Twitter Icon -->
+    <ImageView
+        android:id="@+id/footer_twitter"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:contentDescription="Twitter"
+        android:src="@drawable/ic_twitter" />
+</LinearLayout>

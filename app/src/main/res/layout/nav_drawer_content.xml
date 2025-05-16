@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/dark_blue_background">
+
+    <!-- Header -->
+    <include
+        layout="@layout/drawer_header"
+        android:id="@+id/nav_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Menu -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view_inner"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/dark_blue_background"
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/text_primary"
+        app:itemIconTint="@color/text_primary" />
+
+    <!-- Footer -->
+    <include
+        layout="@layout/drawer_footer"
+        android:id="@+id/nav_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

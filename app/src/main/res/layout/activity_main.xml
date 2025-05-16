@@ -47,15 +47,10 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <!-- Navigation Drawer -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
+    <include
+        layout="@layout/nav_drawer_content"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/dark_blue_background"
-        app:menu="@menu/drawer_menu"
-        app:itemTextColor="@color/text_primary"
-        app:itemIconTint="@color/text_primary"
-        app:headerLayout="@layout/drawer_header" />
+        android:layout_gravity="start" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
