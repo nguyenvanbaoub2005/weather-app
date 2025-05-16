@@ -1,0 +1,46 @@
+[33m0ce4837[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/fix-loi[m[33m, [m[1;32mfix-loi[m[33m)[m upload
+[33m3d92b0a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/admin[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32madmin[m[33m)[m sua ui
+[33m2e0ad7b[m thêm admin và nút AI
+[33me824974[m sửa lặt vặt gần xong
+[33m7a34098[m update search
+[33m2c2cb01[m Merge pull request #4 from nguyenvanbaoub2005/interface
+[33m47085f5[m gần xong darkmode
+[33m0e234ad[m[33m ([m[1;31morigin/feature/search[m[33m, [m[1;32mfeature/search[m[33m)[m hoan thanh
+[33m275b05b[m searching success
+[33mab01b36[m version error
+[33me8bfcdb[m WIP: thay đổi đang làm dở
+[33m6b81cf9[m fix tabular_forecast success
+[33m152ecca[m danh dau 1
+[33m5ed63b3[m fix bug map
+[33m27a3350[m merge đầy đủ
+[33mc3e8fed[m megre blog in main
+[33me479287[m[33m ([m[1;31morigin/backup-before-rebase[m[33m)[m cập nhập blog
+[33m06a07da[m up save
+[33mb09d1a7[m up so so
+[33m3a90bc4[m fix error display hours
+[33ma646a85[m cungtamtam
+[33m9f90fb9[m[33m ([m[1;31morigin/blog[m[33m)[m blog tiep theo
+[33m802a57e[m chuẩn bị xong blog
+[33mdfbfc86[m Resolve merge conflicts in nav_graph.xml and colors.xml
+[33m76165c8[m[33m ([m[1;31morigin/feature/overview-forecast[m[33m, [m[1;32mfeature/overview-forecast[m[33m)[m Hoàn thành tính năng tổng quan dự báo
+[33ma093fba[m up save
+[33m125dd44[m fix error display hours
+[33m9136770[m cập nhập chức năng gợi ý địa điểm
+[33m3b2696d[m up so so
+[33m0ad48d8[m gợi ý địa điểm vui chơi (chưa xong, khoan up)
+[33m017adf0[m cungtamtam
+[33m1b2dd4c[m Merge pull request #1 from nguyenvanbaoub2005/gemini_ai
+[33m6746921[m[33m ([m[1;31morigin/gemini_ai[m[33m)[m Add GeminiAi
+[33md978b95[m Thêm chức năng gemini_ai
+[33m8e9862e[m Merge branch 'Notification' and resolved conflicts
+[33m9344a58[m[33m ([m[1;31morigin/feature/settings[m[33m, [m[1;32mfeature/settings[m[33m)[m setting success
+[33m62f72f8[m upload legal info and ui of units
+[33md625308[m muzukashii
+[33m10e473c[m xml setting
+[33mceee1d1[m[33m ([m[1;31morigin/Notification[m[33m)[m GẦn xong thông báo cảnh báo cho thiết bị, cần sữa lại
+[33ma17b93c[m[33m ([m[1;31morigin/Complete_login[m[33m)[m Hoành thành login và logout
+[33m94b3caa[m fix error get location
+[33mb805f25[m change light
+[33m4e3e5f7[m commit day 22/4
+[33mcf5b61d[m change manifest
+[33m4bbd022[m First commit

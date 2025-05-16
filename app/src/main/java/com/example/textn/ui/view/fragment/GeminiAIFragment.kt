@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.textn.R
 import com.example.textn.viewmodel.GeminiViewModel
 import com.example.textn.data.model.WeatherData
@@ -82,6 +83,7 @@ class GeminiAIFragment : Fragment() {
             // Xử lý dữ liệu từ ViewModel
         })
 
+        setupCloseButton()
         setupObservers()
         setupClickListeners()
         checkLocationPermissionAndGetWeather()
@@ -114,6 +116,13 @@ class GeminiAIFragment : Fragment() {
             }
         } else {
             binding.tvLocation.text = "Cần quyền truy cập vị trí"
+        }
+    }
+
+    private fun setupCloseButton() {
+        binding.btnReturn.setOnClickListener {
+            val navController = findNavController()
+            navController.navigateUp()
         }
     }
 
