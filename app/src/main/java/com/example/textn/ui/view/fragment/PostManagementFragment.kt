@@ -8,11 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.textn.data.model.Post
 import com.example.textn.databinding.FragmentPostManagementBinding
+import com.example.textn.ui.adapter.PostAdapter
 import com.example.textn.viewmodel.AdminViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 class PostManagementFragment : Fragment() {
     private var _binding: FragmentPostManagementBinding? = null
@@ -36,9 +34,15 @@ class PostManagementFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PostAdapter { post ->
-            viewModel.deletePost(post.id)
-        }
+        adapter = PostAdapter(
+            onDelete = { post ->
+                viewModel.deletePost(post.id)
+            },
+            onPostClick = { post ->
+                // Hiển thị Toast khi nhấn vào bài viết (có thể để trống nếu không cần)
+                Toast.makeText(context, "Đã nhấn bài viết: ${post.description}", Toast.LENGTH_SHORT).show()
+            }
+        )
         binding.rvPosts.apply {
             layoutManager = LinearLayoutManager(context)
             this.adapter = this@PostManagementFragment.adapter
@@ -67,37 +71,3 @@ class PostManagementFragment : Fragment() {
     }
 }
 
-class PostAdapter(
-    private val onDelete: (Post) -> Unit
-) : androidx.recyclerview.widget.ListAdapter<Post, PostAdapter.PostViewHolder>(
-    object : androidx.recyclerview.widget.DiffUtil.ItemCallback<Post>() {
-        override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean = oldItem == newItem
-    }
-) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding = com.example.textn.databinding.ItemPostBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
-        return PostViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-
-    inner class PostViewHolder(
-        private val binding: com.example.textn.databinding.ItemPostBinding
-    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: Post) {
-            binding.tvDisplayName.text = post.displayName
-            binding.tvDescription.text = post.description
-            binding.tvLocation.text = post.location.locationName.ifEmpty { "Không có vị trí" }
-            binding.tvTimestamp.text = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-                .format(Date(post.timestamp))
-            binding.tvLikes.text = "Lượt thích: ${post.likes}"
-            binding.tvComments.text = "Bình luận: ${post.comments.size}"
-            binding.btnDelete.setOnClickListener { onDelete(post) }
-        }
-    }
-}

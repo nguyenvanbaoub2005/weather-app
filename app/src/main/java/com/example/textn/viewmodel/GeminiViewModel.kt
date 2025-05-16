@@ -192,8 +192,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
 
 
     // Hàm lấy vị trí hiện tại (dùng Fused Location API)
-// Hàm lấy vị trí hiện tại (dùng Fused Location API)
-    private suspend fun getCurrentLocation(): String? {
+    suspend fun getCurrentLocation(): String? {
         try {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 

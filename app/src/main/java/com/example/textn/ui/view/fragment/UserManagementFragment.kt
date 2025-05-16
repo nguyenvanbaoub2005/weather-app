@@ -4,12 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.textn.R
 import com.example.textn.data.model.User
 import com.example.textn.databinding.FragmentUserManagementBinding
+import com.example.textn.databinding.ItemUserBinding
+import com.example.textn.ui.adapter.PostAdapter
+import com.example.textn.ui.adapter.UserAdapter
 import com.example.textn.viewmodel.AdminViewModel
 
 class UserManagementFragment : Fragment() {
@@ -41,6 +49,13 @@ class UserManagementFragment : Fragment() {
             },
             onActiveToggle = { user ->
                 viewModel.updateUserActiveStatus(user.id, !user.isActive)
+            },
+            onEdit = { user ->
+                showEditDialog(user)
+            },
+            onNameClick = { user ->
+                // Xử lý khi người dùng nhấn vào tên
+                showUserPostsDialog(user)
             }
         )
         binding.rvUsers.apply {
@@ -64,44 +79,56 @@ class UserManagementFragment : Fragment() {
             }
         }
     }
+    private fun showUserPostsDialog(user: User) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_user_posts, null)
+        val rvPosts = dialogView.findViewById<RecyclerView>(R.id.rvUserPosts)
+        val adapter = PostAdapter(
+            onDelete = { post -> viewModel.deletePost(post.id) },
+            onPostClick = { post ->
+                Toast.makeText(context, "Bài viết: ${post.description}", Toast.LENGTH_SHORT).show()
+            }
+        )
+        rvPosts.apply {
+            layoutManager = LinearLayoutManager(context)
+            this.adapter = adapter
+        }
+        viewModel.userPosts.observe(viewLifecycleOwner) { posts ->
+            adapter.submitList(posts)
+        }
+        viewModel.fetchPostsByUserId(user.id)
+        AlertDialog.Builder(requireContext())
+            .setTitle("Bài viết của ${user.displayName}")
+            .setView(dialogView)
+            .setNegativeButton("Đóng", null)
+            .show()
+    }
+    private fun showEditDialog(user: User) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user, null)
+        val etDisplayName = dialogView.findViewById<EditText>(R.id.etDisplayName)
+        val etPhotoUrl = dialogView.findViewById<EditText>(R.id.etPhotoUrl)
+
+        etDisplayName.setText(user.displayName)
+        etPhotoUrl.setText(user.photoUrl)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Chỉnh sửa thông tin người dùng")
+            .setView(dialogView)
+            .setPositiveButton("Lưu") { _, _ ->
+                val newDisplayName = etDisplayName.text.toString().trim()
+                val newPhotoUrl = etPhotoUrl.text.toString().trim()
+
+                if (newDisplayName.isNotEmpty()) {
+                    viewModel.updateUserProfile(user.id, newDisplayName, newPhotoUrl)
+                } else {
+                    Toast.makeText(context, "Tên không được để trống", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Hủy", null)
+            .show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-}
-
-class UserAdapter(
-    private val onRoleToggle: (User) -> Unit,
-    private val onActiveToggle: (User) -> Unit
-) : androidx.recyclerview.widget.ListAdapter<User, UserAdapter.UserViewHolder>(
-    object : androidx.recyclerview.widget.DiffUtil.ItemCallback<User>() {
-        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean = oldItem == newItem
-    }
-) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val binding = com.example.textn.databinding.ItemUserBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
-        return UserViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-
-    inner class UserViewHolder(
-        private val binding: com.example.textn.databinding.ItemUserBinding
-    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User) {
-            binding.tvUserId.text = user.id
-            binding.tvRole.text = user.role
-            binding.tvEmail.text = user.email
-            binding.tvDisplayName.text = user.displayName
-            binding.btnToggleRole.setOnClickListener { onRoleToggle(user) }
-            binding.btnToggleActive.text = if (user.isActive) "Lock" else "Unlock"
-            binding.btnToggleActive.setOnClickListener { onActiveToggle(user) }
-        }
     }
 }

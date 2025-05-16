@@ -77,36 +77,33 @@ class PostRepository {
         }
     }
 
-    suspend fun getPostsByUserId(userId: String): List<Post> = withContext(Dispatchers.IO) {
-        try {
-            val snapshot = postsCollection
+    suspend fun getPostsByUserId(userId: String): Result<List<Post>> = withContext(Dispatchers.IO) {
+        return@withContext try {
+            val querySnapshot = postsCollection
                 .whereEqualTo("userId", userId)
-                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .await()
 
-            val posts = mutableListOf<Post>()
-
-            for (document in snapshot.documents) {
+            // Sắp xếp thủ công bằng Kotlin sau khi lấy dữ liệu
+            val posts = querySnapshot.documents.mapNotNull { document ->
                 val post = document.toObject(Post::class.java)?.copy(id = document.id)
-
-                if (post != null) {
-                    // Lấy danh sách người dùng đã like bài viết
-                    val likesSnapshot = document.reference.collection("likes").get().await()
-                    val likedUserIds = likesSnapshot.documents.map { it.id }
-
-                    // Cập nhật post với danh sách người đã like
-                    val updatedPost = post.copy(likedUserIds = likedUserIds)
-                    posts.add(updatedPost)
+                post?.let {
+                    val likedUserIds = document.reference
+                        .collection("likes")
+                        .get()
+                        .await()
+                        .documents
+                        .map { it.id }
+                    it.copy(likedUserIds = likedUserIds)
                 }
-            }
+            }.sortedByDescending { it.timestamp }
 
-            return@withContext posts
+            Result.success(posts)
         } catch (e: Exception) {
-            e.printStackTrace()
-            return@withContext emptyList()
+            Result.failure(e)
         }
     }
+
 
 //    suspend fun getPostsByLocation(latitude: Double, longitude: Double, radiusKm: Double): List<Post> {
 //        // Tính toán phạm vi tọa độ dựa trên bán kính
@@ -230,5 +227,6 @@ class PostRepository {
             Result.failure(e)
         }
     }
+
 
 }

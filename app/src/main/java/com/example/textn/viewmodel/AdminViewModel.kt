@@ -20,6 +20,9 @@ class AdminViewModel : ViewModel() {
     private val _posts = MutableLiveData<List<Post>>()
     val posts: LiveData<List<Post>> get() = _posts
 
+    private val _userPosts = MutableLiveData<List<Post>>()
+    val userPosts: LiveData<List<Post>> get() = _userPosts
+
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
@@ -64,6 +67,20 @@ class AdminViewModel : ViewModel() {
             }
         }
     }
+
+    fun updateUserProfile(userId: String, displayName: String, photoUrl: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            val result = userRepository.updateUserProfile(userId, displayName, photoUrl)
+            _loading.value = false
+            if (result.isSuccess) {
+                fetchUsers()
+            } else {
+                _error.value = result.exceptionOrNull()?.message ?: "Lỗi khi cập nhật thông tin người dùng"
+            }
+        }
+    }
+
     fun fetchPosts() {
         viewModelScope.launch {
             _loading.value = true
@@ -76,6 +93,7 @@ class AdminViewModel : ViewModel() {
             }
         }
     }
+
     fun deletePost(postId: String) {
         viewModelScope.launch {
             _loading.value = true
@@ -83,8 +101,25 @@ class AdminViewModel : ViewModel() {
             _loading.value = false
             if (result.isSuccess) {
                 fetchPosts()
+                // Refresh user posts if we're currently viewing user posts
+                _userPosts.value?.firstOrNull()?.userId?.let { userId ->
+                    fetchPostsByUserId(userId)
+                }
             } else {
                 _error.value = result.exceptionOrNull()?.message ?: "Lỗi khi xóa bài viết"
+            }
+        }
+    }
+
+    fun fetchPostsByUserId(userId: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            val result = postRepository.getPostsByUserId(userId)
+            _loading.value = false
+            if (result.isSuccess) {
+                _userPosts.value = result.getOrNull() ?: emptyList()
+            } else {
+                _error.value = result.exceptionOrNull()?.message ?: "Lỗi khi lấy bài viết của người dùng"
             }
         }
     }

@@ -120,19 +120,19 @@ class CommunityViewModel(application: Application) : AndroidViewModel(applicatio
 //        }
 //    }
 
-    fun loadPostsByUserId(userId: String) {
-        _isLoading.value = true
-        viewModelScope.launch {
-            try {
-                val postsList = postRepository.getPostsByUserId(userId)
-                _posts.value = postsList
-            } catch (e: Exception) {
-                _errorMessage.value = e.message ?: "Lỗi khi tải bài của người dùng"
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
+//    fun loadPostsByUserId(userId: String) {
+//        _isLoading.value = true
+//        viewModelScope.launch {
+//            try {
+//                val postsList = postRepository.getPostsByUserId(userId)
+//                _posts.value = postsList
+//            } catch (e: Exception) {
+//                _errorMessage.value = e.message ?: "Lỗi khi tải bài của người dùng"
+//            } finally {
+//                _isLoading.value = false
+//            }
+//        }
+//    }
 
     fun toggleLike(postId: String, userId: String) {
         _isLoading.value = true

@@ -1,6 +1,8 @@
 package com.example.textn.ui.view.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -16,7 +18,7 @@ class AdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setupLogoutButton()
         setupViewPager()
     }
 
@@ -36,5 +38,13 @@ class AdminActivity : AppCompatActivity() {
                 else -> ""
             }
         }.attach()
+    }
+    private fun setupLogoutButton() {
+        binding.btnLogout.setOnClickListener {
+            Toast.makeText(this, "Đã đăng xuất", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
     }
 }

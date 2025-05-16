@@ -101,6 +101,21 @@ class UserRepository {
     }
 
     /**
+     * Cập nhật tên hiển thị và URL ảnh đại diện của người dùng
+     */
+    suspend fun updateUserProfile(userId: String, displayName: String, photoUrl: String): Result<Unit> {
+        return try {
+            val updates = hashMapOf<String, Any>(
+                "displayName" to displayName,
+                "photoUrl" to photoUrl
+            )
+            usersCollection.document(userId).update(updates).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+    /**
      * Cập nhật role cho người dùng hiện có nếu thiếu
      */
     suspend fun updateUsersWithRole() {

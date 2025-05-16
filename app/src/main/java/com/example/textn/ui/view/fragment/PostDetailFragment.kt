@@ -177,15 +177,15 @@ class PostDetailFragment : Fragment() {
             .into(ivPostImage)
         Log.d("PostDetailFragment", "Image URL: ${post.imageUrl}")
 
-        // Hiển thị avatar người dùng nếu có
-        // Phần này có thể cần điều chỉnh tùy thuộc vào model User của bạn
-//        try {
-//            Glide.with(requireContext())
-//                .load(R.drawable.ic_menu_gallery) // Default placeholder
-//                .into(ivUserAvatar)
-//        } catch (e: Exception) {
-//            Log.e("PostDetailFragment", "Error loading avatar", e)
-//        }
+//         Hiển thị avatar người dùng nếu có
+//         Phần này có thể cần điều chỉnh tùy thuộc vào model User của bạn
+        try {
+            Glide.with(requireContext())
+                .load(R.drawable.image_user) // Default placeholder
+                .into(ivUserAvatar)
+        } catch (e: Exception) {
+            Log.e("PostDetailFragment", "Error loading avatar", e)
+        }
 
         // Hiển thị thông tin chi tiết
         tvPostDescription.text = post.description

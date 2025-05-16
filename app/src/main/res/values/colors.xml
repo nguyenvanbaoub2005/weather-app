@@ -190,5 +190,12 @@
 <!--    draew menu-->
     <color name="line_divider">#33FFFFFF</color>
     <color name="indicator_color">#FFFFFF</color>
+    <!-- Thêm mã màu dựa trên điều kiện thời tiết -->
+    <color name="weather_sunny_bg">#4DA9FF</color>       <!-- Xanh da trời đậm -->
+    <color name="weather_cloudy_bg">#7F8C8D</color>      <!-- Xám đậm hiện đại -->
+    <color name="weather_rain_bg">#3498DB</color>        <!-- Xanh dương đậm -->
+    <color name="weather_thunderstorm_bg">#41244D</color><!-- Tím sẫm -->
+    <color name="weather_snow_bg">#A9CCE3</color>        <!-- Xanh băng đậm hơn -->
+    <color name="weather_fog_bg">#BDC3C7</color>
 </resources>
 
