@@ -15,4 +15,5 @@ interface WeatherApiService {
         @Query("exclude") exclude: String = "minutely,alerts",
         @Query("lang") language: String = "vi"
     ): Response<WeatherResponse>
+
 }

@@ -50,18 +50,6 @@ data class HourlyData(
     val windGust: Float?,
     val pop: Double? // Xác suất mưa
 )
-
-// Lớp dữ liệu để lưu trữ thông tin thời tiết theo giờ
-//data class HourlyData(
-//    val dt: Long,                // Thời gian (Unix timestamp)
-//    val temp: Float,             // Nhiệt độ
-//    val windSpeed: Float,        // Tốc độ gió (đảm bảo ánh xạ đúng từ phản hồi của API)
-//    val windDeg: Int,            // Hướng gió (độ)
-//    val feelsLike: Float,        // Nhiệt độ cảm nhận
-//    val windGust: Float?,        // Tốc độ gió mạnh (cần thiết cho những cơn gió mạnh)
-//    val pop: Double?             // Xác suất mưa
-//)
-
 data class CurrentWeather(
     val temp: Double,
     val humidity: Int,

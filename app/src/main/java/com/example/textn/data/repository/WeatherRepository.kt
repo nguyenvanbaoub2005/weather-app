@@ -52,6 +52,7 @@ class WeatherRepository(private val apiService: WeatherApiService) {
             throw IllegalStateException("Không thể lấy dữ liệu thời tiết từ API. Lỗi: ${e.message}")
         }
     }
+
     // Lấy vị trí hiện tại sử dụng FusedLocationProvider
      suspend fun getWeatherForCurrentLocation(context: Context): Location? = withContext(Dispatchers.IO) {
         // Kiểm tra quyền truy cập vị trí

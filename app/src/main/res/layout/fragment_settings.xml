@@ -209,22 +209,6 @@
             </androidx.cardview.widget.CardView>
 
             <!-- Font Size -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cỡ chữ"
-                android:textColor="@color/light_text"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
-
-            <SeekBar
-                android:id="@+id/seekFontSize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="30"
-                android:progress="16"
-                android:progressTint="@color/primary"
-                android:thumbTint="@color/primary" />
 
             <TextView
                 android:id="@+id/tvAppVersion"

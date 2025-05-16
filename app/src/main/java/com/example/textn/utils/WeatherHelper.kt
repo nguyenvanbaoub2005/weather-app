@@ -35,20 +35,15 @@ class WeatherHelper(
     private val fragment: Fragment
 ) {
     companion object {
-        // API key moved to a single location for better management
         const val API_KEY = "32ea3752b81cf12722a46358a7a9739c"
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
-
-        // Cờ kiểm tra vị trí đã được lấy chưa
         private var isLocationFetched = false
 
-        // Phương thức reset biến isLocationFetched
         fun resetLocationFetched() {
             isLocationFetched = false
             Log.d("Weather", "Đã reset trạng thái lấy vị trí")
         }
 
-        // Thiết lập cơ bản cho WebView
         fun setupWebView(webView: WebView) {
             webView.settings.apply {
                 javaScriptEnabled = true
@@ -62,7 +57,6 @@ class WeatherHelper(
             webView.webViewClient = WebViewClient()
         }
 
-        // Cập nhật bản đồ với địa điểm cụ thể
         fun updateWindyMap(context: Context, webView: WebView, location: String, layer: String = "wind") {
             try {
                 val geocoder = Geocoder(context, Locale.getDefault())
@@ -78,14 +72,12 @@ class WeatherHelper(
             }
         }
 
-        // Cập nhật lớp thời tiết mà không tải lại toàn bộ bản đồ
         fun updateMapLayer(webView: WebView, layer: String, lat: Double, lon: Double) {
             val html = generateWindyHtml(lat, lon, layer)
             webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
             Log.d("Weather", "Cập nhật lớp thời tiết sang: $layer tại vị trí: $lat, $lon")
         }
 
-        // Cập nhật bản đồ với vị trí hiện tại
         fun updateWindyMapWithCurrentLocation(
             activity: Activity,
             webView: WebView,
@@ -111,17 +103,14 @@ class WeatherHelper(
 
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
 
-            // Thử lấy vị trí cuối cùng
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 if (location != null) {
-                    // Nếu có vị trí cuối cùng, update luôn
                     val lat = location.latitude
                     val lon = location.longitude
                     updateWindyMapHtml(webView, lat, lon, layer)
                     onLocationFetched?.invoke(lat, lon)
                     isLocationFetched = true
                 } else {
-                    // Nếu không có, yêu cầu cập nhật mới
                     val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
                         priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
                         interval = 1000
@@ -149,17 +138,12 @@ class WeatherHelper(
             }
         }
 
-        // Viết thêm 1 hàm con để update webview
         private fun updateWindyMapHtml(webView: WebView, lat: Double, lon: Double, layer: String) {
             val html = generateWindyHtml(lat, lon, layer)
             webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
         }
 
-
-        // Hàm trợ giúp để tạo HTML cho Windy Map với mô hình GFS cố định
-// Hàm trợ giúp để tạo HTML cho Windy Map với mô hình GFS
         private fun generateWindyHtml(lat: Double, lon: Double, layer: String): String {
-            // Thiết lập trực tiếp mô hình GFS trong URL thay vì sử dụng postMessage
             return """
         <html>
         <head>
@@ -178,7 +162,6 @@ class WeatherHelper(
     """.trimIndent()
         }
 
-        // Chuyển đổi địa chỉ thành tọa độ
         fun getCoordinatesFromLocation(context: Context, location: String): Pair<Double, Double>? {
             try {
                 val geocoder = Geocoder(context, Locale.getDefault())
@@ -193,7 +176,7 @@ class WeatherHelper(
                 return null
             }
         }
-        // Hàm để lấy tên địa điểm từ tọa độ
+
         fun getLocationFromCoordinates(context: Context, latitude: Double, longitude: Double): String {
             try {
                 val geocoder = Geocoder(context, Locale.getDefault())
@@ -202,11 +185,11 @@ class WeatherHelper(
                 return if (!addresses.isNullOrEmpty()) {
                     val address = addresses[0]
                     if (address.locality != null) {
-                        address.locality  // Tên thành phố
+                        address.locality
                     } else if (address.subAdminArea != null) {
-                        address.subAdminArea  // Tên quận/huyện
+                        address.subAdminArea
                     } else {
-                        address.adminArea ?: "Unknown Location"  // Tên tỉnh/thành phố lớn
+                        address.adminArea ?: "Unknown Location"
                     }
                 } else {
                     "Unknown Location"
@@ -223,7 +206,7 @@ class WeatherHelper(
     fun initialize() {
         setupBindingWebView()
         setupSearchListener()
-//        observeViewModel()
+        setupSearchButtonListener() // Thêm listener cho nút tìm kiếm
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
         updateWindyMapWithCurrentLocation()
@@ -255,30 +238,18 @@ class WeatherHelper(
         })
     }
 
-//    private fun observeViewModel() {
-//        viewModel.weatherData.observe(lifecycleOwner) { weather ->
-//            val current = weather.current
-//            val forecast = weather.daily.take(3).joinToString("\n") { day ->
-//                val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(day.dt * 1000))
-//                "Ngày: $date - Nhiệt độ: ${day.temp.day}°C, ${day.weather[0].description}"
-//            }
-//
-//            binding.weatherInfo.text = """
-//                🌤️ Thời tiết hiện tại:
-//                Nhiệt độ: ${current.temp}°C
-//                Độ ẩm: ${current.humidity}%
-//                Sức gió: ${current.wind_speed} m/s
-//                Mô tả: ${current.weather[0].description}
-//
-//                🔮 Dự báo 3 ngày tới:
-//                $forecast
-//            """.trimIndent()
-//        }
-//
-//        viewModel.error.observe(lifecycleOwner) {
-//            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-//        }
-//    }
+    // Thêm listener cho nút tìm kiếm
+    private fun setupSearchButtonListener() {
+        binding.btnSearch.setOnClickListener {
+            val query = binding.searchView.query.toString()
+            if (query.isNotBlank()) {
+                fetchLocationWeather(query)
+                updateWindyMap(query)
+            } else {
+                Toast.makeText(context, "Vui lòng nhập địa điểm để tìm kiếm!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     fun fetchLocationWeather(location: String) {
         val coordinates = getCoordinatesFromLocation(context, location)
@@ -289,19 +260,14 @@ class WeatherHelper(
         }
     }
 
-    // Phương thức instance để cập nhật Windy Map
     fun updateWindyMap(location: String) {
         updateWindyMap(context, binding.windyWebView, location, currentLayer)
     }
 
-    // Phương thức instance để cập nhật Windy Map với vị trí hiện tại
     fun updateWindyMapWithCurrentLocation(onLocationFetched: ((lat: Double, lon: Double) -> Unit)? = null) {
         val activity = fragment.requireActivity()
         updateWindyMapWithCurrentLocation(activity, binding.windyWebView, currentLayer) { lat, lon ->
-            // Cập nhật thông tin thời tiết dựa trên vị trí hiện tại
             viewModel.fetchWeather(lat, lon, API_KEY)
-
-            // Gọi callback nếu được cung cấp
             onLocationFetched?.invoke(lat, lon)
         }
     }

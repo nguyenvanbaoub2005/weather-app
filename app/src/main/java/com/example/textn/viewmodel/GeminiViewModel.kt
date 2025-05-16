@@ -74,7 +74,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
                     
                     Hãy đóng vai là bác sĩ và đưa ra lời khuyên ngắn gọn về sức khỏe phù hợp với điều kiện thời tiết này. 
                     Hãy đề cập đến các biện pháp phòng ngừa cần thiết và những hoạt động nên tránh hoặc nên làm.
-                    Hãy đảm bảo kết thúc bằng một câu khích lệ tích cực, có dùng nhiều icon .
+                    Hãy đảm bảo kết thúc bằng một câu khích lệ tích cực, dùng nhiều icon, rút ngắn ý lại.
                 """.trimIndent()
 
                 // Gọi hàm gửi yêu cầu tới API Gemini để nhận lời khuyên
@@ -89,7 +89,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
         }
     }
 
-    // Hàm xử lý câu hỏi tùy chỉnh
+    // Hàm xử lý câu hỏi tùy chỉnh cho AI
     fun getCustomAdvice(customPrompt: String, apiKey: String) {
         _isLoading.value = true
         _error.value = null
@@ -103,17 +103,41 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
                         val response = weatherRepository.getWeatherData(context, location)
                         val weatherData = convertWeatherResponseToWeatherData(response, location)
                         // Lấy dự báo 5 ngày
-                        val forecast = response.daily.take(5).joinToString("\n") { day ->
+                        val forecastDaily = response.daily.take(5).joinToString("\n") { day ->
                             val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(day.dt * 1000))
                             "Ngày: $date - Nhiệt độ: ${day.temp.day}°C, ${day.weather[0].description}"
                         }
+                        // Lấy dự báo theo giờ (ví dụ: 5 giờ tiếp theo)
+                        val forecastHourly = response.hourly.take(5).joinToString("\n") { hour ->
+                            val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(hour.dt * 1000))
+                            "Giờ: $time - Nhiệt độ: ${hour.temp}°C, Gió: ${hour.windSpeed} m/s, Xác suất mưa: ${(hour.pop ?: 0.0) * 100}%"
+                        }
+
+                        // Lấy thông tin chất lượng không khí từ CurrentWeather
+                        val airQualityInfo = response.current.airQuality?.aqi?.let { aqi ->
+                            when (aqi) {
+                                in 0..50 -> "Tốt ($aqi)"
+                                in 51..100 -> "Trung bình ($aqi)"
+                                in 101..150 -> "Không tốt cho nhóm nhạy cảm ($aqi)"
+                                in 151..200 -> "Không tốt ($aqi)"
+                                in 201..300 -> "Rất không tốt ($aqi)"
+                                else -> "Nguy hiểm ($aqi)"
+                            }
+                        } ?: "Không có dữ liệu"
+
                         """
-                    Thông tin thời tiết hiện tại tại $location:
+                    🌤️ Thông tin thời tiết hiện tại tại $location:
                     - Nhiệt độ: ${weatherData.temperature}°C
                     - Chỉ số UV: ${weatherData.uvIndex}
                     - Độ ẩm: ${weatherData.humidity}%
                     - Tình trạng: ${weatherData.condition}
-                    $forecast
+                    - Chất lượng không khí (AQI): $airQualityInfo
+                    
+                    🔮 Dự báo 5 ngày tới:
+                    $forecastDaily
+                    
+                    ⏰ Dự báo theo giờ (5 giờ tới):
+                    $forecastHourly
                     """.trimIndent()
                     } catch (e: Exception) {
                         "Không có thông tin thời tiết hiện tại hoặc dự báo."
@@ -129,7 +153,7 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
                 Câu hỏi của người dùng: $customPrompt
                 
                 Hãy trả lời câu hỏi trên một cách ngắn gọn, rõ ràng và cung cấp thông tin hữu ích. 
-                Nếu câu hỏi liên quan đến thời tiết, hãy sử dụng thông tin thời tiết đã cung cấp, dùng icon đẹp.
+                Nếu câu hỏi liên quan đến thời tiết hoặc chất lượng không khí, hãy sử dụng thông tin đã cung cấp, dùng icon đẹp.
             """.trimIndent()
                 // Gửi yêu cầu đến API Gemini
                 getWeatherAdviceFromAI(prompt, apiKey)
@@ -139,7 +163,6 @@ class GeminiViewModel(private val context: Context) : ViewModel() {
             }
         }
     }
-
     // Hàm gửi yêu cầu đến API Gemini
     private fun getWeatherAdviceFromAI(prompt: String, apiKey: String) {
         _isLoading.value = true

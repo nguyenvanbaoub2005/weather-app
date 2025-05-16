@@ -3,36 +3,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <SearchView
-        android:id="@+id/searchView"
+    <!-- SearchView với nút tìm kiếm -->
+    <LinearLayout
+        android:id="@+id/search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Nhập địa điểm..." />
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:elevation="4dp">
 
-    <!--windy-->
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:queryHint="Nhập địa điểm..."
+            android:iconifiedByDefault="false"
+            android:focusable="true" />
 
-    <WebView
-        android:id="@+id/windyWebView"
-        android:layout_width="match_parent"
-        android:layout_height="800dp"
-        android:layout_marginTop="0dp" />
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_search"
+            android:contentDescription="Tìm kiếm"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp" />
+    </LinearLayout>
 
+    <!-- Nút Layer Menu -->
     <ImageButton
         android:id="@+id/btnLayerMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="8dp"
-        android:layout_below="@id/windyWebView"
+        android:layout_marginBottom="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Layer Menu" />
 
-    <Spinner
-        android:id="@+id/layerSpinner"
+    <!-- Windy WebView -->
+    <WebView
+        android:id="@+id/windyWebView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnLayerMenu"
-        android:layout_margin="16dp" />
+        android:layout_height="0dp"
+        android:layout_below="@id/search_container"
+        android:layout_above="@id/btnLayerMenu"
+        android:layout_marginTop="8dp" />
 
 </RelativeLayout>

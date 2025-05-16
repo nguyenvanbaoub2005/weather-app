@@ -53,11 +53,6 @@ class SettingsFragment : Fragment() {
             updateThemeText(isDarkTheme)
         }
 
-        // Observe font size changes
-        viewModel.fontSize.observe(viewLifecycleOwner) { fontSize ->
-            binding.seekFontSize.progress = fontSize
-            applyFontSize(fontSize)
-        }
     }
 
     private fun setupListeners() {
@@ -72,18 +67,6 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        // Font size slider
-        binding.seekFontSize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    val actualProgress = if (progress < 12) 12 else progress
-                    viewModel.setFontSize(actualProgress)
-                }
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
 
         // Units card
         binding.cardUnit.setOnClickListener {

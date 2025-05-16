@@ -96,29 +96,28 @@ class HealthAlertViewModel(
      */
     private fun getSampleAlerts(): List<HealthAlert> = listOf(
         HealthAlert(
-            id = "sample_high_temp",
+            id = "daytime_high_temp",
             severity = AlertSeverity.HIGH,
-            title = "Mẫu: Nhiệt độ cao",
-            description = "Nhiệt độ trên 35°C — hãy hạn chế ra ngoài và uống đủ nước.",
+            title = "Cảnh báo: Nhiệt độ ban ngày cao",
+            description = "Dự báo nhiệt độ ban ngày vượt quá 36°C — hãy tránh ra ngoài từ 11h đến 15h và uống nhiều nước.",
             iconResId = R.drawable.ic_high_temp_warning
         ),
         HealthAlert(
-            id = "sample_uv",
+            id = "daytime_uv",
             severity = AlertSeverity.MEDIUM,
-            title = "Mẫu: Chỉ số UV cao",
-            description = "Chỉ số UV 7.5 — hãy bôi kem chống nắng.",
+            title = "Cảnh báo: Chỉ số UV buổi trưa cao",
+            description = "Chỉ số UV dự kiến đạt 12.0 vào buổi trưa — hãy sử dụng kem chống nắng, đội mũ và tránh tiếp xúc trực tiếp với ánh nắng.",
             iconResId = R.drawable.ic_uv_warning
         ),
         HealthAlert(
-            id = "sample_air",
+            id = "air_quality_moderate",
             severity = AlertSeverity.LOW,
-            title = "Mẫu: Ô nhiễm không khí",
-            description = "AQI 120 — hạn chế ra ngoài nếu khó thở.",
+            title = "Thông báo: Chất lượng không khí trung bình",
+            description = "Chất lượng không khí (AQI: 110) vào buổi sáng có thể ảnh hưởng đến người nhạy cảm — hạn chế hoạt động ngoài trời.",
             iconResId = R.drawable.ic_air_quality_warning
         )
-
-
     )
+
 
     /**
      * Gửi Notification cho các cảnh báo có độ nghiêm trọng cao.

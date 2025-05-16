@@ -37,7 +37,6 @@ class MapWeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Khởi tạo helper với đầy đủ thông tin
         weatherHelper = WeatherHelper(
             context = requireContext(),
             binding = binding,
@@ -46,9 +45,9 @@ class MapWeatherFragment : Fragment() {
             fragment = this
         )
 
-        // Khởi tạo tất cả các thành phần
         weatherHelper.initialize()
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -57,7 +56,6 @@ class MapWeatherFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Quyền đã được cấp, cập nhật map với vị trí hiện tại
                 weatherHelper.updateWindyMapWithCurrentLocation()
             }
         }
