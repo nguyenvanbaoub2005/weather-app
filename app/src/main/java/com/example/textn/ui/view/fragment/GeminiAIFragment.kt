@@ -122,7 +122,22 @@ class GeminiAIFragment : Fragment() {
     private fun setupCloseButton() {
         binding.btnReturn.setOnClickListener {
             val navController = findNavController()
-            navController.navigateUp()
+            val previousDestinationId = navController.previousBackStackEntry?.destination?.id
+            
+            if (previousDestinationId == R.id.tabularForecastFragment) {
+                navController.navigate(R.id.tabularForecastFragment)
+            } else if (previousDestinationId == R.id.nav_communityFragment) {
+                navController.navigate(R.id.nav_communityFragment)
+            } else if (previousDestinationId == R.id.nav_place_recommend) {
+                navController.navigate(R.id.nav_place_recommend)
+            } else if (previousDestinationId == R.id.nav_weather) {
+                navController.navigate(R.id.nav_weather)
+            } else if (previousDestinationId == R.id.nav_settings) {
+                navController.navigate(R.id.nav_settings)
+            } else {
+                // Nếu không phải các màn hình trên, quay về màn hình chính
+                navController.navigate(R.id.nav_home)
+            }
         }
     }
 
